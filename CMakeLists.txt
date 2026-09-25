@@ -1,0 +1,128 @@
+cmake_minimum_required(VERSION 3.25)
+project(containerlab_vrt VERSION 0.1.0 LANGUAGES CXX)
+
+include(CTest)
+find_package(nlohmann_json 3.12.0 EXACT REQUIRED)
+find_package(SoapySDR 0.8.1 REQUIRED)
+if(NOT SOAPY_SDR_ABI_VERSION STREQUAL "0.8")
+  message(FATAL_ERROR "SoapySDR ABI 0.8 is required, found ${SOAPY_SDR_ABI_VERSION}")
+endif()
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_library(sdr_core
+  src/radio_services.cpp
+  src/soapy_virtual_device.cpp
+  src/status.cpp
+  src/spectrum.cpp
+  src/virtual_radio.cpp)
+target_include_directories(sdr_core PUBLIC include)
+target_include_directories(sdr_core SYSTEM PUBLIC third_party/vrt_framework/include)
+target_link_libraries(sdr_core PUBLIC nlohmann_json::nlohmann_json SoapySDR)
+target_compile_options(sdr_core PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_library(sdr_vrt_adapter
+  src/processor_controller.cpp
+  src/radio_transport.cpp
+  src/vrt_radio_adapter.cpp)
+target_include_directories(sdr_vrt_adapter PUBLIC include)
+target_include_directories(sdr_vrt_adapter SYSTEM PUBLIC third_party/vrt_framework/include)
+target_link_libraries(sdr_vrt_adapter PUBLIC sdr_core)
+target_compile_options(sdr_vrt_adapter PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_library(sdr_udp_apps apps/udp_pipeline.cpp)
+target_include_directories(sdr_udp_apps PUBLIC apps)
+target_include_directories(sdr_udp_apps SYSTEM PRIVATE third_party/vrt_framework/include)
+target_link_libraries(sdr_udp_apps PUBLIC sdr_core nlohmann_json::nlohmann_json)
+target_compile_options(sdr_udp_apps PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_library(sdr_recorder src/recorder.cpp)
+target_include_directories(sdr_recorder PUBLIC include)
+target_link_libraries(sdr_recorder PUBLIC nlohmann_json::nlohmann_json)
+target_compile_options(sdr_recorder PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_executable(processor apps/processor.cpp)
+target_link_libraries(processor PRIVATE sdr_udp_apps sdr_vrt_adapter)
+target_compile_options(processor PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_executable(detector apps/detector.cpp)
+target_link_libraries(detector PRIVATE sdr_udp_apps)
+target_compile_options(detector PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_executable(radio apps/radio.cpp)
+target_link_libraries(radio PRIVATE sdr_vrt_adapter)
+target_compile_options(radio PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+add_executable(recorder apps/recorder.cpp)
+target_link_libraries(recorder PRIVATE sdr_recorder)
+target_compile_options(recorder PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+install(TARGETS radio processor detector recorder RUNTIME DESTINATION bin)
+
+if(BUILD_TESTING)
+  set(P17_GOLDEN_FILE
+    "${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/p17-pre-rename-vectors.txt")
+  file(SHA256 "${P17_GOLDEN_FILE}" P17_GOLDEN_SHA256)
+  if(NOT P17_GOLDEN_SHA256 STREQUAL
+      "2783c2def0d55eeba3d2c9ba185e892e2e37d8cdc0870a3276d8951b7102940a")
+    message(FATAL_ERROR "P17 pre-rename golden-vector corpus integrity failure")
+  endif()
+  add_executable(sdr_p17_golden_vectors_tests tests/p17_golden_vectors_tests.cpp)
+  target_include_directories(sdr_p17_golden_vectors_tests PRIVATE
+    third_party/vrt_framework/include)
+  target_compile_definitions(sdr_p17_golden_vectors_tests PRIVATE
+    P17_GOLDEN_FILE="${P17_GOLDEN_FILE}")
+  target_compile_options(sdr_p17_golden_vectors_tests PRIVATE
+    -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_p17_golden_vectors_tests COMMAND sdr_p17_golden_vectors_tests)
+
+  add_executable(sdr_core_tests tests/sdr_core_tests.cpp)
+  target_link_libraries(sdr_core_tests PRIVATE sdr_core)
+  target_compile_options(sdr_core_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_core_tests COMMAND sdr_core_tests)
+  add_executable(sdr_soapy_tests tests/soapy_virtual_device_tests.cpp)
+  target_link_libraries(sdr_soapy_tests PRIVATE sdr_core)
+  target_compile_options(sdr_soapy_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_soapy_tests COMMAND sdr_soapy_tests)
+  add_executable(sdr_radio_services_tests tests/radio_services_tests.cpp)
+  target_include_directories(sdr_radio_services_tests PRIVATE third_party/vrt_framework/include)
+  target_link_libraries(sdr_radio_services_tests PRIVATE sdr_core)
+  target_compile_options(sdr_radio_services_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_radio_services_tests COMMAND sdr_radio_services_tests)
+  add_executable(sdr_vrt_adapter_tests tests/vrt_radio_adapter_tests.cpp)
+  target_link_libraries(sdr_vrt_adapter_tests PRIVATE sdr_vrt_adapter)
+  target_compile_options(sdr_vrt_adapter_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_vrt_adapter_tests COMMAND sdr_vrt_adapter_tests)
+  add_executable(sdr_vrt_runtime_retention_tests tests/vrt_runtime_retention_tests.cpp)
+  target_include_directories(sdr_vrt_runtime_retention_tests PRIVATE third_party/vrt_framework/include)
+  target_compile_options(sdr_vrt_runtime_retention_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_vrt_runtime_retention_tests COMMAND sdr_vrt_runtime_retention_tests)
+  add_executable(sdr_radio_transport_tests tests/radio_transport_tests.cpp)
+  target_link_libraries(sdr_radio_transport_tests PRIVATE sdr_vrt_adapter)
+  target_compile_options(sdr_radio_transport_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_radio_transport_tests COMMAND sdr_radio_transport_tests)
+  add_executable(sdr_processor_controller_tests tests/processor_controller_tests.cpp)
+  target_link_libraries(sdr_processor_controller_tests PRIVATE sdr_vrt_adapter)
+  target_compile_options(sdr_processor_controller_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_processor_controller_tests COMMAND sdr_processor_controller_tests)
+  set_tests_properties(sdr_processor_controller_tests PROPERTIES TIMEOUT 15)
+  add_executable(sdr_status_tests tests/status_tests.cpp)
+  target_link_libraries(sdr_status_tests PRIVATE sdr_core)
+  target_compile_options(sdr_status_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_status_tests COMMAND sdr_status_tests)
+  add_executable(sdr_udp_pipeline_tests tests/udp_pipeline_tests.cpp)
+  target_include_directories(sdr_udp_pipeline_tests PRIVATE third_party/vrt_framework/include)
+  target_link_libraries(sdr_udp_pipeline_tests PRIVATE sdr_udp_apps)
+  target_compile_options(sdr_udp_pipeline_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_udp_pipeline_tests COMMAND sdr_udp_pipeline_tests)
+  add_executable(sdr_udp_integration_tests tests/udp_integration_tests.cpp)
+  target_include_directories(sdr_udp_integration_tests PRIVATE third_party/vrt_framework/include)
+  target_link_libraries(sdr_udp_integration_tests PRIVATE sdr_udp_apps)
+  target_compile_options(sdr_udp_integration_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_udp_integration_tests COMMAND sdr_udp_integration_tests)
+  add_executable(sdr_recorder_tests tests/recorder_tests.cpp)
+  target_link_libraries(sdr_recorder_tests PRIVATE sdr_recorder)
+  target_compile_options(sdr_recorder_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_recorder_tests COMMAND sdr_recorder_tests)
+endif()

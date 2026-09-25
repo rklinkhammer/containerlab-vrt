@@ -1,0 +1,9 @@
+/build/
+/generated/
+!/generated/.gitkeep
+/artifacts/runtime/
+third_party/vrt_framework/build/
+__pycache__/
+*.py[cod]
+*.pcap
+*.pcapng

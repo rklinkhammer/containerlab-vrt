@@ -1,0 +1,77 @@
+{
+  "schema": "containerlab-vrt/p17-golden-manifest/1",
+  "captured_on": "2026-09-25",
+  "purpose": "Immutable pre-rename GraphX-profile wire evidence for byte-equivalence testing of the migrated SDR profile",
+  "upstream": {
+    "repository": "https://github.com/rklinkhammer/vrt_framework.git",
+    "revision": "dbe85d37155145842da60367af1c4beef8801b0c",
+    "checkout": "../vrt_framework",
+    "checkout_status_at_capture": "clean",
+    "license": "MIT",
+    "license_sha256": "78a2a3ebc6342b388d1c6c62f0bc8158d1c7ec633fdee78ec8b2b85f46fb2019",
+    "oracle_path": "tests/verification/P17/wire_contract.cpp",
+    "oracle_sha256": "ce4a19aacb64ef8b6a2d5dab92855ffdbef28acb90fda8351ca829cd0d4f9bbc"
+  },
+  "capture": {
+    "utility": "tools/capture_p17_golden.cpp",
+    "utility_sha256": "d84abcbe0fd47ebaa169dac6751de35171fe48d7658e0413168315a4ff0f8feb",
+    "compiler": "Apple clang 21.0.0 (clang-2100.3.34.2), target arm64-apple-darwin27.0.0",
+    "language": "C++23",
+    "cmake": "4.4.3",
+    "ninja": "1.13.2",
+    "compile_command": "c++ -std=c++23 -Wall -Wextra -Wpedantic -Werror -I../vrt_framework/include tools/capture_p17_golden.cpp -o build/golden-capture/capture_p17_golden",
+    "capture_command": "build/golden-capture/capture_p17_golden > build/golden-capture/p17-vectors.hex",
+    "raw_capture_sha256": "b21c9d48d7ce0a76587f6b9794689cc60cd6e290b0e26c6347164556810d7657",
+    "determinism": {
+      "stream_id": 1,
+      "unknown_oui": "0x00ffffff",
+      "timestamp": {"tsi": "utc", "tsf": "picoseconds", "integer": 1000, "fractional": 0},
+      "message_ids": ["0x11223344", "0x11223345", "0x11223346"],
+      "controllee_id": 1,
+      "controller_id": 2,
+      "iq_word": "0x7fff8000",
+      "signal_pair_counts": [1, 2, 1023, 1024],
+      "clock_or_random_inputs": "none"
+    }
+  },
+  "corpus": {
+    "path": "tests/golden/p17-pre-rename-vectors.txt",
+    "sha256": "2783c2def0d55eeba3d2c9ba185e892e2e37d8cdc0870a3276d8951b7102940a",
+    "encoding": "Each record is name|decoded byte length|decoded-byte SHA-256|comma-separated hexadecimal segments; HEX*COUNT is lossless repetition.",
+    "vectors": [
+      {"name": "signal-single", "bytes": 36, "sha256": "48984c8fc1487425fa2abc0ac63d2b9966a8cde1eeb8f1cb6e996b82c30cd2d4"},
+      {"name": "signal-first", "bytes": 40, "sha256": "ce026fb5541d4ce5c796abf8c6aaaf30c400683fa44e598186cad9bbb40e35d9"},
+      {"name": "signal-middle", "bytes": 4124, "sha256": "77f9835e58f561e2b11eae58d70ddabb05f8f7ae5f64d60f78d3a72a6f7ac835"},
+      {"name": "signal-final", "bytes": 4128, "sha256": "76880bffa92cee1790a494a3ae0bf2b2b36cc50dc02efe199c36000d76c1a2fa"},
+      {"name": "context-current", "bytes": 52, "sha256": "170432cbf10c944f97f1bdd7db683b507f9ec1b8b4fbeac0d2d826db8357aa56"},
+      {"name": "configure", "bytes": 68, "sha256": "61728d846260d6d1213d01f147079d0d43b8a88af2e7b1d46a2d29020c19156c"},
+      {"name": "start-scheduled", "bytes": 48, "sha256": "f22a43f975486758cca26451889cad30a065093e2b27f81cb5e17ebc2886f48b"},
+      {"name": "stop", "bytes": 48, "sha256": "3095a4fea2a61ca5dc4ee3e721f186e3b6854477c9224f419d7fa035f668ab64"},
+      {"name": "status-query", "bytes": 44, "sha256": "391e50c7cf3b1cd3851ae9194ddee3babe7099ccc0f6f8630adb5cee511a3536"},
+      {"name": "execution-ack", "bytes": 36, "sha256": "0d8a23690f1d1e0a3728c55e7b0d26ede755d756bbe72b2e1f1c920376492e3f"},
+      {"name": "status-ack", "bytes": 48, "sha256": "2a2cefcdd9945a35fd09fb6336edf0648018d02fed63a356b8f0ccc5dda72f73"},
+      {"name": "diagnostic-ack", "bytes": 44, "sha256": "a06a28a3c4ea4ee12017c8ed6a38e4190d851c677e2057eb9cb851b46654ecdc"},
+      {"name": "capability-query", "bytes": 44, "sha256": "d557437cbdcfbff5ac9390f3027a3aa7ef6ceb6fc215eaafc236b088829f8370"},
+      {"name": "capability-response", "bytes": 100, "sha256": "f67002dade77dd0aa1ede78971f4037e94869f67d8b825d8d54671d8cc1b08c7"}
+    ]
+  },
+  "comparison": {
+    "test": "tests/p17_golden_vectors_tests.cpp",
+    "expected_bytes_source": "tests/golden/p17-pre-rename-vectors.txt only",
+    "migrated_include_root": "third_party/vrt_framework/include",
+    "coverage": "All 14 P17 wire_contract fixtures are decoded and re-encoded byte-for-byte through SDR-named headers and types. Signal, context, control, query, state acknowledgment, diagnostic acknowledgment, and capability response paths are covered.",
+    "expectation_independence": "The comparison test never invokes the migrated codec to construct expected bytes. The capture utility includes vita/profiles/iq/graphx.hpp and therefore cannot compile against the migrated SDR-only tree."
+  },
+  "separate_semantic_coverage": {
+    "framing": "third_party/vrt_framework/tests/unit/P17/stream_framer.cpp",
+    "malformed_input": "third_party/vrt_framework/tests/unit/P17/stream_framer.cpp and the preserved decode rejection in tests/verification/P17/wire_contract.cpp",
+    "replay": "third_party/vrt_framework/tests/unit/P17/replay.cpp",
+    "timing": "third_party/vrt_framework/tests/unit/P17/start_epoch.cpp",
+    "inventory": "The pinned P17 tree contains ten unit sources and one verification source; wire_contract.cpp is the sole P17 standalone wire-fixture oracle."
+  },
+  "limitations": [
+    "These are deterministic framework regression vectors, not captured packets from an independent vendor implementation.",
+    "Byte equivalence does not replace the separate framing, malformed-input, replay, and scheduled-timing tests.",
+    "The project directory has no Git metadata in this workspace, so the artifacts are commit-ready but could not be committed by this run."
+  ]
+}

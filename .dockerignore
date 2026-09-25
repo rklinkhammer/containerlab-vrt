@@ -1,0 +1,14 @@
+.git
+build
+artifacts/runtime
+generated
+third_party/vrt_framework/.git
+third_party/vrt_framework/build
+third_party/vrt_framework/docs
+third_party/vrt_framework/drafts
+third_party/vrt_framework/examples
+third_party/vrt_framework/tests
+third_party/vrt_framework/bench
+third_party/vrt_framework/fuzz
+*.pcap
+*.pcapng
