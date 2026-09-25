@@ -1,0 +1,41 @@
+{
+  "imageId": "sha256:0e72a57e76ecd57cff9a4eae9816a04515a16c9cb0d60ac2574ee998ad3a8737",
+  "vrt": {
+    "revision": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+    "include_tree_sha256": "cfb6b98be0f6cc6cadc0701cceda992e726a5b8cc85c77378599163d69786259"
+  },
+  "files": {
+    "CMakeLists.txt": "7323b2756aa5db15c2d4b5495106994080933ae01d7b6b4f61beba7bb4c4e7a6",
+    "Dockerfile": "1c13fa71e07800fb529c7f8088d8a5cd97fe64eb3843cae43b6c3d7133007630",
+    "config/lab.json": "1bd8e7ce8e38074a8796ec6bb74d99b0493b2114fead08df56dd2974f7454561",
+    "container/vrt-source.json": "1fc5855fedc08c03b7930db20b81522ef2155b5438d8529cfb153d47e69d9b75",
+    "container/dependencies.env": "74c2c382b92de4cd1e621a85bf51afec58ad6b52f2f74cfd68c25836d63e46a4",
+    "apps/detector.cpp": "db5df91b936e90ae8122dfe65cd6f6e788a2b3fd2acfae4cd9b53a817b21ed36",
+    "apps/processor.cpp": "80ee43edf374efea33a434acabc6d7ea857d797c8dcd7fa14f7c387c7fc77686",
+    "apps/udp_pipeline.cpp": "504d6e24047e5427422950f3da8ced365d8205207d99450b08d5f9c38ae44928",
+    "apps/udp_pipeline.hpp": "d21da9f6d712e1ed0e73001923a54e7f5e7b9780075395cbe07010756c3979fc",
+    "apps/radio.cpp": "790649c3d6232720ce26694cabb0f54789d9799a03d8eea08ab06d7125b623a7",
+    "apps/recorder.cpp": "600a78e65c00462c118d41579243d0095d0fd7bf1517355e917051cade9e873c",
+    "include/sdr/telemetry.hpp": "1e9e3e87e78b6d4cc6823c4fe1078cfa2d67ae9f4734c8e369be7a0c5ac5e616",
+    "include/sdr/time.hpp": "def7b1d141d45bd0792ddc7b6396dd753c87336b9db5419c3c077881d4dea86f",
+    "include/sdr/recorder.hpp": "9122f70c65af09219775b5137a10451260f26f54b831581e53873ba20aa59985",
+    "include/sdr/processor_controller.hpp": "6f3597fa4f033b85bef6a0935d0d74459d81dbb7d58caa01993ccb67c03d0d48",
+    "include/sdr/virtual_radio.hpp": "d60ec8cb7ca7e015234ae25558bdd0867e1243faeeda7b4d5cb7deab518818d0",
+    "include/sdr/soapy_virtual_device.hpp": "fd2f27c5b9a02ac506a9c5216c1bdac0dbfdcf33ad3c553aee7d85a1e7c4f387",
+    "include/sdr/status.hpp": "54dd039b49fe924adea326f3fabcb2fa93eb520d8783890c4c4950dbca7d3a9e",
+    "include/sdr/spectrum.hpp": "000124b0e7088efa8b5b1add70acf9a9a0f75e028844b926ebd8176022c3d1d5",
+    "include/sdr/vrt_radio_adapter.hpp": "4087f6bdc89e3b0e3b791d558b794cc39629cdee1e623ddfb0d3e45e6bb1072d",
+    "include/sdr/radio_services.hpp": "9cd631d0d8f242e19cefe3e91e82b48d74df19452e43ce0f81ee3e3813272931",
+    "include/sdr/radio_transport.hpp": "74566a35ecabaaec1febc65d65fa8376fd592185bf0192fa8368cb2e043db92e",
+    "src/radio_services.cpp": "e5a86f7f7b6442b2290bb52d5d10183ba6a3397723fb61738c95249b3a2ff50c",
+    "src/radio_transport.cpp": "37a025ecf8149372221565620f1092fdabe62e5326305d240335a5afd84c580a",
+    "src/status.cpp": "6896f9fe4e1290e2582e3f510d5391f001084ba848da6cd69bbcdd00922ad079",
+    "src/spectrum.cpp": "6aebf305ce3962713321500bc7657098cf506d31f1c4a2829f8c70cd2f4911b0",
+    "src/vrt_radio_adapter.cpp": "4f7291e9dbbbb6a8265da583ccc3c900cfa2eee7aa0fc6672bf10c1f2cb71c6a",
+    "src/processor_controller.cpp": "76ca119f89690ae3a1eae9723870c3a8ffd1026967438a1287c60b804a7947a8",
+    "src/virtual_radio.cpp": "3dae483b945cfb2338878eed3ed1b3888bf276592bca74c236173678c8211b9d",
+    "src/soapy_virtual_device.cpp": "eb706b648dab9e57773168bdb46d03f213f946b671c9f96d9f3dff108f0164b1",
+    "src/telemetry.cpp": "b89e24ba9fc93962487a816f9989dba28b077d3eaa526d9a49fcdf8ed0ff5d9d",
+    "src/recorder.cpp": "91349ac12240871caec5919f8d66f60b2e0138a0c030d885c6f3ca0fa75a3c25"
+  }
+}

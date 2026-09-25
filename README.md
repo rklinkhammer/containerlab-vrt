@@ -2,13 +2,17 @@
 
 Standalone C++23 radio, processor, detector, and passive recorder applications for the generated Nokia SR Linux Containerlab topology. Containerlab owns topology and lifecycle. The project-owned VRT source under `third_party/vrt_framework` supplies the renamed SDR profile; graphx-docker is not a build or runtime dependency.
 
+## Telemetry update
+
+All four application roles now emit bounded `vrt.telemetry/1` JSON heartbeats. Configure `telemetry.interval_ms` in `config/lab.json` (default5000;0 disables new telemetry), then regenerate and rebuild. Detection events are rate limited; counters distinguish sequence gaps from proven loss and buffered PCAP writes from durable storage. See [contract and measurements](docs/TELEMETRY.md) and [actual qualification](artifacts/telemetry/RESULTS.md). No GUI, serial endpoint or new service is added.
+
 ## Start here
 
 **macOS:** follow [the Apple Silicon / Lima guide](docs/MACOS.md). Build and deploy inside the dedicated Linux guest. Docker Desktop and OrbStack are not required; their images and containers are separate from the guest's Docker daemon.
 
 **Linux:** use an isolated host with Docker/BuildKit, Containerlab, Python 3.11+, and root privileges for link creation. The pinned SR Linux image must support the host architecture. Follow the workflow below.
 
-**Current review (2026-09-25):** the current VRT submodule builds on macOS, but CTest passes **10/12**, with retention and coordinated-start failures. Historical integrated results below do not qualify the current checkout. See [review and cleanup evidence](artifacts/review/REVIEW-20260925.md).
+**Current runtime fixes:** 15/15 native tests pass; the retention and coordinated-start defects are repaired by an explicit patch against the pinned VRT framework. See [causes, verification and reproduction](artifacts/runtime-fixes/RESULTS.md). Historical VM and integrated qualification remains historical; it does not qualify the patched image.
 
 No lifecycle script manages Lima. No application container receives a Docker or Podman daemon socket. Containerlab and these lifecycle scripts must execute on the Linux host that owns the lab; selecting a remote Docker context on a Mac is insufficient.
 
@@ -18,6 +22,7 @@ Run the example on an isolated Linux host that meets the prerequisites above. Fr
 
 ```sh
 git submodule update --init --recursive
+python3 scripts/verify_vrt_source.py --apply
 ```
 
 Generate the topology and application configuration first (`generated/` is not shipped in a fresh clone), verify them, then build the local application image:

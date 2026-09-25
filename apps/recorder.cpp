@@ -1,3 +1,4 @@
+#include <sdr/telemetry.hpp>
 #include <sdr/recorder.hpp>
 
 #include <algorithm>
@@ -104,11 +105,16 @@ int run(const sdr::recorder::Options &options) {
                             : std::nullopt;
   auto next_report = started;
   sdr::recorder::Metrics metrics;
+  sdr::telemetry::Reporter telemetry("recorder",std::cout);
+  auto report=[&](bool final=false){
+    if(final||telemetry.due())telemetry.heartbeat({{"rx_frames",metrics.frames},{"rx_wire_bytes",metrics.wire_bytes},{"receive_truncations",metrics.receive_truncations},{"receive_errors",metrics.receive_errors},{"kernel_drops",metrics.kernel_drops},{"pcap_enabled",options.pcap_path.has_value()},{"pcap_frames",metrics.pcap_frames},{"pcap_bytes_accepted",metrics.pcap_bytes},{"pcap_io_errors",metrics.pcap_io_errors},{"pcap_limit_reached",metrics.pcap_limit_reached},{"durably_committed_bytes",nullptr},{"queue_depth",nullptr}},metrics.receive_errors+metrics.pcap_io_errors+metrics.kernel_drops,final);
+  };
   if (pcap)
     metrics.pcap_bytes = pcap->bytes();
   std::array<std::byte, sdr::recorder::receive_buffer_bytes> frame{};
     while (running != 0 &&
       (!deadline || std::chrono::steady_clock::now() < *deadline)) {
+    report();
     pollfd item{socket.descriptor(), POLLIN, 0};
     const int ready = poll(&item, 1, 200);
     if (ready < 0 && errno != EINTR)
@@ -117,7 +123,7 @@ int run(const sdr::recorder::Options &options) {
     if (ready > 0 && (item.revents & (POLLERR | POLLNVAL)) != 0)
       throw std::runtime_error("packet socket reported a terminal error");
     if (ready > 0 && (item.revents & POLLIN) != 0) {
-      while (true) {
+      for (unsigned drained=0; drained<256; ++drained) {
         iovec vector{frame.data(), frame.size()};
         msghdr message{};
         message.msg_iov = &vector;
@@ -134,6 +140,7 @@ int run(const sdr::recorder::Options &options) {
         const auto wire_size = static_cast<std::size_t>(received);
         const auto copied_size = std::min(wire_size, frame.size());
         metrics.observe_frame(wire_size, copied_size);
+        telemetry.activity();
         if (pcap && !metrics.pcap_limit_reached) {
           try {
             if (pcap->write(std::span(frame).first(copied_size), wire_size,
@@ -163,6 +170,7 @@ int run(const sdr::recorder::Options &options) {
       ++metrics.pcap_io_errors;
     }
   }
+  report(true);
   sdr::recorder::write_metrics(options, metrics, started, "stopped");
   return 0;
 }
@@ -176,8 +184,9 @@ int run(const sdr::recorder::Options &) {
 int main(int argc, char **argv) {
   try {
     return run(sdr::recorder::parse_options(argc, argv));
-  } catch (const std::exception &error) {
-    std::cerr << "recorder: " << error.what() << '\n';
+  } catch (const std::exception &) {
+    try { sdr::telemetry::Reporter("recorder",std::cout).failed(); } catch (...) {}
+    std::cerr << "recorder: application error (see documented configuration requirements)\n";
     return 2;
   }
 }

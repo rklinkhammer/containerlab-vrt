@@ -1,0 +1,11 @@
+Test project /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+    Start 8: sdr_processor_controller_tests
+    Test #8: sdr_processor_controller_tests ...   Passed   10.14 sec
+    Start 8: sdr_processor_controller_tests
+    Test #8: sdr_processor_controller_tests ...   Passed   10.14 sec
+    Start 8: sdr_processor_controller_tests
+1/1 Test #8: sdr_processor_controller_tests ...   Passed   10.25 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =  30.54 sec

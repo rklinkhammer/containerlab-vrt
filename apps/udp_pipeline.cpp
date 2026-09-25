@@ -1,3 +1,4 @@
+#include <sdr/telemetry.hpp>
 #include "udp_pipeline.hpp"
 
 #include <vita/codec/packet.hpp>
@@ -613,9 +614,27 @@ int run_processor(const ProcessorConfig &config,
   std::vector<std::byte> receive_buffer(config.receive_bytes);
   const auto started = std::chrono::steady_clock::now();
   auto next_metrics = started + std::chrono::seconds(1);
+  sdr::telemetry::Reporter telemetry("processor",output);
+  std::uint64_t rx_bytes=0, tx_bytes=0, tx_packets=0, processing_ns=0, processed=0;
+  auto report=[&](bool final=false){
+    if(!final&&!telemetry.due())return;
+    auto counters=Json::parse(metrics_json(core.metrics()));
+    counters.erase("type");
+    counters["rx_bytes"]=rx_bytes;
+    counters["tx_bytes"]=tx_bytes;
+    counters["tx_packets"]=tx_packets;
+    counters["processing_ns_total"]=processing_ns;
+    counters["processing_calls"]=processed;
+    counters["queue_depth"]=nullptr;
+    counters["proven_packet_loss"]=nullptr;
+    counters["downstream_delivery"]=nullptr;
+    telemetry.heartbeat(counters,core.metrics().malformed + core.metrics().send_failures,final);
+  };
+
     while ((!stop_requested || !stop_requested()) &&
       (!duration || std::chrono::steady_clock::now() - started < *duration)) {
-    const auto ready = poll(polls.data(), polls.size(), duration ? 10 : 1000);
+    report();
+    const auto ready = poll(polls.data(), polls.size(), duration ? 10 : 100);
     if (ready < 0 && errno != EINTR)
       throw std::runtime_error("processor poll failed");
     for (std::size_t index = 0; index < polls.size(); ++index) {
@@ -625,19 +644,27 @@ int run_processor(const ProcessorConfig &config,
                                  receive_buffer.data(), receive_buffer.size(), 0);
       if (received <= 0)
         continue;
+      rx_bytes+=static_cast<std::uint64_t>(received);
+      const auto before=core.metrics().malformed;
+      const auto processing_start=std::chrono::steady_clock::now();
       auto spectra = core.consume(config.listeners[index].stream_id,
                                   std::span{receive_buffer}.first(received));
+      processing_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-processing_start).count();
+      ++processed;
+      if(core.metrics().malformed==before)telemetry.activity();
       for (const auto &wire : spectra)
         if (send(destination.descriptor, wire.data(), wire.size(), 0) !=
             static_cast<ssize_t>(wire.size()))
           core.note_send_failure();
+        else {++tx_packets;tx_bytes+=wire.size();}
     }
     if (std::chrono::steady_clock::now() >= next_metrics) {
-      output << metrics_json(core.metrics()) << '\n' << std::flush;
+      sdr::telemetry::write_line(output,metrics_json(core.metrics()));
       next_metrics += std::chrono::seconds(1);
     }
   }
-  output << metrics_json(core.metrics()) << '\n';
+  report(true);
+  sdr::telemetry::write_line(output,metrics_json(core.metrics()));
   return 0;
 }
 
@@ -651,29 +678,51 @@ int run_detector(const DetectorConfig &config,
   pollfd descriptor{listener.descriptor, POLLIN, 0};
   const auto started = std::chrono::steady_clock::now();
   auto next_metrics = started + std::chrono::seconds(1);
+  sdr::telemetry::Reporter telemetry("detector",output);
+  std::uint64_t rx_bytes=0, processing_ns=0, processed=0;
+  auto report=[&](bool final=false){
+    if(!final&&!telemetry.due())return;
+    auto counters=Json::parse(metrics_json(core.metrics()));
+    counters.erase("type");
+    counters["rx_bytes"]=rx_bytes;
+    counters["tx_bytes"]=nullptr;
+    counters["tx_packets"]=nullptr;
+    counters["processing_ns_total"]=processing_ns;
+    counters["processing_calls"]=processed;
+    counters["queue_depth"]=nullptr;
+    counters["proven_packet_loss"]=nullptr;
+    counters["downstream_delivery"]=nullptr;
+    telemetry.heartbeat(counters,core.metrics().malformed,final);
+  };
+
   std::array<std::optional<std::uint64_t>, 4> reported_seconds{};
   std::array<std::optional<std::chrono::steady_clock::time_point>, 4> last_seen{};
   std::array<bool, 4> unavailable_reported{};
     while ((!stop_requested || !stop_requested()) &&
       (!duration || std::chrono::steady_clock::now() - started < *duration)) {
-    const auto ready = poll(&descriptor, 1, duration ? 10 : 1000);
+    report();
+    const auto ready = poll(&descriptor, 1, duration ? 10 : 100);
     if (ready < 0 && errno != EINTR)
       throw std::runtime_error("detector poll failed");
-    if (!(descriptor.revents & POLLIN))
-      continue;
-    const auto received = recv(listener.descriptor, receive_buffer.data(),
-                               receive_buffer.size(), 0);
-    if (received <= 0)
-      continue;
-    const auto detection =
-        core.consume(std::span{receive_buffer}.first(received));
+    const auto received = (descriptor.revents & POLLIN) ? recv(listener.descriptor, receive_buffer.data(), receive_buffer.size(), 0) : 0;
+    std::optional<Detection> detection;
+    if(received>0){
+      rx_bytes+=static_cast<std::uint64_t>(received);
+      const auto before=core.metrics().malformed;
+      const auto processing_start=std::chrono::steady_clock::now();
+      detection=core.consume(std::span{receive_buffer}.first(received));
+      processing_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-processing_start).count();
+      ++processed;
+      if(core.metrics().malformed==before)telemetry.activity();
+    }
     if (detection && detection->stream_id >= 1 && detection->stream_id <= 4) {
       const auto stream_index = detection->stream_id - 1;
       last_seen[stream_index] = std::chrono::steady_clock::now();
       unavailable_reported[stream_index] = false;
+      telemetry.detection(Json::parse(detection_json(*detection)));
       auto &reported = reported_seconds[detection->stream_id - 1];
       if (!reported || *reported != detection->observation_time.seconds) {
-        output << detection_json(*detection) << '\n';
+        sdr::telemetry::write_line(output,detection_json(*detection));
         reported = detection->observation_time.seconds;
       }
     }
@@ -695,17 +744,19 @@ int run_detector(const DetectorConfig &config,
                   1000},
           .frequency_hz = std::nullopt,
           .validity = "unavailable"};
-      output << detection_json(unavailable) << '\n';
+      telemetry.detection(Json::parse(detection_json(unavailable)));
+      sdr::telemetry::write_line(output,detection_json(unavailable));
       core.note_unavailable();
       unavailable_reported[index] = true;
     }
     if (now >= next_metrics) {
-      output << metrics_json(core.metrics()) << '\n' << std::flush;
+      sdr::telemetry::write_line(output,metrics_json(core.metrics()));
       next_metrics += std::chrono::seconds(1);
     }
   }
   core.finish();
-  output << metrics_json(core.metrics()) << '\n';
+  report(true);
+  sdr::telemetry::write_line(output,metrics_json(core.metrics()));
   return 0;
 }
 

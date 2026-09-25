@@ -31,6 +31,8 @@ struct RadioTransportMetrics {
   std::uint64_t accepted_connections{};
   std::uint64_t rejected_connections{};
   std::uint64_t received_packets{};
+  std::uint64_t received_bytes{};
+  std::uint64_t transmitted_bytes{};
   std::uint64_t completed_submissions{};
   std::uint64_t failed_submissions{};
   std::uint64_t partial_writes{};

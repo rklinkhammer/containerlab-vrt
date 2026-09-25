@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/rklinkhammer/workspace/containerlab-vrt/scripts/test_telemetry_process.py", line 25, in <module>
+    first=run();second=run();bad=run(True);assert first[0]['boot_id']!=second[0]['boot_id'];assert first[0]['sequence']==second[0]['sequence']==1
+  File "/Users/rklinkhammer/workspace/containerlab-vrt/scripts/test_telemetry_process.py", line 18, in run
+    assert p.returncode==0,err
+           ^^^^^^^^^^^^^^^
+AssertionError: b'detector: application error (see documented configuration requirements)\n'

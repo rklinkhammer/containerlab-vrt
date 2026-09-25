@@ -1,3 +1,4 @@
+#include <sdr/telemetry.hpp>
 #include <sdr/radio_services.hpp>
 #include <sdr/radio_transport.hpp>
 #include <sdr/vrt_radio_adapter.hpp>
@@ -129,6 +130,7 @@ int main(int argc, char **argv) {
     else
       throw std::invalid_argument("usage: radio [--config] GENERATED_RADIO_JSON");
     const auto config = sdr::load_radio_config(config_path);
+    sdr::telemetry::Reporter telemetry("radio",std::cout,config.id);
     auto device = std::make_shared<sdr::SoapyVirtualDevice>(
         config.id, config.signal_hz, config.amplitude, config.phase_radians);
     device->apply_settings(config.defaults);
@@ -195,6 +197,12 @@ int main(int argc, char **argv) {
     std::signal(SIGINT, stop);
     std::signal(SIGTERM, stop);
     std::signal(SIGHUP, restart);
+    std::uint64_t last_completed=0;
+    auto report=[&](bool final=false){
+      auto m=transport.instance->metrics();
+      if(m.completed_submissions!=last_completed){telemetry.activity();last_completed=m.completed_submissions;}
+      if(final||telemetry.due())telemetry.heartbeat({{"control_rx_packets",m.received_packets},{"control_rx_bytes",m.received_bytes},{"tx_bytes",m.transmitted_bytes},{"tx_completed_submissions",m.completed_submissions},{"tx_failed_submissions",m.failed_submissions},{"write_retries",m.write_retries},{"sample_ordinal",device->sample_ordinal()},{"clipped_samples",device->clipped_samples()},{"streaming",device->streaming()},{"queue_depth",nullptr},{"proven_packet_loss",nullptr},{"downstream_delivery",nullptr}},m.failed_submissions,final);
+    };
     std::uint64_t last_clock_second = 0;
     while (running.load()) {
       const auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -216,8 +224,10 @@ int main(int argc, char **argv) {
         running.store(false);
         throw std::runtime_error("radio runtime progress failed");
       }
+      report();
       std::this_thread::sleep_for(std::chrono::microseconds(100));
     }
+    report(true);
     status_workers.clear();
     std::cout << sdr::radio_status(config, id, control.snapshot(),
                                    device->settings(), device->sample_ordinal(),
@@ -241,8 +251,9 @@ int main(int argc, char **argv) {
       throw std::runtime_error("radio process re-exec failed");
     }
     return 0;
-  } catch (const std::exception &error) {
-    std::cerr << "radio: " << error.what() << '\n';
+  } catch (const std::exception &) {
+    try { sdr::telemetry::Reporter("radio",std::cout).failed(); } catch (...) {}
+    std::cerr << "radio: application error (see documented configuration requirements)\n";
     return 1;
   }
 }

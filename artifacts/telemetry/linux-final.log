@@ -1,0 +1,126 @@
+VRT source and revision metadata verified: 51853ba29703f51aceb2cfefe5a12a65a8e1110f
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon   1.22MB
+Step 1/26 : ARG BASE_IMAGE
+Step 2/26 : FROM ${BASE_IMAGE} AS build
+bookworm-20250908-slim: Pulling from library/debian
+Digest: sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+Status: Image is up to date for debian:bookworm-20250908-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ ---> df52e55e3361
+Step 3/26 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> a4d951557100
+Step 4/26 : ARG NLOHMANN_JSON_VERSION
+ ---> Using cache
+ ---> 64b6e5182bc5
+Step 5/26 : ARG NLOHMANN_JSON_SHA256
+ ---> Using cache
+ ---> 356d4213c1b0
+Step 6/26 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends       ca-certificates cmake curl g++ libsoapysdr-dev ninja-build     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> c05b8ae0a9cd
+Step 7/26 : RUN curl --fail --location --proto '=https' --tlsv1.2       "https://github.com/nlohmann/json/releases/download/v${NLOHMANN_JSON_VERSION}/json.tar.xz"       --output /tmp/nlohmann-json.tar.xz     && echo "${NLOHMANN_JSON_SHA256}  /tmp/nlohmann-json.tar.xz" | sha256sum --check --strict     && cmake -E tar xf /tmp/nlohmann-json.tar.xz     && cmake -S json -B /tmp/nlohmann-build -G Ninja       -DJSON_BuildTests=OFF -DCMAKE_BUILD_TYPE=Release       -DCMAKE_INSTALL_PREFIX=/opt/deps     && cmake --build /tmp/nlohmann-build --target install
+ ---> Using cache
+ ---> 2a9c5c724f65
+Step 8/26 : WORKDIR /src
+ ---> Using cache
+ ---> cdaf2e57ff83
+Step 9/26 : COPY CMakeLists.txt ./
+ ---> 35cff49cbca0
+Step 10/26 : COPY apps apps
+ ---> 2e309ea1de76
+Step 11/26 : COPY include include
+ ---> 5e09988cb2f8
+Step 12/26 : COPY src src
+ ---> 095440597043
+Step 13/26 : COPY third_party/vrt_framework/include third_party/vrt_framework/include
+ ---> 6e07174e3a16
+Step 14/26 : RUN cmake -S . -B /tmp/build -G Ninja       -DBUILD_TESTING=OFF       -DCMAKE_BUILD_TYPE=Release       -DCMAKE_PREFIX_PATH=/opt/deps       -DCMAKE_INSTALL_PREFIX=/opt/containerlab-vrt     && cmake --build /tmp/build --parallel     && cmake --install /tmp/build     && test -x /opt/containerlab-vrt/bin/radio     && test -x /opt/containerlab-vrt/bin/processor     && test -x /opt/containerlab-vrt/bin/detector     && test -x /opt/containerlab-vrt/bin/recorder
+ ---> Running in 52174fab3c7e
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found nlohmann_json: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable exact version "3.12.0") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/build
+[1/24] Building CXX object CMakeFiles/sdr_core.dir/src/virtual_radio.cpp.o
+[2/24] Building CXX object CMakeFiles/sdr_core.dir/src/spectrum.cpp.o
+[3/24] Building CXX object CMakeFiles/sdr_core.dir/src/soapy_virtual_device.cpp.o
+[4/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/vrt_radio_adapter.cpp.o
+[5/24] Building CXX object CMakeFiles/detector.dir/apps/detector.cpp.o
+[6/24] Building CXX object CMakeFiles/processor.dir/apps/processor.cpp.o
+[7/24] Building CXX object CMakeFiles/sdr_core.dir/src/status.cpp.o
+[8/24] Building CXX object CMakeFiles/sdr_telemetry.dir/src/telemetry.cpp.o
+[9/24] Linking CXX static library libsdr_telemetry.a
+[10/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/radio_transport.cpp.o
+[11/24] Building CXX object CMakeFiles/sdr_recorder.dir/src/recorder.cpp.o
+[12/24] Linking CXX static library libsdr_recorder.a
+[13/24] Building CXX object CMakeFiles/recorder.dir/apps/recorder.cpp.o
+[14/24] Linking CXX executable recorder
+[15/24] Building CXX object CMakeFiles/sdr_core.dir/src/radio_services.cpp.o
+[16/24] Linking CXX static library libsdr_core.a
+[17/24] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[18/24] Linking CXX static library libsdr_udp_apps.a
+[19/24] Linking CXX executable detector
+[20/24] Building CXX object CMakeFiles/radio.dir/apps/radio.cpp.o
+[21/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[22/24] Linking CXX static library libsdr_vrt_adapter.a
+[23/24] Linking CXX executable radio
+[24/24] Linking CXX executable processor
+-- Install configuration: "Release"
+-- Installing: /opt/containerlab-vrt/bin/radio
+-- Installing: /opt/containerlab-vrt/bin/processor
+-- Installing: /opt/containerlab-vrt/bin/detector
+-- Installing: /opt/containerlab-vrt/bin/recorder
+ ---> Removed intermediate container 52174fab3c7e
+ ---> 3f4f4c363e8c
+Step 15/26 : FROM ${BASE_IMAGE} AS runtime
+bookworm-20250908-slim: Pulling from library/debian
+Digest: sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+Status: Image is up to date for debian:bookworm-20250908-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ ---> df52e55e3361
+Step 16/26 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> a4d951557100
+Step 17/26 : ARG VRT_REVISION
+ ---> Using cache
+ ---> 5431f1ea8c26
+Step 18/26 : ARG GRAPHX_REFERENCE_REVISION
+ ---> Using cache
+ ---> 1216182c757f
+Step 19/26 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends iproute2 libsoapysdr0.8     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 6bb30f27e01d
+Step 20/26 : COPY --from=build /opt/containerlab-vrt /opt/containerlab-vrt
+ ---> 688f8c1ad422
+Step 21/26 : COPY THIRD_PARTY_NOTICES.md /usr/share/doc/containerlab-vrt/THIRD_PARTY_NOTICES.md
+ ---> a0158b13c687
+Step 22/26 : COPY third_party/vrt_framework/LICENSE /usr/share/doc/containerlab-vrt/VRT_FRAMEWORK_LICENSE
+ ---> b88178cc2295
+Step 23/26 : ENV PATH=/opt/containerlab-vrt/bin:$PATH
+ ---> Running in bbeeedc166f0
+ ---> Removed intermediate container bbeeedc166f0
+ ---> 01e49ffd37c7
+Step 24/26 : LABEL org.opencontainers.image.title="containerlab-vrt standalone SDR applications"       org.opencontainers.image.source="https://github.com/rklinkhammer/containerlab-vrt"       org.opencontainers.image.licenses="MIT"       org.opencontainers.image.revision.vrt="${VRT_REVISION}"       org.opencontainers.image.revision.graphx-reference="${GRAPHX_REFERENCE_REVISION}"
+ ---> Running in 48a5e1a76a85
+ ---> Removed intermediate container 48a5e1a76a85
+ ---> 938486108b9b
+Step 25/26 : WORKDIR /run/containerlab-vrt
+ ---> Running in c5ef9ef5b4ad
+ ---> Removed intermediate container c5ef9ef5b4ad
+ ---> 62cbc69d8b6b
+Step 26/26 : CMD ["/bin/false"]
+ ---> Running in 47cbede795a9
+ ---> Removed intermediate container 47cbede795a9
+ ---> 0e72a57e76ec
+Successfully built 0e72a57e76ec
+Successfully tagged containerlab-vrt-app:local
+built and inspected containerlab-vrt-app:local
+[{"case": "processor-idle", "outcome": "PASS", "events": 8, "last": {"boot_id": "c899c37a110845c549b12010ee566f24", "data": {"context_updates": 0, "datagrams": 0, "downstream_delivery": null, "malformed": 0, "observed_unix_ns": 1790372146118614040, "packet_gaps": 0, "processing_calls": 0, "processing_ns_total": 0, "proven_packet_loss": null, "queue_depth": null, "rx_bytes": 0, "send_failures": 0, "spectra": 0, "tx_bytes": 0, "tx_packets": 0, "unavailable": 0}, "event": "shutdown", "instance": "42d66001618e", "last_successful_activity": null, "ready": false, "role": "processor", "schema": "vrt.telemetry/1", "sequence": 8, "state": "unknown", "suppressed_events": 0, "timestamp": "2026-09-25T21:35:46.118Z", "uptime_ms": 705}}, {"case": "radio-idle", "outcome": "PASS", "events": 11, "last": {"boot_id": "55dfd5556bfdceb11fea43d4b33dbc48", "data": {"clipped_samples": 0, "control_rx_bytes": 0, "control_rx_packets": 0, "downstream_delivery": null, "proven_packet_loss": null, "queue_depth": null, "sample_ordinal": 0, "streaming": false, "tx_bytes": 0, "tx_completed_submissions": 0, "tx_failed_submissions": 0, "write_retries": 0}, "event": "shutdown", "instance": "radio1", "last_successful_activity": null, "ready": false, "role": "radio", "schema": "vrt.telemetry/1", "sequence": 11, "state": "unknown", "suppressed_events": 0, "timestamp": "2026-09-25T21:35:47.223Z", "uptime_ms": 999}}, {"case": "detector-idle", "outcome": "PASS", "events": 8, "last": {"boot_id": "beb2b485e93151d89098b0b960df629d", "data": {"datagrams": 0, "detections": 0, "downstream_delivery": null, "gapped": 0, "malformed": 0, "observed_unix_ns": 1790372148030417593, "processing_calls": 0, "processing_ns_total": 0, "proven_packet_loss": null, "queue_depth": null, "rx_bytes": 0, "sequence_gaps": 0, "tx_bytes": null, "tx_packets": null, "unavailable": 4, "zero": 0}, "event": "shutdown", "instance": "99a9b5d52b81", "last_successful_activity": null, "ready": false, "role": "detector", "schema": "vrt.telemetry/1", "sequence": 8, "state": "unknown", "suppressed_events": 0, "timestamp": "2026-09-25T21:35:48.030Z", "uptime_ms": 704}}, {"case": "recorder-empty", "outcome": "PASS", "events": 6, "last": {"boot_id": "c88a3bbabc44e746a3d7742b7f25e322", "data": {"durably_committed_bytes": null, "kernel_drops": 0, "pcap_bytes_accepted": 24, "pcap_enabled": true, "pcap_frames": 0, "pcap_io_errors": 0, "pcap_limit_reached": false, "queue_depth": null, "receive_errors": 0, "receive_truncations": 0, "rx_frames": 0, "rx_wire_bytes": 0}, "event": "shutdown", "instance": "890f94960b9f", "last_successful_activity": null, "ready": false, "role": "recorder", "schema": "vrt.telemetry/1", "sequence": 6, "state": "unknown", "suppressed_events": 0, "timestamp": "2026-09-25T21:35:49.144Z", "uptime_ms": 1016}}, {"case": "recorder-full", "outcome": "PASS", "events": 6, "last": {"boot_id": "f75cb9d1ff7f350714512614acb5e3e5", "data": {"durably_committed_bytes": null, "kernel_drops": 0, "pcap_bytes_accepted": 24, "pcap_enabled": true, "pcap_frames": 0, "pcap_io_errors": 1, "pcap_limit_reached": false, "queue_depth": null, "receive_errors": 0, "receive_truncations": 0, "rx_frames": 0, "rx_wire_bytes": 0}, "event": "shutdown", "instance": "83f29b1b1734", "last_successful_activity": null, "ready": false, "role": "recorder", "schema": "vrt.telemetry/1", "sequence": 6, "state": "degraded", "suppressed_events": 0, "timestamp": "2026-09-25T21:35:50.271Z", "uptime_ms": 1024}}, {"case": "recorder-bad-path", "outcome": "PASS", "events": 2, "last": {"boot_id": "c29e6cdd19b9561da7c9c3823b1fe485", "data": {"reason": "APPLICATION_ERROR"}, "event": "failure", "instance": "83c64ec9151b", "last_successful_activity": null, "ready": false, "role": "recorder", "schema": "vrt.telemetry/1", "sequence": 2, "state": "failed", "suppressed_events": 0, "timestamp": "2026-09-25T21:35:50.588Z", "uptime_ms": 214}}]

@@ -1,3 +1,4 @@
+#include <sdr/telemetry.hpp>
 #include "udp_pipeline.hpp"
 
 #include <sdr/processor_controller.hpp>
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
       sdr::udp::run_processor(config, duration, std::cout, stopping);
     if (controller) {
       const auto metrics = controller->metrics();
-      std::cout << nlohmann::json{
+      sdr::telemetry::write_line(std::cout, nlohmann::json{
                        {"type", "controller_metrics"},
                        {"coordinated", controller->coordinated()},
                        {"connection_attempts", metrics.connection_attempts},
@@ -42,12 +43,12 @@ int main(int argc, char **argv) {
                        {"starts_admitted", metrics.starts_admitted},
                        {"stale_starts_replayed", metrics.stale_starts_replayed},
                        {"boot_changes", metrics.boot_changes}}
-                       .dump()
-                << '\n';
+                       .dump());
     }
     return result;
-  } catch (const std::exception &error) {
-    std::cerr << "processor: " << error.what() << '\n';
+  } catch (const std::exception &) {
+    try { sdr::telemetry::Reporter("processor",std::cout).failed(); } catch (...) {}
+    std::cerr << "processor: application error (see documented configuration requirements)\n";
     return 2;
   }
 }

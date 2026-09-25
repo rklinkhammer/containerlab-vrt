@@ -1,0 +1,3 @@
+Independent scheduled-start regression with unpatched engine header; all expectations unchanged.
+Exit: -6
+Assertion failed: (device->streaming() == !late), function scenario, file vrt_scheduled_start_tests.cpp, line 52.

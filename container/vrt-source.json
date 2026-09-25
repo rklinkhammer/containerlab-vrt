@@ -1,0 +1,11 @@
+{
+  "revision": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+  "include_tree_sha256": "0f3f858114d2a70f112b1fc40e05a2ac8bdb8afd43ebcb6e8fbbd1a5d7d09d3c",
+  "base_include_tree_sha256": "cfb6b98be0f6cc6cadc0701cceda992e726a5b8cc85c77378599163d69786259",
+  "patches": [
+    {
+      "path": "patches/vrt-runtime-progress.patch",
+      "sha256": "a4ebe2d9904650283145f0ce2bffeb288298d611226ad55c99b09d0b9e8ab662"
+    }
+  ]
+}

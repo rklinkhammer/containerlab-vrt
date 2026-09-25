@@ -36,6 +36,9 @@ def load_and_validate(source: Path) -> dict[str, Any]:
     if not SRL_DIGEST.fullmatch(data["images"]["srlinux"]):
         raise ValueError("SR Linux image must include a tag and immutable sha256 digest")
 
+    interval = data.get("telemetry", {}).get("interval_ms", 5000)
+    if type(interval) is not int or (interval != 0 and not 100 <= interval <= 60000):
+        raise ValueError("telemetry interval_ms must be 0 or100..60000")
     radios = data.get("radios", [])
     if len(radios) != 4 or [radio.get("id") for radio in radios] != [f"radio{i}" for i in range(1, 5)]:
         raise ValueError("exactly radio1 through radio4 are required")
@@ -103,6 +106,8 @@ def render_topology(data: dict[str, Any]) -> str:
         f"      memory: {data['limits']['memory_bytes_per_application']}b",
         "      privileged: false",
         "      restart-policy: no",
+        "      env:",
+        f"        VRT_TELEMETRY_INTERVAL_MS: \"{data.get('telemetry', {}).get('interval_ms', 5000)}\"",
         "      cmd: recorder --interface eth1 --metrics /run/containerlab-vrt/recorder.json",
         "      cap-add:",
         "        - NET_ADMIN",
@@ -131,6 +136,8 @@ def render_linux_node(data: dict[str, Any], name: str, address: str, command: st
         f"      memory: {data['limits']['memory_bytes_per_application']}b",
         "      privileged: false",
         "      restart-policy: no",
+        "      env:",
+        f"        VRT_TELEMETRY_INTERVAL_MS: \"{data.get('telemetry', {}).get('interval_ms', 5000)}\"",
         "      cap-add:",
         "        - NET_ADMIN",
         f"      cmd: {command}",

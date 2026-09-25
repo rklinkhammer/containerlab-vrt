@@ -330,6 +330,7 @@ struct RadioTransport::Implementation {
       fail_control();
       return true;
     }
+    metrics_.received_bytes += static_cast<std::uint64_t>(count);
     input_activity = Clock::now();
     const vita::Bytes input{buffer.data(), static_cast<std::size_t>(count)};
     auto delivered = ingress->feed(input);
@@ -395,6 +396,7 @@ struct RadioTransport::Implementation {
       }
       return true;
     }
+    metrics_.transmitted_bytes += static_cast<std::uint64_t>(sent);
     std::size_t consumed = static_cast<std::size_t>(sent);
     if (slot.data && consumed != slot.submission->storage.byte_size()) {
       vita::runtime::CompletionResult result;

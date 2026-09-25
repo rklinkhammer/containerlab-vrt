@@ -11,6 +11,7 @@ command -v docker >/dev/null 2>&1 || {
   exit 2
 }
 python3 "$ROOT/scripts/generate_config.py" --check
+python3 "$ROOT/scripts/verify_vrt_source.py"
 
 docker build --pull \
   --file "$ROOT/Dockerfile" \

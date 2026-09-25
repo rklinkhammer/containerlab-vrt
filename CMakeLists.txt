@@ -11,6 +11,11 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+add_library(sdr_telemetry src/telemetry.cpp)
+target_include_directories(sdr_telemetry PUBLIC include)
+target_link_libraries(sdr_telemetry PUBLIC nlohmann_json::nlohmann_json)
+target_compile_options(sdr_telemetry PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 add_library(sdr_core
   src/radio_services.cpp
   src/soapy_virtual_device.cpp
@@ -19,7 +24,7 @@ add_library(sdr_core
   src/virtual_radio.cpp)
 target_include_directories(sdr_core PUBLIC include)
 target_include_directories(sdr_core SYSTEM PUBLIC third_party/vrt_framework/include)
-target_link_libraries(sdr_core PUBLIC nlohmann_json::nlohmann_json SoapySDR)
+target_link_libraries(sdr_core PUBLIC sdr_telemetry nlohmann_json::nlohmann_json SoapySDR)
 target_compile_options(sdr_core PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 add_library(sdr_vrt_adapter
@@ -39,7 +44,7 @@ target_compile_options(sdr_udp_apps PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 add_library(sdr_recorder src/recorder.cpp)
 target_include_directories(sdr_recorder PUBLIC include)
-target_link_libraries(sdr_recorder PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(sdr_recorder PUBLIC sdr_telemetry nlohmann_json::nlohmann_json)
 target_compile_options(sdr_recorder PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 add_executable(processor apps/processor.cpp)
@@ -125,4 +130,24 @@ if(BUILD_TESTING)
   target_link_libraries(sdr_recorder_tests PRIVATE sdr_recorder)
   target_compile_options(sdr_recorder_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
   add_test(NAME sdr_recorder_tests COMMAND sdr_recorder_tests)
+endif()
+
+if(BUILD_TESTING)
+  add_executable(sdr_telemetry_tests tests/telemetry_tests.cpp)
+  target_link_libraries(sdr_telemetry_tests PRIVATE sdr_telemetry)
+  target_compile_options(sdr_telemetry_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_telemetry_tests COMMAND sdr_telemetry_tests)
+endif()
+if(BUILD_TESTING)
+  add_executable(sdr_telemetry_pipeline_tests tests/telemetry_pipeline_tests.cpp)
+  target_link_libraries(sdr_telemetry_pipeline_tests PRIVATE sdr_udp_apps)
+  target_compile_options(sdr_telemetry_pipeline_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_telemetry_pipeline_tests COMMAND sdr_telemetry_pipeline_tests)
+endif()
+
+if(BUILD_TESTING)
+  add_executable(sdr_vrt_scheduled_start_tests tests/vrt_scheduled_start_tests.cpp)
+  target_link_libraries(sdr_vrt_scheduled_start_tests PRIVATE sdr_vrt_adapter)
+  target_compile_options(sdr_vrt_scheduled_start_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME sdr_vrt_scheduled_start_tests COMMAND sdr_vrt_scheduled_start_tests)
 endif()

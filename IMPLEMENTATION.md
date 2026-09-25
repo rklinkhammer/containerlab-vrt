@@ -1,3 +1,7 @@
+# Current telemetry slice
+
+Versioned heartbeats and role counters are implemented without changing VITA payload semantics or third-party headers. See [telemetry contract](docs/TELEMETRY.md) and [evidence](artifacts/telemetry/RESULTS.md). The telemetry baseline passed 12/14; the subsequent [runtime fixes](artifacts/runtime-fixes/RESULTS.md) address both failures with a documented patch against the pinned framework. Six finite Linux container cases qualify local heartbeat and recorder failures, not the complete coordinated eight-node workflow. Historical qualification below is unchanged.
+
 # Implement a standalone four-radio SDR lab with Containerlab and Nokia SR Linux
 
 ## Current review versus historical qualification

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VRT telemetry envelope v1",
+  "description": "Record byte bound4096 enforced by emitter; role data units and unsupported nulls defined in TELEMETRY.md.",
+  "type": "object",
+  "required": [
+    "schema",
+    "event",
+    "timestamp",
+    "role",
+    "instance",
+    "boot_id",
+    "sequence",
+    "uptime_ms",
+    "state",
+    "ready",
+    "last_successful_activity",
+    "suppressed_events",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "vrt.telemetry/1"
+    },
+    "event": {
+      "enum": [
+        "heartbeat",
+        "detection",
+        "shutdown",
+        "failure"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "role": {
+      "enum": [
+        "radio",
+        "processor",
+        "detector",
+        "recorder"
+      ]
+    },
+    "instance": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "boot_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "uptime_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "state": {
+      "enum": [
+        "healthy",
+        "idle",
+        "degraded",
+        "failed",
+        "unknown"
+      ]
+    },
+    "ready": {
+      "type": "boolean"
+    },
+    "last_successful_activity": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "suppressed_events": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "data": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,197 @@
+[
+  {
+    "case": "processor-idle",
+    "outcome": "PASS",
+    "events": 8,
+    "last": {
+      "boot_id": "5c821ed5fb791d6700835d617fd0b51f",
+      "data": {
+        "context_updates": 0,
+        "datagrams": 0,
+        "downstream_delivery": null,
+        "malformed": 0,
+        "observed_unix_ns": 1790372220157320559,
+        "packet_gaps": 0,
+        "processing_calls": 0,
+        "processing_ns_total": 0,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "rx_bytes": 0,
+        "send_failures": 0,
+        "spectra": 0,
+        "tx_bytes": 0,
+        "tx_packets": 0,
+        "unavailable": 0
+      },
+      "event": "shutdown",
+      "instance": "50a78b66420f",
+      "last_successful_activity": null,
+      "ready": false,
+      "role": "processor",
+      "schema": "vrt.telemetry/1",
+      "sequence": 8,
+      "state": "unknown",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T21:37:00.157Z",
+      "uptime_ms": 711
+    }
+  },
+  {
+    "case": "radio-idle",
+    "outcome": "PASS",
+    "events": 11,
+    "last": {
+      "boot_id": "fa3e3ba97662b0bdcdbb53cafb53581d",
+      "data": {
+        "clipped_samples": 0,
+        "control_rx_bytes": 0,
+        "control_rx_packets": 0,
+        "downstream_delivery": null,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "sample_ordinal": 0,
+        "streaming": false,
+        "tx_bytes": 0,
+        "tx_completed_submissions": 0,
+        "tx_failed_submissions": 0,
+        "write_retries": 0
+      },
+      "event": "shutdown",
+      "instance": "radio1",
+      "last_successful_activity": null,
+      "ready": false,
+      "role": "radio",
+      "schema": "vrt.telemetry/1",
+      "sequence": 11,
+      "state": "unknown",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T21:37:01.273Z",
+      "uptime_ms": 1001
+    }
+  },
+  {
+    "case": "detector-idle",
+    "outcome": "PASS",
+    "events": 8,
+    "last": {
+      "boot_id": "78f8e5779add22373f10b244d1d81f54",
+      "data": {
+        "datagrams": 0,
+        "detections": 0,
+        "downstream_delivery": null,
+        "gapped": 0,
+        "malformed": 0,
+        "observed_unix_ns": 1790372222081470548,
+        "processing_calls": 0,
+        "processing_ns_total": 0,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "rx_bytes": 0,
+        "sequence_gaps": 0,
+        "tx_bytes": null,
+        "tx_packets": null,
+        "unavailable": 4,
+        "zero": 0
+      },
+      "event": "shutdown",
+      "instance": "f18a8c22c8a3",
+      "last_successful_activity": null,
+      "ready": false,
+      "role": "detector",
+      "schema": "vrt.telemetry/1",
+      "sequence": 8,
+      "state": "unknown",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T21:37:02.081Z",
+      "uptime_ms": 704
+    }
+  },
+  {
+    "case": "recorder-empty",
+    "outcome": "PASS",
+    "events": 6,
+    "last": {
+      "boot_id": "2fb81910f4c9a27dd647613c5741cf4d",
+      "data": {
+        "durably_committed_bytes": null,
+        "kernel_drops": 0,
+        "pcap_bytes_accepted": 24,
+        "pcap_enabled": true,
+        "pcap_frames": 0,
+        "pcap_io_errors": 0,
+        "pcap_limit_reached": false,
+        "queue_depth": null,
+        "receive_errors": 0,
+        "receive_truncations": 0,
+        "rx_frames": 0,
+        "rx_wire_bytes": 0
+      },
+      "event": "shutdown",
+      "instance": "3d6e402f42b2",
+      "last_successful_activity": null,
+      "ready": false,
+      "role": "recorder",
+      "schema": "vrt.telemetry/1",
+      "sequence": 6,
+      "state": "unknown",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T21:37:03.207Z",
+      "uptime_ms": 1020
+    }
+  },
+  {
+    "case": "recorder-full",
+    "outcome": "PASS",
+    "events": 6,
+    "last": {
+      "boot_id": "0f4e72e7c29bc815ddc5b1bc55427c49",
+      "data": {
+        "durably_committed_bytes": null,
+        "kernel_drops": 0,
+        "pcap_bytes_accepted": 24,
+        "pcap_enabled": true,
+        "pcap_frames": 0,
+        "pcap_io_errors": 1,
+        "pcap_limit_reached": false,
+        "queue_depth": null,
+        "receive_errors": 0,
+        "receive_truncations": 0,
+        "rx_frames": 0,
+        "rx_wire_bytes": 0
+      },
+      "event": "shutdown",
+      "instance": "52bc0a7e24de",
+      "last_successful_activity": null,
+      "ready": false,
+      "role": "recorder",
+      "schema": "vrt.telemetry/1",
+      "sequence": 6,
+      "state": "degraded",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T21:37:04.340Z",
+      "uptime_ms": 1024
+    }
+  },
+  {
+    "case": "recorder-bad-path",
+    "outcome": "PASS",
+    "events": 2,
+    "last": {
+      "boot_id": "222d53b51a8001348dc2065d05924874",
+      "data": {
+        "reason": "APPLICATION_ERROR"
+      },
+      "event": "failure",
+      "instance": "ef3f8b28e538",
+      "last_successful_activity": null,
+      "ready": false,
+      "role": "recorder",
+      "schema": "vrt.telemetry/1",
+      "sequence": 2,
+      "state": "failed",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T21:37:04.671Z",
+      "uptime_ms": 222
+    }
+  }
+]

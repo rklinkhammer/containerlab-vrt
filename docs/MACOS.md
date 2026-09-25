@@ -11,7 +11,7 @@ The recorded environment uses Apple Silicon and Lima 2.2.0. The recipe pins an A
 
 The guest has **no host filesystem mounts**, forwarded SSH agent, or forwarded application ports. Editing the Mac checkout does not update the guest checkout. Docker Desktop/OrbStack images are not available in this guest. No browser GUI is provided by this project.
 
-Current qualification limitations are in [the review](../artifacts/review/REVIEW-20260925.md). The following is a reviewed setup procedure; a fresh VM installation was not rerun during that review.
+Current native fixes are in [runtime fix evidence](../artifacts/runtime-fixes/RESULTS.md); historical deployment limitations are in [the review](../artifacts/review/REVIEW-20260925.md). After initializing submodules, run `python3 scripts/verify_vrt_source.py --apply` before building, including in a fresh guest checkout. The following is a reviewed setup procedure; a fresh VM installation was not rerun during that review.
 
 ## 1. Create the VM — Mac terminal, repository root
 
@@ -159,4 +159,8 @@ Read the destroy audit and investigate any residual resources. If destruction fa
 | Existing lab names rejected | Inspect and clean up the previous owned lab; deploy deliberately refuses replacement. |
 | Second log command never starts | The first `--follow` blocks. Use another terminal or Ctrl-C. |
 | Capture missing on Mac | It is initially in the guest checkout; use the copy step. |
-| Build passes but control tests fail | Current review observed this; consult the recorded failures rather than treating historical 12/12 as current. |
+| Build passes but control tests fail | Verify the pinned framework patch with `python3 scripts/verify_vrt_source.py`; see runtime fix evidence. Preserve any new failure instead of relying on historical qualification. |
+
+## Telemetry qualification
+
+The new stdout telemetry is described in [TELEMETRY.md](TELEMETRY.md). Local C++ and process checks run on macOS; AF_PACKET recorder checks require Linux. Use [the explicit telemetry qualification](../artifacts/telemetry/README.md) only in a newly created guest. Its finite isolated containers need no Containerlab deployment or SR Linux image; they do not establish full workflow health. Collect image ID/results and stop that exact VM afterward. Existing node logs can display the JSON records without serial ports.

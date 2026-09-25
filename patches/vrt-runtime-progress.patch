@@ -1,0 +1,31 @@
+diff --git a/include/vita/runtime/public/runtime.hpp b/include/vita/runtime/public/runtime.hpp
+index 0760dc2..06ef2c2 100644
+--- a/include/vita/runtime/public/runtime.hpp
++++ b/include/vita/runtime/public/runtime.hpp
+@@ -2361,6 +2361,8 @@ public:
+     } guard{progressing_};
+     progressing_ = true;
+     now_ = now;
++    retention_.expire(now);
++    controllers_.expire(now);
+     if (transport_.begin_cycle)
+       transport_.begin_cycle(transport_.context);
+     freeze();
+diff --git a/include/vita/runtime/transaction/engine.hpp b/include/vita/runtime/transaction/engine.hpp
+index b40f9ee..8c1c2cc 100644
+--- a/include/vita/runtime/transaction/engine.hpp
++++ b/include/vita/runtime/transaction/engine.hpp
+@@ -1051,6 +1051,13 @@ public:
+               now.clock.state == timing::ClockState::holdover) &&
+              (slot.plan.request.cam.timing == 0 || slot.plan.timing.qualified ||
+               slot.plan.timing.injected));
++        // A stopped SDR starts at an absolute protocol epoch, not an existing
++        // sample boundary. PPS updates may remap the clock while it waits.
++        // Preserve the admitted epoch; the qualified-clock and actual-effect
++        // interval checks below still reject early/late execution.
++        if (sdr_start && slot.plan.schedule_valid && qualified)
++          slot.plan.execution.boundary.mapping_generation =
++              now.clock.mapping_generation;
+         bool boundary_available = false;
+         if (sdr_start) {
+           boundary_available = slot.plan.execution.boundary.time ==

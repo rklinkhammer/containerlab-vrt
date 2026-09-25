@@ -1,3 +1,4 @@
+#include <sdr/telemetry.hpp>
 #include <sdr/processor_controller.hpp>
 
 #include <vita/codec/packet.hpp>
@@ -685,7 +686,7 @@ struct ProcessorController::Implementation {
                    : vita::Result<vita::runtime::transaction::Observation>{
                      std::unexpected(vita::Error{
                      vita::ErrorCode::invalid_state})};
-      *events << nlohmann::json{
+      sdr::telemetry::write_line(*events, nlohmann::json{
                      {"type", "controller_error"},
                      {"radio_id", session.transport.config.id},
                      {"reason", "vrt_status_failed"},
@@ -699,8 +700,7 @@ struct ProcessorController::Implementation {
                       observation && observation->validation_accepted},
                      {"confirms_execution",
                       observation && observation->confirms_execution}}
-                     .dump()
-              << '\n';
+                     .dump());
       return false;
     }
     session.last_liveness = Clock::now();
@@ -768,13 +768,12 @@ struct ProcessorController::Implementation {
     }
     count(&ProcessorControllerMetrics::starts_admitted);
     session.started = true;
-    *events << nlohmann::json{{"type", "controller"},
+    sdr::telemetry::write_line(*events, nlohmann::json{{"type", "controller"},
                               {"state", "radio_restarted"},
                               {"radio_id", session.transport.config.id},
                               {"start_epoch", {{"seconds", epoch.seconds},
                                                 {"picoseconds", epoch.picoseconds}}}}
-                   .dump()
-            << '\n';
+                   .dump());
     return true;
   }
 
@@ -815,12 +814,11 @@ struct ProcessorController::Implementation {
     for (auto &session : sessions)
       session.started = true;
     coordinated_.store(true);
-    *events << nlohmann::json{{"type", "controller"},
+    sdr::telemetry::write_line(*events, nlohmann::json{{"type", "controller"},
                               {"state", "coordinated"},
                               {"start_epoch", {{"seconds", epoch.seconds},
                                                 {"picoseconds", epoch.picoseconds}}}}
-                   .dump()
-            << '\n';
+                   .dump());
     return true;
   }
 
@@ -837,12 +835,11 @@ struct ProcessorController::Implementation {
           if (!reconcile(session)) {
             ++session.consecutive_failures;
             if (session.consecutive_failures == config.retry_limit)
-              *events << nlohmann::json{{"type", "controller_error"},
+              sdr::telemetry::write_line(*events, nlohmann::json{{"type", "controller_error"},
                                         {"radio_id", session.transport.config.id},
                                         {"reason", "retry_limit_reached"},
                                         {"retry_count", config.retry_limit}}
-                             .dump()
-                      << '\n';
+                             .dump());
             ready = false;
             continue;
           }
