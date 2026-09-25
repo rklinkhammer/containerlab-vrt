@@ -12,4 +12,8 @@
 
 The builder installs `ca-certificates`, `cmake`, `curl`, `g++`, `libsoapysdr-dev`, and `ninja-build` from the dated Debian snapshot. The runtime installs only `iproute2` and `libsoapysdr0.8` from the same snapshot. Snapshot pinning fixes transitive package resolution; `container/dependencies.env` is the machine-readable source for build arguments.
 
-The application image itself is local and therefore has no repository digest before building. Record `docker image inspect containerlab-vrt-app:local --format '{{index .RepoDigests 0}} {{.Id}}'` with qualification evidence. A local image ID is build evidence, not a portable registry digest.
+The application image itself is local and therefore has no repository digest before building. Record `docker image inspect containerlab-vrt-app:local --format '{{json .RepoDigests}} {{.Id}}'` with qualification evidence. A local image ID is build evidence, not a portable registry digest.
+
+## Current source provenance caveat
+
+Docker copies `third_party/vrt_framework` from the build context; `VRT_REVISION` is image-label metadata and does not select or verify that source. At the 2026-09-25 review, the checked-out submodule was `51853ba29703f51aceb2cfefe5a12a65a8e1110f`, while the manifest still named the historical `dbe85d3` baseline. Record `git submodule status` alongside the image ID; the existing label alone is not reliable source provenance. Align and enforce this metadata before the next image qualification.

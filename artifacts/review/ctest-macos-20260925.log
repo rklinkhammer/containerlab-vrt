@@ -1,0 +1,187 @@
+Start testing: Sep 25 14:10 EDT
+----------------------------------------------------------
+1/12 Testing: sdr_p17_golden_vectors_tests
+1/12 Test: sdr_p17_golden_vectors_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_p17_golden_vectors_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_p17_golden_vectors_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_p17_golden_vectors_tests" end time: Sep 25 14:10 EDT
+"sdr_p17_golden_vectors_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/12 Testing: sdr_core_tests
+2/12 Test: sdr_core_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_core_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_core_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_core_tests" end time: Sep 25 14:10 EDT
+"sdr_core_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/12 Testing: sdr_soapy_tests
+3/12 Test: sdr_soapy_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_soapy_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_soapy_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_soapy_tests" end time: Sep 25 14:10 EDT
+"sdr_soapy_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/12 Testing: sdr_radio_services_tests
+4/12 Test: sdr_radio_services_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_radio_services_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_radio_services_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_radio_services_tests" end time: Sep 25 14:10 EDT
+"sdr_radio_services_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/12 Testing: sdr_vrt_adapter_tests
+5/12 Test: sdr_vrt_adapter_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_vrt_adapter_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_vrt_adapter_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_vrt_adapter_tests" end time: Sep 25 14:10 EDT
+"sdr_vrt_adapter_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/12 Testing: sdr_vrt_runtime_retention_tests
+6/12 Test: sdr_vrt_runtime_retention_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_vrt_runtime_retention_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_vrt_runtime_retention_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+Assertion failed: (query), function main, file vrt_runtime_retention_tests.cpp, line 34.
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Failed.
+"sdr_vrt_runtime_retention_tests" end time: Sep 25 14:10 EDT
+"sdr_vrt_runtime_retention_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/12 Testing: sdr_radio_transport_tests
+7/12 Test: sdr_radio_transport_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_radio_transport_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_radio_transport_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_radio_transport_tests" end time: Sep 25 14:10 EDT
+"sdr_radio_transport_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/12 Testing: sdr_processor_controller_tests
+8/12 Test: sdr_processor_controller_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_processor_controller_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_processor_controller_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+{"start_epoch":{"picoseconds":461343000000,"seconds":1790359835},"state":"coordinated","type":"controller"}
+radio1 streaming=0 source_status=2 ordinal=0
+Assertion failed: (epoch), function main, file processor_controller_tests.cpp, line 299.
+<end of output>
+Test time =   6.17 sec
+----------------------------------------------------------
+Test Failed.
+"sdr_processor_controller_tests" end time: Sep 25 14:10 EDT
+"sdr_processor_controller_tests" time elapsed: 00:00:06
+----------------------------------------------------------
+
+9/12 Testing: sdr_status_tests
+9/12 Test: sdr_status_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_status_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_status_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_status_tests" end time: Sep 25 14:10 EDT
+"sdr_status_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/12 Testing: sdr_udp_pipeline_tests
+10/12 Test: sdr_udp_pipeline_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_udp_pipeline_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_udp_pipeline_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_udp_pipeline_tests" end time: Sep 25 14:10 EDT
+"sdr_udp_pipeline_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/12 Testing: sdr_udp_integration_tests
+11/12 Test: sdr_udp_integration_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_udp_integration_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_udp_integration_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   1.52 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_udp_integration_tests" end time: Sep 25 14:10 EDT
+"sdr_udp_integration_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+12/12 Testing: sdr_recorder_tests
+12/12 Test: sdr_recorder_tests
+Command: "/Users/rklinkhammer/workspace/containerlab-vrt/build/dev/sdr_recorder_tests"
+Directory: /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+"sdr_recorder_tests" start time: Sep 25 14:10 EDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"sdr_recorder_tests" end time: Sep 25 14:10 EDT
+"sdr_recorder_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 25 14:10 EDT

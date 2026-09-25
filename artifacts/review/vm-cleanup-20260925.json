@@ -1,0 +1,146 @@
+{
+  "scope": "Containerlab VMs identified by clab- names; explicit user cleanup request",
+  "removedLab": "four-radio-sdr",
+  "removedExitedBuildContainers": [
+    "08e7d9ed19d8",
+    "df8c43f39c84",
+    "42e7eaf8e4f3"
+  ],
+  "stoppedVm": "clab-vrt-20260925-135412",
+  "disksDeleted": false,
+  "alreadyStoppedVmsStarted": false,
+  "inventory": [
+    {
+      "name": "clab-display-20260925-014338-exp015",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-errors-20260925-013725-exp014",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-investigation-clean-20260924",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-022712-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-065817-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-071042-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-072103-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-073014-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-094659-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-100311-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-102836-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-103509-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-105845-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-110301-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-112155-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-112505-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-112640-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-112810-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-113003-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-114158-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-114347-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-114642-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-120629-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-120833-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-121508-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-121820-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-load-20260925-122323-exp016",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-qualification-20260924",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-t2-20260925-exp011",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-t2-20260925-exp012",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-t2-20260925-exp013",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-vrt-20260925-135412",
+      "status": "Stopped"
+    },
+    {
+      "name": "clab-vrt-20260925-145115",
+      "status": "Stopped"
+    }
+  ]
+}

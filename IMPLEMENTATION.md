@@ -1,5 +1,9 @@
 # Implement a standalone four-radio SDR lab with Containerlab and Nokia SR Linux
 
+## Current review versus historical qualification
+
+The runtime environment, acceptance table, and command results below describe the earlier qualification, not a rerun of the current submodule. On 2026-09-25 the current checkout at VRT `51853ba29703f51aceb2cfefe5a12a65a8e1110f` built on macOS but passed **10/12 CTest targets**; retention and coordinated-start tests failed. No new deployment or Docker build was performed during this documentation review. See [current evidence](artifacts/review/REVIEW-20260925.md) and [macOS instructions](docs/MACOS.md).
+
 ## Authority and packaging
 
 Containerlab is the topology and lifecycle authority. `config/lab.json` is the sole application-parameter source, and `scripts/generate_config.py` produces topology, SR Linux startup commands, role configurations, and a hash manifest. Deployment first rejects stale outputs.
@@ -39,7 +43,7 @@ Integrated checks ran on 2026-09-25 in the newly created, dedicated ARM64 Lima V
 
 The retention repair calls controller expiry from ordinary `VitaRuntime::progress()`. A simulated-time regression completes and releases 300 transactions, exceeding the 256-record registry. Image `sha256:c408b1c9313535f22a7fcf48fe0d4b474d8084b8dfb30573db49dd3651be730c` then sustained 331 seconds and more than 256 one-second VRT liveness transactions with zero `vrt_status_failed`, retry-limit, or capacity events; all four radios remained active, generation 1, ready, and streaming. The final image adds only cooperative SIGINT/SIGTERM handling to the processor and detector loops; after coordinated startup, both stopped in 0.05 seconds.
 
-## Acceptance status
+## Historical acceptance status
 
 | Requirement | Implementation | Verification evidence | Status |
 | --- | --- | --- | --- |
@@ -64,11 +68,12 @@ The diagnostic capture completeness gate remains failed because kernel drops mak
 ## Exact commands
 
 ```sh
+python3 scripts/generate_config.py
 python3 scripts/generate_config.py --check
-bash scripts/build-image.sh
+sudo bash scripts/build-image.sh
 sudo bash scripts/deploy.sh
-bash scripts/inspect.sh
-bash scripts/capture.sh
+sudo bash scripts/inspect.sh
+sudo bash scripts/capture.sh
 sudo bash scripts/destroy.sh
 ```
 

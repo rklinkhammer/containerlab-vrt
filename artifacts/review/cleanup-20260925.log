@@ -1,0 +1,27 @@
+14:10:41 INFO Parsing & checking topology file=four-radio.clab.yml
+14:10:41 INFO Parsing & checking topology file=four-radio.clab.yml
+14:10:41 INFO Destroying lab name=four-radio-sdr
+14:10:41 ERRO container "clab-four-radio-sdr-recorder" exited; container output:
+recorder: packet socket reported a terminal error
+14:10:41 INFO Removed container name=clab-four-radio-sdr-recorder
+14:10:41 INFO Removed container name=clab-four-radio-sdr-radio2
+14:10:41 INFO Removed container name=clab-four-radio-sdr-processor
+14:10:41 INFO Removed container name=clab-four-radio-sdr-radio1
+14:10:41 INFO Removed container name=clab-four-radio-sdr-detector
+14:10:41 INFO Removed container name=clab-four-radio-sdr-radio4
+14:10:41 INFO Removed container name=clab-four-radio-sdr-switch1
+14:10:41 INFO Removed container name=clab-four-radio-sdr-radio3
+14:10:41 INFO Removing host entries path=/etc/hosts
+14:10:41 INFO Removing SSH config path=/etc/ssh/ssh_config.d/clab-four-radio-sdr.conf
+08e7d9ed19d8
+df8c43f39c84
+42e7eaf8e4f3
+Verified lab and build containers removed; management network absent
+time="2026-09-25T14:10:56-04:00" level=info msg="Sending SIGINT to hostagent process 58302"
+time="2026-09-25T14:10:56-04:00" level=info msg="Waiting for the host agent and the driver processes to shut down"
+time="2026-09-25T14:10:56-04:00" level=info msg="[hostagent] Received SIGINT, shutting down the host agent"
+time="2026-09-25T14:10:56-04:00" level=info msg="[hostagent] Shutting down the host agent"
+time="2026-09-25T14:10:56-04:00" level=info msg="[hostagent] Shutting down VZ"
+time="2026-09-25T14:10:57-04:00" level=info msg="[hostagent] [VZ] - vm state change: stopped"
+time="2026-09-25T14:10:58-04:00" level=info msg="Waiting for the instance to shut down"
+time="2026-09-25T14:10:58-04:00" level=info msg="The instance clab-vrt-20260925-135412 has shut down"
