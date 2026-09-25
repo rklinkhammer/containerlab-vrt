@@ -8,7 +8,7 @@
 #include <string_view>
 #include <vita/codec/packet.hpp>
 #include <vita/codec/prologue.hpp>
-#include <vita/profiles/iq/graphx.hpp>
+#include <vita/profiles/iq/sdr.hpp>
 #include <vita/profiles/iq/profile.hpp>
 #include <vita/runtime/context/publisher.hpp>
 #include <vita/runtime/transaction/outcomes.hpp>
@@ -69,12 +69,12 @@ void emit_signal(std::string_view name, std::uint32_t header,
   const auto expected = signal<Pairs>(header, frame);
   const auto decoded = decode_envelope(expected);
   assert(decoded && decoded->trailer &&
-         *decoded->trailer == graphx_trailer(frame));
+         *decoded->trailer == sdr_trailer(frame));
 
   Envelope envelope;
   envelope.type = PacketType::signal;
   envelope.stream_id = 1;
-  envelope.class_id = ClassId{graphx_unknown_oui, 0, 0};
+  envelope.class_id = ClassId{sdr_unknown_oui, 0, 0};
   envelope.timestamp = {Tsi::utc, Tsf::picoseconds, 1000, 0};
   envelope.trailer = true;
   envelope.packet_count = static_cast<std::uint8_t>((header >> 16) & 0xf);
@@ -99,7 +99,7 @@ int main() {
   const auto decoded_context = decode_packet(context);
   assert(decoded_context && decoded_context->fields.size() == 4);
   runtime::context::ContextFrame frame;
-  frame.state.profile = Profile::graphx_radio;
+  frame.state.profile = Profile::sdr_radio;
   frame.time = {1000, 0};
   frame.epoch = Tsi::utc;
   frame.time_known = true;
@@ -136,20 +136,20 @@ int main() {
                                       0x6060000b, 1, 1000, 0, 0, 0xa0040000,
                                       0x11223344, 1, 2, 2, 0x40}));
 
-  constexpr RequestContext graphx_request{0xa11f0000};
+  constexpr RequestContext sdr_request{0xa11f0000};
   verify_and_emit("execution-ack", bytes(std::array<std::uint32_t, 9>{
                                        0x64630009, 1, 1000, 0, 0, 0xa1080400,
                                        0x11223344, 1, 2}),
-                  graphx_request);
+                  sdr_request);
   verify_and_emit("status-ack", bytes(std::array<std::uint32_t, 12>{
                                     0x6464000c, 1, 1000, 0, 1, 0xa1040000,
                                     0x11223344, 1, 2, 2, 0x40, 3}),
-                  graphx_request);
+                  sdr_request);
   verify_and_emit("diagnostic-ack", bytes(std::array<std::uint32_t, 11>{
                                         0x6465000b, 1, 1000, 0, 0, 0xa1110000,
                                         0x11223344, 1, 2, 0x20000000,
                                         0x90000000}),
-                  graphx_request);
+                  sdr_request);
 
   const auto capability_query = bytes(std::array<std::uint32_t, 11>{
       0x6060000b, 1, 1000, 0, 0, 0xa0040000, 0x11223344, 1, 2, 0x28a00080,
@@ -163,14 +163,14 @@ int main() {
       0x0000e200, 0x000001e8, 0x48000000, 0,          0x3e800000});
   const auto request = decode_packet(capability_query);
   assert(request);
-  profiles::iq::GraphxCapabilities supported;
+  profiles::iq::SdrCapabilities supported;
   runtime::transaction::AckRecord ranges;
   ranges.request = request->envelope.envelope;
   ranges.cam = *runtime::transaction::Cam::parse(
-      ranges.request, runtime::transaction::Profile::graphx_radio);
+      ranges.request, runtime::transaction::Profile::sdr_radio);
   ranges.kind = runtime::transaction::AckKind::state;
   ranges.selected_mask = 0x72;
-  ranges.graphx_capabilities = &supported;
+  ranges.sdr_capabilities = &supported;
   ranges.time_known = true;
   ranges.epoch = Tsi::utc;
   ranges.time = {1000, 0};
