@@ -307,6 +307,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
   if (listener_stream_id < 1 || listener_stream_id > 4 ||
       datagram.size() > config_.receive_bytes) {
     ++metrics_.malformed;
+    ++metrics_.discards.limits;
     return output;
   }
   auto &stream = (*streams_)[listener_stream_id - 1];
@@ -314,6 +315,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
   const auto envelope = vita::codec::decode_envelope(bytes);
   if (!envelope || envelope->envelope.stream_id != listener_stream_id) {
     ++metrics_.malformed;
+    ++metrics_.discards.invalid_envelope;
     return output;
   }
   if (envelope->envelope.type == vita::codec::PacketType::context) {
@@ -325,10 +327,12 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
         packet->envelope.envelope.timestamp.fractional >=
             picoseconds_per_second) {
       ++metrics_.malformed;
+      ++metrics_.discards.invalid_context;
       return output;
     }
     if (packet->fields.size() != 4) {
       ++metrics_.malformed;
+      ++metrics_.discards.invalid_context;
       return output;
     }
     std::optional<std::uint64_t> center;
@@ -340,17 +344,20 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
       if (field.kind != vita::BodyKind::values ||
           field.attribute != vita::Attribute::current) {
         ++metrics_.malformed;
+        ++metrics_.discards.invalid_context;
         return output;
       }
       const auto value = field.value();
       if (!value) {
         ++metrics_.malformed;
+        ++metrics_.discards.invalid_context;
         return output;
       }
       if (field.id == vita::RFReferenceFrequency::id) {
         const auto *hertz = std::get_if<vita::Hertz>(&*value);
         if (!hertz || hertz->q20 < 0 || hertz->q20 % (1LL << 20)) {
           ++metrics_.malformed;
+          ++metrics_.discards.invalid_context;
           return output;
         }
         center = static_cast<std::uint64_t>(hertz->q20 >> 20);
@@ -359,6 +366,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
         if (!hertz || hertz->q20 <= 0 || hertz->q20 % (1LL << 20) ||
             (hertz->q20 >> 20) > std::numeric_limits<std::uint32_t>::max()) {
           ++metrics_.malformed;
+          ++metrics_.discards.invalid_context;
           return output;
         }
         rate = static_cast<std::uint32_t>(hertz->q20 >> 20);
@@ -366,6 +374,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
         const auto *hertz = std::get_if<vita::Hertz>(&*value);
         if (!hertz) {
           ++metrics_.malformed;
+          ++metrics_.discards.invalid_context;
           return output;
         }
         bandwidth = hertz->q20;
@@ -373,11 +382,13 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
         const auto *stages = std::get_if<vita::GainStages>(&*value);
         if (!stages) {
           ++metrics_.malformed;
+          ++metrics_.discards.invalid_context;
           return output;
         }
         gain = *stages;
       } else {
         ++metrics_.malformed;
+        ++metrics_.discards.invalid_context;
         return output;
       }
     }
@@ -386,6 +397,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
       gain->stage2_q7 != 0 || gain->stage1_q7 < -60 * 128 ||
       gain->stage1_q7 > 60 * 128) {
       ++metrics_.malformed;
+      ++metrics_.discards.invalid_context;
       return output;
     }
     try {
@@ -398,6 +410,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
               "invalid center frequency");
     } catch (const std::invalid_argument &) {
       ++metrics_.malformed;
+      ++metrics_.discards.invalid_context;
       return output;
     }
     if (!stream.samples.empty() &&
@@ -414,11 +427,11 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
     ++metrics_.context_updates;
     return output;
   }
-  if (!stream.metadata_valid ||
-      !valid_sdr_envelope(envelope->envelope, listener_stream_id) ||
+  if (!valid_sdr_envelope(envelope->envelope, listener_stream_id) ||
       !envelope->trailer ||
       (*envelope->trailer & ~std::uint32_t{0x00000c00}) != 0x00c00000) {
     ++metrics_.malformed;
+    ++metrics_.discards.invalid_data;
     return output;
   }
   const auto sample_view =
@@ -426,6 +439,12 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
   if (!sample_view || sample_view->size() == 0 ||
       sample_view->size() > config_.processing.fft_size) {
     ++metrics_.malformed;
+    ++metrics_.discards.invalid_samples;
+    return output;
+  }
+  if (!stream.metadata_valid) {
+    ++metrics_.malformed; // legacy aggregate includes all these discards
+    ++metrics_.discards.waiting_context;
     return output;
   }
   std::size_t missing_pairs = 0;
@@ -451,6 +470,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
           subtract_samples(packet_time, missing_pairs, stream.sample_rate_hz);
   } catch (const std::invalid_argument &) {
     ++metrics_.malformed;
+    ++metrics_.discards.timestamp_range;
     return output;
   }
   auto append = [&](std::complex<double> sample, bool missing,
@@ -496,6 +516,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
     const auto pair = sample_view->at(index);
     if (!pair) {
       ++metrics_.malformed;
+      ++metrics_.discards.invalid_samples;
       return {};
     }
     append({static_cast<double>(pair->i) / 32768.0,
@@ -575,6 +596,15 @@ std::string metrics_json(const ProcessorMetrics &metrics) {
                    .count()},
               {"datagrams", metrics.datagrams},
               {"malformed", metrics.malformed},
+              {"discarded", metrics.malformed},
+              {"discard_schema", "processor.discards/1"},
+              {"discard_reasons", {{"limits",metrics.discards.limits},
+                {"invalid_envelope",metrics.discards.invalid_envelope},
+                {"invalid_context",metrics.discards.invalid_context},
+                {"invalid_data",metrics.discards.invalid_data},
+                {"invalid_samples",metrics.discards.invalid_samples},
+                {"waiting_context",metrics.discards.waiting_context},
+                {"timestamp_range",metrics.discards.timestamp_range}}},
               {"context_updates", metrics.context_updates},
               {"packet_gaps", metrics.packet_gaps},
               {"spectra", metrics.spectra},

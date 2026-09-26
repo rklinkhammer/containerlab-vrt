@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/runtime_trial.py", line 39, in <module>
+    assert p.returncode==0,'deployment failed'
+           ^^^^^^^^^^^^^^^
+AssertionError: deployment failed

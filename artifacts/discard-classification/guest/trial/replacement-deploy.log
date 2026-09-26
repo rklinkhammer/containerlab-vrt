@@ -1,0 +1,129 @@
+{
+  "four-radio-sdr": [
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-detector",
+      "container_id": "1551f4b336b8",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.4/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-processor",
+      "container_id": "58d9a3c83e40",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up Less than a second",
+      "ipv4_address": "172.31.79.6/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio1",
+      "container_id": "d5bc0b43676b",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.8/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio2",
+      "container_id": "87778c043166",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.9/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio3",
+      "container_id": "d4014138d636",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.3/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio4",
+      "container_id": "be1f1591462f",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.5/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-recorder",
+      "container_id": "19b31a766160",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.2/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-switch1",
+      "container_id": "3bf045a5d3e5",
+      "image": "ghcr.io/nokia/srlinux:25.10.1@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c",
+      "kind": "nokia_srlinux",
+      "state": "running",
+      "status": "Up 52 seconds",
+      "ipv4_address": "172.31.79.7/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    }
+  ]
+}
+20:42:11 INFO Containerlab started version=0.79.0
+20:42:11 INFO Parsing & checking topology file=four-radio.clab.yml
+20:42:11 INFO Applying link change without node lifecycle action node=switch1 change="added link"
+20:42:11 INFO Creating lab directory path=/home/rklinkhammer.guest/containerlab-vrt/generated/clab-four-radio-sdr
+20:42:11 INFO Creating node node=processor
+20:42:11 INFO Creating container name=processor
+20:42:11 INFO Creating link link="processor:eth1 -- switch1:e1-5"
+20:42:11 INFO Created link: switch1:e1-5 (ethernet-1/5) ▪┄┄▪ processor:eth1
+20:42:11 INFO Executed command node=processor command="ip link set dev eth1 mtu 9000" stdout=""
+20:42:11 INFO Executed command node=processor command="ip address replace 10.79.0.14/24 dev eth1" stdout=""
+20:42:11 INFO Executed command node=processor command="ip link set dev eth1 up" stdout=""
+20:42:11 INFO Adding host entries path=/etc/hosts
+20:42:11 INFO Adding SSH config for nodes path=/etc/ssh/ssh_config.d/clab-four-radio-sdr.conf

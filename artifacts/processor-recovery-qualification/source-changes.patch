@@ -1,0 +1,233 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f0cf249..55eaffa 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -74,7 +74,7 @@ if(BUILD_TESTING)
+     message(FATAL_ERROR "P17 pre-rename golden-vector corpus integrity failure")
+   endif()
+   add_executable(sdr_p17_golden_vectors_tests tests/p17_golden_vectors_tests.cpp)
+-  target_include_directories(sdr_p17_golden_vectors_tests PRIVATE
++  target_include_directories(sdr_p17_golden_vectors_tests SYSTEM PRIVATE
+     third_party/vrt_framework/include)
+   target_compile_definitions(sdr_p17_golden_vectors_tests PRIVATE
+     P17_GOLDEN_FILE="${P17_GOLDEN_FILE}")
+@@ -91,7 +91,7 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_soapy_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_soapy_tests COMMAND sdr_soapy_tests)
+   add_executable(sdr_radio_services_tests tests/radio_services_tests.cpp)
+-  target_include_directories(sdr_radio_services_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_radio_services_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_radio_services_tests PRIVATE sdr_core)
+   target_compile_options(sdr_radio_services_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_radio_services_tests COMMAND sdr_radio_services_tests)
+@@ -100,7 +100,7 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_vrt_adapter_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_vrt_adapter_tests COMMAND sdr_vrt_adapter_tests)
+   add_executable(sdr_vrt_runtime_retention_tests tests/vrt_runtime_retention_tests.cpp)
+-  target_include_directories(sdr_vrt_runtime_retention_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_vrt_runtime_retention_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_compile_options(sdr_vrt_runtime_retention_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_vrt_runtime_retention_tests COMMAND sdr_vrt_runtime_retention_tests)
+   add_executable(sdr_radio_transport_tests tests/radio_transport_tests.cpp)
+@@ -117,12 +117,12 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_status_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_status_tests COMMAND sdr_status_tests)
+   add_executable(sdr_udp_pipeline_tests tests/udp_pipeline_tests.cpp)
+-  target_include_directories(sdr_udp_pipeline_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_udp_pipeline_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_udp_pipeline_tests PRIVATE sdr_udp_apps)
+   target_compile_options(sdr_udp_pipeline_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_udp_pipeline_tests COMMAND sdr_udp_pipeline_tests)
+   add_executable(sdr_udp_integration_tests tests/udp_integration_tests.cpp)
+-  target_include_directories(sdr_udp_integration_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_udp_integration_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_udp_integration_tests PRIVATE sdr_udp_apps)
+   target_compile_options(sdr_udp_integration_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_udp_integration_tests COMMAND sdr_udp_integration_tests)
+diff --git a/IMPLEMENTATION.md b/IMPLEMENTATION.md
+index 6a42ad2..4a44bbd 100644
+--- a/IMPLEMENTATION.md
++++ b/IMPLEMENTATION.md
+@@ -1,3 +1,15 @@
++# Latest radio recovery qualification
++
++[Single-radio replacement](artifacts/radio-recovery-qualification/RESULTS.md) passed native lifecycle, controller boot-change/reconfiguration/start, actual streaming and four-tone recovery checks. Other seven nodes were unchanged. Retries and sequence discontinuities make this disruptive recovery. All task resources were cleaned and the fresh VM is stopped. Processor replacement is the next unqualified recovery boundary. No application source changed in this slice.
++
++# Latest recovery qualification
++
++[Native detector replacement](artifacts/recovery-qualification/RESULTS.md) restored traffic while preserving all seven non-target container IDs and start times. Full native redeploy also passed as a disruptive fallback. Link-only reconciliation did not restore the existing node's exec-configured address/MTU. The new qualification VM is stopped; no application code changed in this slice.
++
++# Latest Linux qualification
++
++[Patched ARM64 qualification](artifacts/linux-runtime-qualification/RESULTS.md) now records 15/15 Linux tests, sustained switched traffic, telemetry/recorder checks, overhead and stopped-VM cleanup. Direct Docker restart recovery and capture completeness remain unqualified. This supersedes the prior “not rerun on Linux” status, not historical evidence.
++
+ # Current telemetry slice
+ 
+ Versioned heartbeats and role counters are implemented without changing VITA payload semantics or third-party headers. See [telemetry contract](docs/TELEMETRY.md) and [evidence](artifacts/telemetry/RESULTS.md). The telemetry baseline passed 12/14; the subsequent [runtime fixes](artifacts/runtime-fixes/RESULTS.md) address both failures with a documented patch against the pinned framework. Six finite Linux container cases qualify local heartbeat and recorder failures, not the complete coordinated eight-node workflow. Historical qualification below is unchanged.
+diff --git a/README.md b/README.md
+index f3716f0..51f7bac 100644
+--- a/README.md
++++ b/README.md
+@@ -6,6 +6,14 @@ Standalone C++23 radio, processor, detector, and passive recorder applications f
+ 
+ All four application roles now emit bounded `vrt.telemetry/1` JSON heartbeats. Configure `telemetry.interval_ms` in `config/lab.json` (default5000;0 disables new telemetry), then regenerate and rebuild. Detection events are rate limited; counters distinguish sequence gaps from proven loss and buffered PCAP writes from durable storage. See [contract and measurements](docs/TELEMETRY.md) and [actual qualification](artifacts/telemetry/RESULTS.md). No GUI, serial endpoint or new service is added.
+ 
++## Current Linux qualification
++
++The patched ARM64 images passed 15/15 Linux tests and a 340-second switched four-radio run, with all four tones detected and no observed sequence gaps. Qualification fixed a recorder startup race and test portability issues. Pause/resume recovers traffic, but direct Docker restart did not; the bounded capture also reached its size cap and measured kernel drops. See [results, image identity, failures and cleanup](artifacts/linux-runtime-qualification/RESULTS.md). The dedicated VM is stopped.
++
++## Recovery
++
++[Detector and single-radio replacement through Containerlab](docs/RECOVERY.md) are qualified on ARM64: each native workflow restored traffic while preserving the other seven node identities. Radio recovery included controller reconfiguration and a new start epoch; retries and sequence discontinuities were observed. See [radio evidence](artifacts/radio-recovery-qualification/RESULTS.md). Full-lab redeployment is a verified disruptive fallback. Link-only reconciliation after Docker restart did not restore the exec-configured address/MTU. See [recovery evidence](artifacts/recovery-qualification/RESULTS.md).
++
+ ## Start here
+ 
+ **macOS:** follow [the Apple Silicon / Lima guide](docs/MACOS.md). Build and deploy inside the dedicated Linux guest. Docker Desktop and OrbStack are not required; their images and containers are separate from the guest's Docker daemon.
+diff --git a/apps/recorder.cpp b/apps/recorder.cpp
+index 946530c..1837e4b 100644
+--- a/apps/recorder.cpp
++++ b/apps/recorder.cpp
+@@ -16,6 +16,7 @@
+ #include <arpa/inet.h>
+ #include <cerrno>
+ #include <linux/if_packet.h>
++#include <ifaddrs.h>
+ #include <net/ethernet.h>
+ #include <net/if.h>
+ #include <poll.h>
+@@ -83,9 +84,23 @@ void collect_kernel_statistics(int descriptor,
+ int run(const sdr::recorder::Options &options) {
+   const auto interface_deadline = std::chrono::steady_clock::now() +
+                                   std::chrono::seconds(30);
+-  while (if_nametoindex(options.interface.c_str()) == 0) {
++  // Containerlab creates the link before its post-create commands bring it up.
++  // AF_PACKET can report POLLERR on an administratively down interface.
++  const auto interface_ready = [&] {
++    ifaddrs *addresses = nullptr;
++    if (getifaddrs(&addresses) != 0)
++      throw std::runtime_error("cannot inspect capture interface readiness");
++    bool ready = false;
++    for (const auto *address = addresses; address; address = address->ifa_next)
++      if (address->ifa_name && options.interface == address->ifa_name &&
++          (address->ifa_flags & IFF_UP) != 0)
++        ready = true;
++    freeifaddrs(addresses);
++    return ready;
++  };
++  while (!interface_ready()) {
+     if (std::chrono::steady_clock::now() >= interface_deadline)
+-      throw std::runtime_error("capture interface did not appear before timeout");
++      throw std::runtime_error("capture interface did not become ready before timeout");
+     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+   }
+   PacketSocket socket(options.interface);
+diff --git a/artifacts/telemetry/README.md b/artifacts/telemetry/README.md
+index 78ae9f0..01cde2a 100644
+--- a/artifacts/telemetry/README.md
++++ b/artifacts/telemetry/README.md
+@@ -12,7 +12,7 @@ python3 scripts/test_telemetry_process.py
+ python3 scripts/benchmark_telemetry.py
+ ```
+ 
+-Configure a new macOS build when needed with `cmake -S . -B build/dev -DCMAKE_BUILD_TYPE=Debug`; pinned nlohmann/json3.12.0 and SoapySDR0.8.1 must be installed. Local CTest currently has two independently recorded baseline failures; do not interpret a nonzero CTest exit as a telemetry-only failure. Ordinary tests never create VMs.
++Configure a new macOS build when needed with `cmake -S . -B build/dev -DCMAKE_BUILD_TYPE=Debug`; pinned nlohmann/json3.12.0 and SoapySDR0.8.1 must be installed. The historical telemetry baseline had two independently recorded failures. They are repaired and the subsequent Linux qualification passes 15/15; see ../linux-runtime-qualification/RESULTS.md. Ordinary tests never create VMs.
+ 
+ Explicit Linux qualification: follow docs/MACOS.md to create a **new** dedicated VM from the pinned template. Do not reuse a stopped VM. Copy the current checkout into that new guest (no host mounts), including the vendored headers, config and generated files. In the guest source directory:
+ 
+@@ -28,4 +28,4 @@ The explicit qualification script starts finite task-named containers on `--netw
+ 
+ Collect guest artifacts/telemetry/linux-results.json and the image ID, then stop the exact newly created VM from the Mac with `limactl stop "$VM_NAME"`. Keep a task-owned VM name record and clean up even after failure. Do not broadly prune containers or VMs. The recorded run created no Containerlab lab and published no services.
+ 
+-To qualify the full eight-node workflow later, first resolve or explicitly disposition the VRT retention/coordinated-start failures, then use the existing reviewed deployment and destruction scripts in another fresh VM. Do not treat the isolated heartbeat tests as proof of coordinated streaming.
++To qualify the full eight-node workflow later, use the existing reviewed deployment and destruction scripts in another fresh VM. Do not treat the isolated heartbeat tests as proof of coordinated streaming.
+diff --git a/docs/MACOS.md b/docs/MACOS.md
+index 8c93488..b1071fa 100644
+--- a/docs/MACOS.md
++++ b/docs/MACOS.md
+@@ -161,6 +161,10 @@ Read the destroy audit and investigate any residual resources. If destruction fa
+ | Capture missing on Mac | It is initially in the guest checkout; use the copy step. |
+ | Build passes but control tests fail | Verify the pinned framework patch with `python3 scripts/verify_vrt_source.py`; see runtime fix evidence. Preserve any new failure instead of relying on historical qualification. |
+ 
++## Current patched-image qualification
++
++The fresh ARM64 run is recorded in [Linux qualification results](../artifacts/linux-runtime-qualification/RESULTS.md). Both the unit/integration suite and sustained switched traffic passed. The recorder now waits for its interface to become administratively up before opening its packet socket. Do not use a bare Docker stop/start as a qualified Containerlab node recovery procedure: that trial restarted the detector process but did not restore its traffic. Subsequent [detector and single-radio replacement workflows](RECOVERY.md) are qualified through native filtered destruction and full-topology deployment; processor, recorder and switch recovery still need separate qualification. Full native redeploy is the disruptive fallback.
++
+ ## Telemetry qualification
+ 
+ The new stdout telemetry is described in [TELEMETRY.md](TELEMETRY.md). Local C++ and process checks run on macOS; AF_PACKET recorder checks require Linux. Use [the explicit telemetry qualification](../artifacts/telemetry/README.md) only in a newly created guest. Its finite isolated containers need no Containerlab deployment or SR Linux image; they do not establish full workflow health. Collect image ID/results and stop that exact VM afterward. Existing node logs can display the JSON records without serial ports.
+diff --git a/tests/radio_transport_tests.cpp b/tests/radio_transport_tests.cpp
+index d9f1afa..65f6cbe 100644
+--- a/tests/radio_transport_tests.cpp
++++ b/tests/radio_transport_tests.cpp
+@@ -13,6 +13,7 @@
+ 
+ #include <array>
+ #include <cassert>
++#include <cerrno>
+ #include <chrono>
+ #include <cstddef>
+ #include <cstdint>
+@@ -178,7 +179,9 @@ struct Fixture {
+   std::optional<Runtime::Controllee> controllee;
+   std::uint64_t now{};
+ 
+-  Fixture() {
++  explicit Fixture(std::chrono::milliseconds stale_timeout =
++                       std::chrono::milliseconds(120)) {
++    transport.config.stale_timeout = stale_timeout;
+     sdr::RadioSettings defaults;
+     device->apply_settings(defaults);
+     auto config = vita::profiles::iq::lab::config(
+@@ -231,7 +234,9 @@ void drain(int descriptor) {
+ }
+ 
+ void runtime_control_path() {
+-  Fixture fixture;
++  // This case tests exclusive ownership, not idle expiry. Keep its connection
++  // live across host scheduler delays; the dedicated stale test retains 120ms.
++  Fixture fixture(std::chrono::seconds(2));
+   Socket controller(connect_tcp(fixture.transport.instance->control_port()));
+   fixture.pump(2'000'000, true);
+   assert(fixture.transport.instance->connected());
+@@ -285,13 +290,29 @@ void runtime_control_path() {
+   Socket rejected(connect_tcp(fixture.transport.instance->control_port()));
+   fixture.pump(77'000'000, true);
+   std::byte probe{};
+-  assert(recv(rejected.descriptor, &probe, 1, 0) == 0);
++  // A nonblocking TCP peer can observe EAGAIN before the FIN arrives on Linux.
++  // Keep servicing transport until closure, with a bounded wall-clock deadline.
++  const auto rejection_deadline = std::chrono::steady_clock::now() +
++                                  std::chrono::milliseconds(500);
++  ssize_t rejected_read;
++  do {
++    rejected_read = recv(rejected.descriptor, &probe, 1, 0);
++    if (rejected_read >= 0 || (errno != EAGAIN && errno != EWOULDBLOCK))
++      break;
++    fixture.pump(fixture.now + 100'000, true);
++  } while (std::chrono::steady_clock::now() < rejection_deadline);
++  if (rejected_read != 0)
++    std::fprintf(stderr, "rejected connection recv=%zd errno=%d (%s)\n",
++                 rejected_read, errno, std::strerror(errno));
++  assert(rejected_read == 0);
++  assert(fixture.transport.instance->metrics().rejected_connections == 1);
++  assert(fixture.transport.instance->connected());
+ 
+   const auto state_version = fixture.device->settings();
+   controller = Socket{};
+-  fixture.pump(79'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   Socket reconnected(connect_tcp(fixture.transport.instance->control_port()));
+-  fixture.pump(81'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   assert(fixture.transport.instance->connected());
+   assert(fixture.device->settings().sample_rate_hz ==
+          state_version.sample_rate_hz);
+@@ -299,7 +320,7 @@ void runtime_control_path() {
+ 
+   const std::array<std::byte, 4> malformed{};
+   assert(send_all(reconnected.descriptor, malformed));
+-  fixture.pump(83'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   assert(!fixture.transport.instance->connected());
+   assert(recv(reconnected.descriptor, &probe, 1, 0) == 0);
+ }

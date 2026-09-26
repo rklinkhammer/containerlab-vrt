@@ -1,0 +1,70 @@
+[1m╭[0m[1m───────────────────────────────[0m[1m┬[0m[1m───────────────────────────────────────────────────────────────────────────────────────────────────────[0m[1m┬[0m[1m─────────[0m[1m┬[0m[1m────────────────[0m[1m╮[0m
+[1m│[0m[1m              Name             [0m[1m│[0m[1m                                               Kind/Image                                              [0m[1m│[0m[1m  State  [0m[1m│[0m[1m IPv4/6 Address [0m[1m│[0m
+[1m├[0m[1m───────────────────────────────[0m[1m┼[0m[1m───────────────────────────────────────────────────────────────────────────────────────────────────────[0m[1m┼[0m[1m─────────[0m[1m┼[0m[1m────────────────[0m[1m┤[0m
+│ clab-four-radio-sdr-detector  │ linux                                                                                                 │ running │ 172.31.79.4    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-processor │ linux                                                                                                 │ running │ 172.31.79.7    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-radio1    │ linux                                                                                                 │ running │ 172.31.79.3    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-radio2    │ linux                                                                                                 │ running │ 172.31.79.9    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-radio3    │ linux                                                                                                 │ running │ 172.31.79.2    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-radio4    │ linux                                                                                                 │ running │ 172.31.79.8    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-recorder  │ linux                                                                                                 │ running │ 172.31.79.5    │
+│                               │ containerlab-vrt-app:local                                                                            │         │ N/A            │
+├───────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────┤
+│ clab-four-radio-sdr-switch1   │ nokia_srlinux                                                                                         │ running │ 172.31.79.6    │
+│                               │ ghcr.io/nokia/srlinux:25.10.1@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c │         │ N/A            │
+╰───────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────────────╯
+deployment command completed; runtime qualification gates remain NOT_RUN
+19:56:54 INFO Containerlab started version=0.79.0
+19:56:54 INFO Parsing & checking topology file=four-radio.clab.yml
+19:56:54 INFO Creating docker network name=four-radio-sdr-mgmt IPv4 subnet=172.31.79.0/24 IPv6 subnet="" MTU=0
+19:56:54 INFO Creating lab directory path=/home/rklinkhammer.guest/containerlab-vrt/generated/clab-four-radio-sdr
+19:56:54 INFO Creating container name=detector
+19:56:54 INFO Creating container name=radio4
+19:56:54 INFO Creating container name=radio2
+19:56:54 INFO Creating container name=radio3
+19:56:54 INFO Creating container name=recorder
+19:56:54 INFO Creating container name=switch1
+19:56:54 INFO Creating container name=radio1
+19:56:54 INFO Creating container name=processor
+19:56:54 INFO Created link: switch1:e1-1 (ethernet-1/1) ▪┄┄▪ radio1:eth1
+19:56:54 INFO Created link: switch1:e1-3 (ethernet-1/3) ▪┄┄▪ radio3:eth1
+19:56:55 INFO Created link: switch1:e1-4 (ethernet-1/4) ▪┄┄▪ radio4:eth1
+19:56:55 INFO Created link: switch1:e1-2 (ethernet-1/2) ▪┄┄▪ radio2:eth1
+19:56:55 INFO Created link: switch1:e1-5 (ethernet-1/5) ▪┄┄▪ processor:eth1
+19:56:55 INFO Created link: switch1:e1-6 (ethernet-1/6) ▪┄┄▪ detector:eth1
+19:56:55 INFO Created link: switch1:e1-7 (ethernet-1/7) ▪┄┄▪ recorder:eth1
+19:56:55 INFO Running postdeploy actions kind=nokia_srlinux node=switch1
+19:57:06 INFO Executed command node=detector command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=radio1 command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=radio3 command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=recorder command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=detector command="ip address replace 10.79.0.15/24 dev eth1" stdout=""
+19:57:06 INFO Executed command node=radio1 command="ip address replace 10.79.0.10/24 dev eth1" stdout=""
+19:57:06 INFO Executed command node=radio3 command="ip address replace 10.79.0.12/24 dev eth1" stdout=""
+19:57:06 INFO Executed command node=radio1 command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Executed command node=detector command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Executed command node=radio4 command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=radio3 command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Executed command node=recorder command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Executed command node=processor command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=radio4 command="ip address replace 10.79.0.13/24 dev eth1" stdout=""
+19:57:06 INFO Executed command node=radio2 command="ip link set dev eth1 mtu 9000" stdout=""
+19:57:06 INFO Executed command node=processor command="ip address replace 10.79.0.14/24 dev eth1" stdout=""
+19:57:06 INFO Executed command node=radio2 command="ip address replace 10.79.0.11/24 dev eth1" stdout=""
+19:57:06 INFO Executed command node=radio4 command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Executed command node=processor command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Executed command node=radio2 command="ip link set dev eth1 up" stdout=""
+19:57:06 INFO Adding host entries path=/etc/hosts
+19:57:06 INFO Adding SSH config for nodes path=/etc/ssh/ssh_config.d/clab-four-radio-sdr.conf

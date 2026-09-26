@@ -1,0 +1,177 @@
+diff --git a/scripts/capture.sh b/scripts/capture.sh
+index 2353f13..976f5d0 100644
+--- a/scripts/capture.sh
++++ b/scripts/capture.sh
+@@ -6,49 +6,5 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/runtime-common.sh"
+ require_command docker
+ verify_generated
+ 
+-RECORDER=clab-four-radio-sdr-recorder
+-REMOTE_FILE=/tmp/containerlab-vrt-diagnostic.pcap
+-REMOTE_METRICS=/tmp/containerlab-vrt-diagnostic.json
+-OUTPUT_DIR="$ROOT/artifacts/runtime"
+-OUTPUT_FILE="$OUTPUT_DIR/four-radio-sdr-recorder.pcap"
+-OUTPUT_METRICS="$OUTPUT_DIR/four-radio-sdr-recorder-capture.json"
+-
+-container_is_present "$RECORDER" || {
+-  printf 'required task-owned container is absent: %s\n' "$RECORDER" >&2
+-  exit 3
+-}
+-test "$(docker inspect --format '{{.State.Running}}' "$RECORDER")" = true || {
+-  printf 'required task-owned container is not running: %s\n' "$RECORDER" >&2
+-  exit 3
+-}
+-
+-cleanup_remote() {
+-  docker exec "$RECORDER" rm -f "$REMOTE_FILE" "$REMOTE_METRICS" >/dev/null 2>&1 || true
+-}
+-trap cleanup_remote EXIT INT TERM
+-cleanup_remote
+-mkdir -p "$OUTPUT_DIR"
+-rm -f "$OUTPUT_FILE" "$OUTPUT_METRICS"
+-
+-capture_status=0
+-docker exec "$RECORDER" timeout --signal=INT --kill-after=5s 65s \
+-  recorder --interface eth1 --metrics "$REMOTE_METRICS" \
+-  --duration-seconds 60 --pcap "$REMOTE_FILE" \
+-  --capture-bytes 67108864 || capture_status=$?
+-if [[ "$capture_status" -ne 0 ]]; then
+-  printf 'bounded capture failed with status %s\n' "$capture_status" >&2
+-  exit "$capture_status"
+-fi
+-docker exec "$RECORDER" test -f "$REMOTE_FILE"
+-docker cp "$RECORDER:$REMOTE_FILE" "$OUTPUT_FILE"
+-docker cp "$RECORDER:$REMOTE_METRICS" "$OUTPUT_METRICS"
+-if ! size=$(stat -c '%s' "$OUTPUT_FILE" 2>/dev/null); then
+-  size=$(stat -f '%z' "$OUTPUT_FILE")
+-fi
+-if (( size > 67108864 )); then
+-  printf 'capture exceeded 64 MiB bound: %s bytes\n' "$size" >&2
+-  exit 4
+-fi
+-shasum -a 256 "$OUTPUT_FILE"
+-cat "$OUTPUT_METRICS"
+-printf 'capture_seconds_limit=60 capture_bytes=%s interface=eth1 namespace=%s selection=all-mirrored-frames\n' "$size" "$RECORDER"
++require_command python3
++exec python3 "$ROOT/scripts/capture_session.py"
+diff --git a/src/recorder.cpp b/src/recorder.cpp
+index 4e69d97..25ce01e 100644
+--- a/src/recorder.cpp
++++ b/src/recorder.cpp
+@@ -3,6 +3,7 @@
+ #include <algorithm>
+ #include <charconv>
+ #include <fstream>
++#include <cstdio>
+ #include <limits>
+ #include <nlohmann/json.hpp>
+ #include <stdexcept>
+@@ -29,9 +30,10 @@ std::uint64_t parse_number(std::string_view value, std::uint64_t minimum,
+ }
+ 
+ template <typename Integer>
+-void write_little_endian(std::ostream &output, Integer value) {
++void write_little_endian(std::FILE *output, Integer value) {
+   for (std::size_t index = 0; index < sizeof(value); ++index) {
+-    output.put(static_cast<char>(value & 0xff));
++    if (std::fputc(static_cast<unsigned char>(value & 0xff), output) == EOF)
++      throw std::runtime_error("cannot write recorder PCAP file");
+     value >>= 8;
+   }
+ }
+@@ -39,8 +41,9 @@ void write_little_endian(std::ostream &output, Integer value) {
+ 
+ struct PcapWriter::State {
+   explicit State(const std::filesystem::path &path)
+-      : output(path, std::ios::binary | std::ios::trunc) {}
+-  std::ofstream output;
++      : output(std::fopen(path.c_str(), "wbx")) {}
++  ~State() { if (output) std::fclose(output); }
++  std::FILE *output;
+ };
+ 
+ void Metrics::observe_frame(std::size_t wire_size,
+@@ -59,17 +62,19 @@ void Metrics::observe_kernel(std::uint64_t packets,
+ 
+ PcapWriter::PcapWriter(const std::filesystem::path &path,
+                        std::uint64_t byte_limit)
+-    : state_(new State(path)), byte_limit_(byte_limit) {
++    : state_(nullptr), byte_limit_(byte_limit) {
+   if (byte_limit < pcap_header_bytes + pcap_record_header_bytes) {
+     delete state_;
+     state_ = nullptr;
+     throw std::invalid_argument("PCAP byte limit is too small");
+   }
++  state_ = new State(path);
+   if (!state_->output) {
+     delete state_;
+     state_ = nullptr;
+     throw std::runtime_error("cannot open recorder PCAP file");
+   }
++  try {
+   write_little_endian(state_->output, std::uint32_t{0xa1b2c3d4});
+   write_little_endian(state_->output, std::uint16_t{2});
+   write_little_endian(state_->output, std::uint16_t{4});
+@@ -79,6 +84,7 @@ PcapWriter::PcapWriter(const std::filesystem::path &path,
+                       static_cast<std::uint32_t>(receive_buffer_bytes));
+   write_little_endian(state_->output, std::uint32_t{1});
+   bytes_ = pcap_header_bytes;
++  } catch (...) { delete state_; state_ = nullptr; throw; }
+ }
+ 
+ PcapWriter::~PcapWriter() { delete state_; }
+@@ -107,17 +113,14 @@ bool PcapWriter::write(std::span<const std::byte> frame, std::size_t wire_size,
+       state_->output,
+       static_cast<std::uint32_t>(std::min<std::size_t>(
+           wire_size, std::numeric_limits<std::uint32_t>::max())));
+-  state_->output.write(reinterpret_cast<const char *>(frame.data()),
+-                       static_cast<std::streamsize>(frame.size()));
+-  if (!state_->output)
++  if (std::fwrite(frame.data(), 1, frame.size(), state_->output) != frame.size())
+     throw std::runtime_error("cannot write recorder PCAP file");
+   bytes_ += record_bytes;
+   return true;
+ }
+ 
+ void PcapWriter::finish() {
+-  state_->output.flush();
+-  if (!state_->output)
++  if (std::fflush(state_->output) != 0)
+     throw std::runtime_error("cannot finalize recorder PCAP file");
+ }
+ 
+diff --git a/tests/recorder_tests.cpp b/tests/recorder_tests.cpp
+index 6361130..afc40e9 100644
+--- a/tests/recorder_tests.cpp
++++ b/tests/recorder_tests.cpp
+@@ -7,6 +7,7 @@
+ #include <nlohmann/json.hpp>
+ #include <stdexcept>
+ #include <vector>
++#include <fstream>
+ 
+ namespace {
+ sdr::recorder::Options parse(std::initializer_list<const char *> arguments) {
+@@ -98,7 +99,22 @@ void pcap_bound_contract() {
+     writer.finish();
+   }
+   assert(std::filesystem::file_size(path) == 44);
++  // Existing files, including symlink destinations, must remain untouched.
++  bool refused = false;
++  try { sdr::recorder::PcapWriter duplicate(path, 100); }
++  catch (const std::runtime_error &) { refused = true; }
++  assert(refused && std::filesystem::file_size(path) == 44);
++  const auto link = path.string() + ".link";
++  std::filesystem::remove(link);
++  std::filesystem::create_symlink(path, link);
++  refused = false;
++  try { sdr::recorder::PcapWriter duplicate(link, 100); }
++  catch (const std::runtime_error &) { refused = true; }
++  assert(refused && std::filesystem::file_size(path) == 44);
++  std::filesystem::remove(link);
+   std::filesystem::remove(path);
++  rejected([&] { sdr::recorder::PcapWriter invalid(path, 39); });
++  assert(!std::filesystem::exists(path));
+ }
+ } // namespace
+ 

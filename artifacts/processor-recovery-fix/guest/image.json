@@ -1,0 +1,54 @@
+[
+    {
+        "Architecture": "arm64",
+        "Config": {
+            "Cmd": [
+                "/bin/false"
+            ],
+            "Env": [
+                "PATH=/opt/containerlab-vrt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Labels": {
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision.graphx-reference": "7cad4da8646eda302a005070228495c1aa87d89a",
+                "org.opencontainers.image.revision.vrt": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+                "org.opencontainers.image.source": "https://github.com/rklinkhammer/containerlab-vrt",
+                "org.opencontainers.image.title": "containerlab-vrt standalone SDR applications"
+            },
+            "WorkingDir": "/run/containerlab-vrt"
+        },
+        "Created": "2026-09-25T20:27:30.435043581-04:00",
+        "Descriptor": {
+            "digest": "sha256:66fabae4a1d5f1a68b858fed486fd3a55c3c566ab9223700c14d5e60a5a7dc1c",
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "size": 2289
+        },
+        "Id": "sha256:66fabae4a1d5f1a68b858fed486fd3a55c3c566ab9223700c14d5e60a5a7dc1c",
+        "Metadata": {
+            "LastTagTime": "2026-09-26T00:27:30.458274651Z"
+        },
+        "Os": "linux",
+        "Parent": "sha256:48f14dea59da95a31f9f6eebbe9fe0066196f2f5af756b48759ca6171fc278d6",
+        "RepoDigests": [
+            "containerlab-vrt-app@sha256:66fabae4a1d5f1a68b858fed486fd3a55c3c566ab9223700c14d5e60a5a7dc1c"
+        ],
+        "RepoTags": [
+            "containerlab-vrt-app:local"
+        ],
+        "RootFS": {
+            "Layers": [
+                "sha256:07d4c428e5bd1876bbc1c2412d105f749f49898b64c684185c5123c73c8e9e7e",
+                "sha256:198741309a84601018ba043f09960b5cbfd3f5afef5710237338e6a95ecb378a",
+                "sha256:c3c46a1a57df45b5b8139bb5e88246dfb0600cfced2df321d672c6a59c1e06ac",
+                "sha256:268a9ed25785671e11a4faec3d42ea212b280657956b67b519d5a7251ae48e86",
+                "sha256:f051c310138946e8bdd860dcf23b3a6f683af9f342557ba12b4e3f50e3ca5853",
+                "sha256:4a5f502ba4bd1bb230bf8b66ef53f83760ab032afbb71c49b10ce0476b5fe6a1",
+                "sha256:c3cdc35914b0669312f5cf876ae62f5fbeef9ea159c678f8d6d53d0b9f3b1149",
+                "sha256:15433f1cb7d1003a41843fd787ae3314223e38c36de6c0bd619d1f6b6c12239e",
+                "sha256:47c81e019e869def01cd3cf42cfed3fec41aaae0cd28ccbd3bd3e17c08283889"
+            ],
+            "Type": "layers"
+        },
+        "Size": 34467368
+    }
+]

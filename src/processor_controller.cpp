@@ -66,6 +66,8 @@ bool set_nonblocking(int descriptor) noexcept {
 struct StatusSnapshot {
   std::string boot_id;
   std::optional<std::uint64_t> generation;
+  std::uint32_t admitted_message_id{};
+  std::uint64_t association_generation{};
   bool ready{};
   bool active{};
   bool streaming{};
@@ -176,7 +178,15 @@ read_status(const ProcessorRadioControlConfig &config,
     const auto value = nlohmann::json::parse(response.data(), response.data() + size);
     if (value.at("version") != 1 || value.at("radio_id") != config.id)
       return std::nullopt;
+    const auto &resume=value.at("command_resume");
+    if(resume.at("version")!=1 || resume.at("sid")!=config.sid ||
+       !resume.at("last_admitted_id").is_number_unsigned() ||
+       resume.at("last_admitted_id").get<std::uint64_t>()>UINT32_MAX ||
+       !resume.at("association_generation").is_number_unsigned() ||
+       resume.at("association_generation").get<std::uint64_t>()==0)return std::nullopt;
     StatusSnapshot result;
+    result.admitted_message_id=resume.at("last_admitted_id").get<std::uint32_t>();
+    result.association_generation=resume.at("association_generation").get<std::uint64_t>();
     result.boot_id = value.at("boot_id").get<std::string>();
     result.ready = value.at("ready").get<bool>();
     result.active = value.at("connection").at("active").get<bool>();
@@ -628,6 +638,8 @@ struct ProcessorController::Implementation {
         return session.controller->release(handle).has_value();
       }
     }
+    const auto observation=session.controller->observation(handle);
+    sdr::telemetry::write_line(*events,nlohmann::json{{"type","controller_error"},{"radio_id",session.transport.config.id},{"reason","command_evidence_timeout"},{"observation_kind",observation?static_cast<unsigned>(observation->kind):999u},{"validation_accepted",observation&&observation->validation_accepted},{"confirms_execution",observation&&observation->confirms_execution}}.dump());
     static_cast<void>(session.controller->release(handle));
     return false;
   }
@@ -665,19 +677,18 @@ struct ProcessorController::Implementation {
       return false;
     const auto after = read_status(session.transport.config, config.io_timeout);
     if (!after || before->boot_id != after->boot_id || !after->active ||
-        !after->generation) {
+        !after->generation || after->generation==before->generation ||
+        after->association_generation!=before->association_generation) {
       count(&ProcessorControllerMetrics::status_failures);
       return false;
     }
     const bool boot_changed = session.status &&
                               session.status->boot_id != after->boot_id;
-    if (boot_changed) {
-      session.configured = false;
-      session.started = false;
-      count(&ProcessorControllerMetrics::boot_changes);
+    if (!session.controller->resume_commands_after(after->admitted_message_id)) {
+      count(&ProcessorControllerMetrics::protocol_failures);
+      sdr::telemetry::write_line(*events,nlohmann::json{{"type","controller_error"},{"radio_id",session.transport.config.id},{"reason","command_id_resumption_failed"}}.dump());
+      return false;
     }
-    session.status = after;
-    session.reconciled_generation = session.transport.instance->generation();
     auto status = session.controller->status();
     if (!status || !wait_state(session, *status, config.io_timeout)) {
       count(&ProcessorControllerMetrics::protocol_failures);
@@ -703,6 +714,13 @@ struct ProcessorController::Implementation {
                      .dump());
       return false;
     }
+    if (boot_changed) {
+      session.configured = false;
+      session.started = false;
+      count(&ProcessorControllerMetrics::boot_changes);
+    }
+    session.status = after;
+    session.reconciled_generation = session.transport.instance->generation();
     session.last_liveness = Clock::now();
     session.consecutive_failures = 0;
     count(session.reconciled_generation > 1
@@ -725,6 +743,17 @@ struct ProcessorController::Implementation {
   }
 
   bool configure(Session &session) {
+    // Native SDR configuration/start is illegal while already streaming.
+    // Only an unconfigured session takes this path; ordinary reconnect preserves it.
+    if (session.status && session.status->streaming) {
+      auto stopped=session.controller->stop();
+      if(!stopped || !wait(session,*stopped,vita::WaitEvidence::execution,config.io_timeout)) {
+        count(&ProcessorControllerMetrics::protocol_failures);
+        return false;
+      }
+      session.status->streaming=false;
+      sdr::telemetry::write_line(*events,nlohmann::json{{"type","controller"},{"radio_id",session.transport.config.id},{"state","radio_quiesced_for_reconfiguration"}}.dump());
+    }
     vita::SdrRadioSettings settings;
     settings.center_frequency =
         *vita::Hertz::from_integer(session.transport.config.center_hz);

@@ -1,0 +1,5 @@
+{
+  "removed_failed_build_container": "7330a60e865f1025e89fa3b708b34353ed265acdf863817440692250f60c9c8d",
+  "remaining_containers": [],
+  "lab_cleanup": "both trial destroy audits passed"
+}

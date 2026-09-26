@@ -1,0 +1,20 @@
+{
+  "trial": {
+    "processor_container_changed": true,
+    "processor_boot_changed": true,
+    "non_target_changes": [],
+    "radio_boots_unchanged": true,
+    "detector_boot_unchanged": true,
+    "cleanup_exit": 0,
+    "remaining_containers": []
+  },
+  "attempt-2": {
+    "processor_container_changed": true,
+    "processor_boot_changed": true,
+    "non_target_changes": [],
+    "radio_boots_unchanged": true,
+    "detector_boot_unchanged": true,
+    "cleanup_exit": 0,
+    "remaining_containers": []
+  }
+}

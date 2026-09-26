@@ -1,0 +1,14 @@
+{
+  "cases": [
+    {
+      "case": "native_detector_replacement",
+      "destroy_exit": 0,
+      "deploy_exit": 0,
+      "outcome": "PASS",
+      "non_target_changes": []
+    }
+  ],
+  "baseline": "PASS",
+  "cleanup_exit": 0,
+  "remaining_containers": []
+}

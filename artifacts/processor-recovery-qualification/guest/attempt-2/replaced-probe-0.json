@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-09-26T00:10:54.666303+00:00",
+  "nodes": {
+    "radio1": {
+      "id": "1b8d24cd8074fd25494082238f880e8701902b9c953620f1050738b287aa8b3c",
+      "started_at": "2026-09-26T00:10:07.745448905Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio2": {
+      "id": "8bfd0ef2a60712bb5c8519e5d9d22643733138fcc40c3658f96a1b21ff5e2422",
+      "started_at": "2026-09-26T00:10:07.729107104Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio3": {
+      "id": "ef113a5c6546143ff38a9d5f8c4b3462936079ee751340fd2f55f63c449f0e3c",
+      "started_at": "2026-09-26T00:10:07.74544853Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio4": {
+      "id": "430dd11164ec326d3adff35eca405bb3906c3d240d64fc9fab93048c1b596206",
+      "started_at": "2026-09-26T00:10:07.730638861Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "processor": {
+      "id": "33065288a4ad96beb689ff58fedfe97033b79807e76513b6da419b3f6e25a871",
+      "started_at": "2026-09-26T00:10:54.351802997Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "detector": {
+      "id": "41a410c66f2229f720e54b21f9504fffacb919f4ce05ddb0d6babffe2d08942d",
+      "started_at": "2026-09-26T00:10:07.730271018Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "recorder": {
+      "id": "3e6dad7e495e1ad33ae73ec3ecf303c934764e55cc32b6ee5df384822751f891",
+      "started_at": "2026-09-26T00:10:07.725371036Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "switch1": {
+      "id": "a740fe7c053617967ebb8ee751116cc775880416e8b8077fc20bb1807ac26652",
+      "started_at": "2026-09-26T00:10:07.745448488Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    }
+  },
+  "detector_interface": {
+    "exit": 0,
+    "interfaces": [
+      {
+        "ifindex": 56,
+        "link_index": 55,
+        "ifname": "eth1",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 9000,
+        "qdisc": "noqueue",
+        "operstate": "UP",
+        "group": "default",
+        "link_type": "ether",
+        "address": "aa:c1:ab:16:59:4d",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "link_netnsid": 1,
+        "altnames": [
+          "clab-o-51e6de6307cb2563"
+        ],
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "10.79.0.15",
+            "prefixlen": 24,
+            "scope": "global",
+            "label": "eth1",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          },
+          {
+            "family": "inet6",
+            "local": "fe80::a8c1:abff:fe16:594d",
+            "prefixlen": 64,
+            "scope": "link",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "heartbeat": null,
+  "boots": [],
+  "tones": {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": []
+  }
+}

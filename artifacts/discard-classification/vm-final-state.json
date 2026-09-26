@@ -1,0 +1,8 @@
+{
+  "name": "clab-vrt-discards-20260926-003625",
+  "status": "Stopped",
+  "vmType": "vz",
+  "arch": "aarch64",
+  "cpus": 8,
+  "memory": 17179869184
+}

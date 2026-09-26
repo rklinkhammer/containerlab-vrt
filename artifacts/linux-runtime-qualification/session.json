@@ -1,0 +1,12 @@
+{
+  "vm": "clab-vrt-linux-20260925-220209",
+  "source_commit": "8ae49ca60a59444228d9019f38042459c7754363",
+  "scope": "fresh Linux ARM64 patched runtime qualification",
+  "source_archive_sha256": "a9af98f324df2fdb105f8fa566007c9ea7696581b36391c42828a2bae8663b2d",
+  "guest_home": "/home/rklinkhammer.guest",
+  "qualification_changes_sha256": {
+    "CMakeLists.txt": "5c9be6b9ea57fd66e7f5675bd16597c8a2735c5bae82611e37f741809c4ea7f4",
+    "tests/radio_transport_tests.cpp": "b5cbe6cc4e893ba9ced41eeed1a3323e236f50d38f019a30644fa04e83d65239",
+    "apps/recorder.cpp": "bf9affd31c66e46d4cacad030853e0a1ee8e192c75fba3f280ab770ddde00a19"
+  }
+}

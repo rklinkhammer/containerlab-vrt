@@ -110,6 +110,8 @@ struct RadioFixture {
   Clock::time_point origin{Clock::now()};
   vita::runtime::timing::ProtocolTime clock_origin{utc_now()};
   std::atomic<bool> stop{false};
+  std::atomic<unsigned> status_fault{0};
+  unsigned status_reads{};
   std::jthread worker;
 
   RadioFixture(std::string radio_id, std::uint32_t stream_id)
@@ -199,7 +201,7 @@ struct RadioFixture {
           sdr::RadioConfig config;
           config.id = id;
           config.sid = sid;
-          const auto snapshot = sdr::radio_status(
+          auto snapshot = sdr::radio_status(
               config, "boot-" + id, control.snapshot(), device->settings(),
               device->sample_ordinal(), device->clipped_samples(),
               device->streaming(), elapsed / 1'000'000,
@@ -208,6 +210,16 @@ struct RadioFixture {
                       std::chrono::system_clock::now().time_since_epoch())
                       .count()),
               true);
+          snapshot["command_resume"]={{"version",1},{"sid",sid},{"last_admitted_id",controllee->admitted_message_id()},{"association_generation",controllee->association_generation()}};
+          switch(status_fault.load()) {
+          case 1:snapshot.erase("command_resume");break;
+          case 2:snapshot["command_resume"]["sid"]=999;break;
+          case 3:snapshot["command_resume"]["last_admitted_id"]=UINT32_MAX;break;
+          case 4:snapshot["connection"]["generation"]=1;break;
+          case 5:snapshot["boot_id"]="changing-"+std::to_string(++status_reads);break;
+          case 6:snapshot["command_resume"]["last_admitted_id"]=std::uint64_t{UINT32_MAX}+1;break;
+          default:break;
+          }
           assert(sdr::serve_status_transaction(client.value, snapshot));
         }
       }
@@ -258,7 +270,8 @@ int main() {
   }
 
   std::ostringstream events;
-  sdr::ProcessorController controller(config, events);
+  auto owner = std::make_unique<sdr::ProcessorController>(config, events);
+  auto &controller = *owner;
   const auto admission_deadline = Clock::now() + std::chrono::seconds(4);
   while (!controller.coordinated() && Clock::now() < admission_deadline)
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -320,4 +333,28 @@ int main() {
   const auto sustained = controller.metrics();
   assert(sustained.protocol_failures == after.protocol_failures);
   assert(sustained.starts_submitted == 4);
+  owner.reset();
+  std::ostringstream replacement_events;
+  auto replacement = std::make_unique<sdr::ProcessorController>(config, replacement_events);
+  const auto replacement_deadline = Clock::now() + std::chrono::seconds(5);
+  while (!replacement->coordinated() && Clock::now() < replacement_deadline)
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  const auto result = replacement->metrics();
+  replacement.reset(); // join before reading the event stream
+  std::cerr << replacement_events.str()
+            << "replacement configurations=" << result.configurations
+            << " starts=" << result.starts_admitted
+            << " protocol_failures=" << result.protocol_failures << '\n';
+  if (result.configurations != 4 || result.starts_admitted != 4) return 1;
+  for(unsigned fault=1;fault<=6;++fault) {
+    radios[0]->status_fault.store(fault);
+    std::ostringstream rejected_events;
+    auto rejected=std::make_unique<sdr::ProcessorController>(config,rejected_events);
+    std::this_thread::sleep_for(std::chrono::milliseconds(600));
+    auto metrics=rejected->metrics();
+    assert(!rejected->coordinated() && metrics.starts_submitted==0);
+    assert(metrics.configurations<=3); // invalid radio must never be configured
+    assert(metrics.status_failures>0 || metrics.protocol_failures>0);
+    rejected.reset();
+  }
 }

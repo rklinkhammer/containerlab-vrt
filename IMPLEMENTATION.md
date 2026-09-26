@@ -1,3 +1,31 @@
+# Latest local health recovery
+
+[Qualified local-activity/2 policy](artifacts/health-recovery/RESULTS.md) recovers health from recent activity/error deltas without resetting history. The real processor trial retained 145 waiting_context discards through degraded → healthy, with successful controller/data recovery. 16/16 tests passed on macOS and Linux; task lab removed and VM stopped. Next bounded gap: recorder replacement with capture-file preservation. Earlier phase conclusions below remain historical.
+
+# Latest discard classification
+
+[Completed qualification](artifacts/discard-classification/RESULTS.md): 141 transition discards were all waiting_context, with no growth in the sustained window. 16/16 tests pass on macOS and Linux; actual controller/data recovery still passes and the fresh VM is stopped. Historical 130 counts remain unclassified. Next: current-health recovery semantics using recent activity/counter deltas without erasing history.
+
+# Latest processor recovery fix
+
+[Qualified recovery](artifacts/processor-recovery-fix/RESULTS.md) now preserves stream IDs through a pinned native command-resumption extension and bounded status handshake. Native stop precedes reconfiguration of streaming radios. 16/16 tests pass on macOS and Linux; the fresh actual runtime trial passed four configurations/starts and four-tone recovery, and the VM is stopped. Transition data discard classification is the next bounded step. Earlier failures below remain historical.
+
+# Latest processor recovery qualification
+
+[Processor replacement failed control-plane acceptance](artifacts/processor-recovery-qualification/RESULTS.md) in two attempts despite recovered four-stream data processing. New controller VRT status reconciliation timed out; no configurations or starts succeeded. Both labs were removed and the fresh VM stopped. Next: deterministic fresh-controller/surviving-radio regression and native association-lifecycle diagnosis, followed by a focused fix and new runtime qualification. No application source changes in this slice.
+
+# Latest radio recovery qualification
+
+[Single-radio replacement](artifacts/radio-recovery-qualification/RESULTS.md) passed native lifecycle, controller boot-change/reconfiguration/start, actual streaming and four-tone recovery checks. Other seven nodes were unchanged. Retries and sequence discontinuities make this disruptive recovery. All task resources were cleaned and the fresh VM is stopped. Processor replacement is the next unqualified recovery boundary. No application source changed in this slice.
+
+# Latest recovery qualification
+
+[Native detector replacement](artifacts/recovery-qualification/RESULTS.md) restored traffic while preserving all seven non-target container IDs and start times. Full native redeploy also passed as a disruptive fallback. Link-only reconciliation did not restore the existing node's exec-configured address/MTU. The new qualification VM is stopped; no application code changed in this slice.
+
+# Latest Linux qualification
+
+[Patched ARM64 qualification](artifacts/linux-runtime-qualification/RESULTS.md) now records 15/15 Linux tests, sustained switched traffic, telemetry/recorder checks, overhead and stopped-VM cleanup. Direct Docker restart recovery and capture completeness remain unqualified. This supersedes the prior “not rerun on Linux” status, not historical evidence.
+
 # Current telemetry slice
 
 Versioned heartbeats and role counters are implemented without changing VITA payload semantics or third-party headers. See [telemetry contract](docs/TELEMETRY.md) and [evidence](artifacts/telemetry/RESULTS.md). The telemetry baseline passed 12/14; the subsequent [runtime fixes](artifacts/runtime-fixes/RESULTS.md) address both failures with a documented patch against the pinned framework. Six finite Linux container cases qualify local heartbeat and recorder failures, not the complete coordinated eight-node workflow. Historical qualification below is unchanged.
@@ -82,3 +110,8 @@ sudo bash scripts/destroy.sh
 ```
 
 These commands are intended for a dedicated isolated Linux host with Docker and Containerlab. The integrated sequence above was executed in the dedicated Linux VM described here. Local source validation also passed 12/12 CTest targets, 4/4 Python generator tests, ShellCheck for every lifecycle script, and Python bytecode compilation. Final cleanup removed the eight exact containers and management network, and the dedicated VM was stopped.
+
+
+## Recorder replacement and capture preservation (2026-09-26 UTC)
+
+Implemented exclusive PCAP creation and separate bounded capture-session directories with exact container identity, retained hashes and explicit incomplete outcomes. See [contract](docs/CAPTURE_PRESERVATION.md) and [actual evidence](artifacts/recorder-recovery/RESULTS.md). macOS/Linux CTest16/16 and three offline lifecycle tests pass. Fresh ARM64 native recorder replacement preserved other seven identities, recovered traffic, and retained completed captures across removal. The expected interrupted attempt returned137 with a partial file and incomplete manifest. Both complete PCAPs passed structural checks but exhausted their byte cap and had kernel drops. Capture completeness/durable storage is not established. Lab removed; dedicated VM stopped. Next: bounded switch replacement, not an assumption of universal recovery.

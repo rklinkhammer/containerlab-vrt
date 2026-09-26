@@ -1,0 +1,45 @@
+{
+  "sha256": "de6d3eabc19c99340e50e9f13e8a830211311844b32657f0bba1cc6ea9ae3594",
+  "bytes": 67107198,
+  "records": 11961,
+  "first_timestamp": [
+    1790385507,
+    893152
+  ],
+  "last_timestamp": [
+    1790385511,
+    773078
+  ],
+  "metrics": {
+    "interface": "eth1",
+    "limits": {
+      "capture_bytes": 67108864,
+      "duration_seconds": 60,
+      "receive_buffer_bytes": 65535,
+      "socket_receive_bytes": 4194304
+    },
+    "observation_clock": "unix",
+    "observed_unix_ns": 1790385567893343564,
+    "passive": true,
+    "pcap": {
+      "bytes": 67107198,
+      "enabled": true,
+      "frames": 11961,
+      "io_errors": 0,
+      "limit_reached": true
+    },
+    "receive": {
+      "errors": 0,
+      "frames": 342985,
+      "kernel_drops": 10917,
+      "kernel_packets": 353902,
+      "truncations": 0,
+      "wire_bytes": 1925841848
+    },
+    "role": "recorder",
+    "schema": 1,
+    "status": "stopped",
+    "uptime_ms": 60000
+  },
+  "complete_record_boundaries": true
+}

@@ -1,0 +1,2 @@
+# Full synthetic process logs remain local; reviewed summaries and hashes are tracked.
+/guest/**/*.jsonl

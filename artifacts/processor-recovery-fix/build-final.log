@@ -1,0 +1,10 @@
+[1/10] Building CXX object CMakeFiles/sdr_processor_controller_tests.dir/tests/processor_controller_tests.cpp.o
+[2/10] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[3/10] Linking CXX static library libsdr_vrt_adapter.a
+[4/10] Linking CXX executable sdr_vrt_adapter_tests
+[5/10] Linking CXX executable sdr_vrt_scheduled_start_tests
+[6/10] Linking CXX executable sdr_vrt_command_resumption_tests
+[7/10] Linking CXX executable radio
+[8/10] Linking CXX executable sdr_radio_transport_tests
+[9/10] Linking CXX executable processor
+[10/10] Linking CXX executable sdr_processor_controller_tests

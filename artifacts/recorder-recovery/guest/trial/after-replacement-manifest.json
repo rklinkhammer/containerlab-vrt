@@ -1,0 +1,23 @@
+{
+  "schema": "recorder.capture/1",
+  "container_id": "60f1dc4cf2668762ae041573739ee64c6a0be0d6c51b6e672f5492de2864ef29",
+  "started_at": "2026-09-26T01:18:27.851873+00:00",
+  "status": "completed",
+  "duration_limit_seconds": 60,
+  "byte_limit": 67108864,
+  "durable_commit": "not_measured",
+  "files": {
+    "capture.pcap": {
+      "copy_exit": 0,
+      "bytes": 67107198,
+      "sha256": "de6d3eabc19c99340e50e9f13e8a830211311844b32657f0bba1cc6ea9ae3594"
+    },
+    "metrics.json": {
+      "copy_exit": 0,
+      "bytes": 501,
+      "sha256": "191bdc7cc2e3aa19d65785d8956fdd488c7b63afbbc39c9dfc82abef249220f6"
+    }
+  },
+  "capture_exit": 0,
+  "finished_at": "2026-09-26T01:19:28.033748+00:00"
+}

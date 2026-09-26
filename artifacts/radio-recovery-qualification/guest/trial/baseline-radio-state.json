@@ -1,0 +1,125 @@
+{
+  "status": {
+    "boot_id": "3bb3035e938f1b7ccb702631cff010e3",
+    "clipped_samples": 0,
+    "connection": {
+      "active": true,
+      "generation": 1
+    },
+    "observation": {
+      "clock_domain": "utc",
+      "timestamp_unix_ns": 1790380666947077043
+    },
+    "radio_id": "radio1",
+    "ready": true,
+    "sample_ordinal": 35409920,
+    "settings": {
+      "bandwidth_hz": 800000,
+      "center_hz": 100000000,
+      "gain_db": 0.0,
+      "sample_rate_hz": 1000000
+    },
+    "streaming": true,
+    "uptime_ms": 51906,
+    "version": 1
+  },
+  "heartbeat": {
+    "boot_id": "92ebc8896469cf5be53f48ee0ea71ec7",
+    "data": {
+      "clipped_samples": 0,
+      "control_rx_bytes": 1832,
+      "control_rx_packets": 41,
+      "downstream_delivery": null,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "sample_ordinal": 33505280,
+      "streaming": true,
+      "tx_bytes": 135082588,
+      "tx_completed_submissions": 33005,
+      "tx_failed_submissions": 0,
+      "write_retries": 0
+    },
+    "event": "heartbeat",
+    "instance": "radio1",
+    "last_successful_activity": "2026-09-25T23:57:45.041Z",
+    "ready": true,
+    "role": "radio",
+    "schema": "vrt.telemetry/1",
+    "sequence": 11,
+    "state": "healthy",
+    "suppressed_events": 0,
+    "timestamp": "2026-09-25T23:57:45.042Z",
+    "uptime_ms": 50202
+  },
+  "first_event": {
+    "boot_id": "92ebc8896469cf5be53f48ee0ea71ec7",
+    "data": {
+      "clipped_samples": 0,
+      "control_rx_bytes": 0,
+      "control_rx_packets": 0,
+      "downstream_delivery": null,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "sample_ordinal": 0,
+      "streaming": false,
+      "tx_bytes": 0,
+      "tx_completed_submissions": 0,
+      "tx_failed_submissions": 0,
+      "write_retries": 0
+    },
+    "event": "heartbeat",
+    "instance": "radio1",
+    "last_successful_activity": null,
+    "ready": true,
+    "role": "radio",
+    "schema": "vrt.telemetry/1",
+    "sequence": 1,
+    "state": "idle",
+    "suppressed_events": 0,
+    "timestamp": "2026-09-25T23:56:55.041Z",
+    "uptime_ms": 201
+  },
+  "interface": [
+    {
+      "ifindex": 19,
+      "link_index": 18,
+      "ifname": "eth1",
+      "flags": [
+        "BROADCAST",
+        "MULTICAST",
+        "UP",
+        "LOWER_UP"
+      ],
+      "mtu": 9000,
+      "qdisc": "noqueue",
+      "operstate": "UP",
+      "group": "default",
+      "link_type": "ether",
+      "address": "aa:c1:ab:43:6d:3c",
+      "broadcast": "ff:ff:ff:ff:ff:ff",
+      "link_netnsid": 1,
+      "altnames": [
+        "clab-o-1b0d2c0f9fb5efa6"
+      ],
+      "addr_info": [
+        {
+          "family": "inet",
+          "local": "10.79.0.10",
+          "prefixlen": 24,
+          "scope": "global",
+          "label": "eth1",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        },
+        {
+          "family": "inet6",
+          "local": "fe80::a8c1:abff:fe43:6d3c",
+          "prefixlen": 64,
+          "scope": "link",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        }
+      ]
+    }
+  ]
+}

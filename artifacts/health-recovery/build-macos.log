@@ -1,0 +1,30 @@
+[1/30] Building CXX object CMakeFiles/detector.dir/apps/detector.cpp.o
+[2/30] Building CXX object CMakeFiles/recorder.dir/apps/recorder.cpp.o
+[3/30] Building CXX object CMakeFiles/processor.dir/apps/processor.cpp.o
+[4/30] Building CXX object CMakeFiles/sdr_telemetry.dir/src/telemetry.cpp.o
+[5/30] Linking CXX static library libsdr_telemetry.a
+[6/30] Linking CXX executable recorder
+[7/30] Linking CXX executable sdr_recorder_tests
+[8/30] Linking CXX executable sdr_soapy_tests
+[9/30] Linking CXX executable sdr_core_tests
+[10/30] Linking CXX executable sdr_status_tests
+[11/30] Linking CXX executable sdr_radio_services_tests
+[12/30] Building CXX object CMakeFiles/sdr_telemetry_tests.dir/tests/telemetry_tests.cpp.o
+[13/30] Linking CXX executable sdr_telemetry_tests
+[14/30] Building CXX object CMakeFiles/sdr_telemetry_pipeline_tests.dir/tests/telemetry_pipeline_tests.cpp.o
+[15/30] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[16/30] Linking CXX static library libsdr_udp_apps.a
+[17/30] Linking CXX executable sdr_telemetry_pipeline_tests
+[18/30] Linking CXX executable detector
+[19/30] Linking CXX executable sdr_udp_pipeline_tests
+[20/30] Linking CXX executable sdr_udp_integration_tests
+[21/30] Building CXX object CMakeFiles/radio.dir/apps/radio.cpp.o
+[22/30] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[23/30] Linking CXX static library libsdr_vrt_adapter.a
+[24/30] Linking CXX executable sdr_vrt_adapter_tests
+[25/30] Linking CXX executable processor
+[26/30] Linking CXX executable radio
+[27/30] Linking CXX executable sdr_vrt_command_resumption_tests
+[28/30] Linking CXX executable sdr_vrt_scheduled_start_tests
+[29/30] Linking CXX executable sdr_processor_controller_tests
+[30/30] Linking CXX executable sdr_radio_transport_tests

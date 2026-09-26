@@ -1,0 +1,32 @@
+{
+  "native_version": "0.79.0",
+  "native_commit": "5ae50094a",
+  "image_id": "sha256:6f193efb674c3564067d30dabf4792d678ab00a4f416a8df130a02b1584e444c",
+  "reconciliation": "FAIL: link restored, address and MTU not restored; no traffic in 90 seconds",
+  "full_redeploy": "PASS: all eight containers replaced; 30-second advancing traffic check",
+  "detector_replacement": "PASS: native filtered destroy plus full-topology deploy",
+  "replaced_nodes": [
+    "detector"
+  ],
+  "unchanged_non_target_container_ids_and_start_times": true,
+  "new_process_sequence": 1,
+  "new_process_initial_datagrams": 0,
+  "detector_final_datagrams": 67472,
+  "detector_final_sequence_gaps": 0,
+  "verification_window_seconds": 30,
+  "source_inputs_unchanged": true,
+  "cleanup": {
+    "remaining_containers": [],
+    "input_hashes_unchanged": true,
+    "lab_destroy_audits": "both passed"
+  },
+  "vm": {
+    "name": "clab-vrt-recovery-20260925-222243",
+    "status": "Stopped",
+    "vmType": "vz",
+    "arch": "aarch64",
+    "cpus": 8,
+    "memory": 17179869184,
+    "limaVersion": "2.2.0"
+  }
+}

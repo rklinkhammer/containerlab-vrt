@@ -1,0 +1,370 @@
+{
+  "radio1": {
+    "id": "b9110a7e32458cd743e773b87bd21a649c5c18ef87ed14634beb072b6a75eb6c",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32939,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.195996144Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 7,
+    "last_telemetry": {
+      "boot_id": "c36d70a8c84cf10e4e0f60cb62367032",
+      "data": {
+        "clipped_samples": 0,
+        "control_rx_bytes": 996,
+        "control_rx_packets": 22,
+        "downstream_delivery": null,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "sample_ordinal": 14607360,
+        "streaming": true,
+        "tx_bytes": 58892804,
+        "tx_completed_submissions": 14402,
+        "tx_failed_submissions": 0,
+        "write_retries": 0
+      },
+      "event": "heartbeat",
+      "instance": "radio1",
+      "last_successful_activity": "2026-09-25T22:19:15.553Z",
+      "ready": true,
+      "role": "radio",
+      "schema": "vrt.telemetry/1",
+      "sequence": 7,
+      "state": "healthy",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T22:19:15.553Z",
+      "uptime_ms": 30201
+    },
+    "boot_ids": [
+      "c36d70a8c84cf10e4e0f60cb62367032"
+    ]
+  },
+  "radio2": {
+    "id": "c7dd213b958326f30cf4468f4a19b5eb0af3f11a6374587e29d7c0c18f2c27f7",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32877,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.189209533Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 7,
+    "last_telemetry": {
+      "boot_id": "47e14d5b4d6857e1def961094d5468d7",
+      "data": {
+        "clipped_samples": 0,
+        "control_rx_bytes": 996,
+        "control_rx_packets": 22,
+        "downstream_delivery": null,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "sample_ordinal": 14525440,
+        "streaming": true,
+        "tx_bytes": 58562564,
+        "tx_completed_submissions": 14322,
+        "tx_failed_submissions": 0,
+        "write_retries": 0
+      },
+      "event": "heartbeat",
+      "instance": "radio2",
+      "last_successful_activity": "2026-09-25T22:19:15.471Z",
+      "ready": true,
+      "role": "radio",
+      "schema": "vrt.telemetry/1",
+      "sequence": 7,
+      "state": "healthy",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T22:19:15.471Z",
+      "uptime_ms": 30201
+    },
+    "boot_ids": [
+      "47e14d5b4d6857e1def961094d5468d7"
+    ]
+  },
+  "radio3": {
+    "id": "98f98da821ad233c105dd9d8964124cda8e415cc3e09cf79a752ba455e4ef722",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32915,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.195600719Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 7,
+    "last_telemetry": {
+      "boot_id": "ac8f200fc3651a057966b21341d0e949",
+      "data": {
+        "clipped_samples": 0,
+        "control_rx_bytes": 996,
+        "control_rx_packets": 22,
+        "downstream_delivery": null,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "sample_ordinal": 14540800,
+        "streaming": true,
+        "tx_bytes": 58624484,
+        "tx_completed_submissions": 14337,
+        "tx_failed_submissions": 0,
+        "write_retries": 0
+      },
+      "event": "heartbeat",
+      "instance": "radio3",
+      "last_successful_activity": "2026-09-25T22:19:15.486Z",
+      "ready": true,
+      "role": "radio",
+      "schema": "vrt.telemetry/1",
+      "sequence": 7,
+      "state": "healthy",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T22:19:15.486Z",
+      "uptime_ms": 30201
+    },
+    "boot_ids": [
+      "ac8f200fc3651a057966b21341d0e949"
+    ]
+  },
+  "radio4": {
+    "id": "897c047bc525dc14e1894e7ff80705ffc7999a161c595e95bdcce358e745cc49",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32937,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.195217585Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 7,
+    "last_telemetry": {
+      "boot_id": "27595e89c55d5799a9a316e9866358b0",
+      "data": {
+        "clipped_samples": 0,
+        "control_rx_bytes": 996,
+        "control_rx_packets": 22,
+        "downstream_delivery": null,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "sample_ordinal": 14600192,
+        "streaming": true,
+        "tx_bytes": 58863908,
+        "tx_completed_submissions": 14395,
+        "tx_failed_submissions": 0,
+        "write_retries": 0
+      },
+      "event": "heartbeat",
+      "instance": "radio4",
+      "last_successful_activity": "2026-09-25T22:19:15.545Z",
+      "ready": true,
+      "role": "radio",
+      "schema": "vrt.telemetry/1",
+      "sequence": 7,
+      "state": "healthy",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T22:19:15.546Z",
+      "uptime_ms": 30202
+    },
+    "boot_ids": [
+      "27595e89c55d5799a9a316e9866358b0"
+    ]
+  },
+  "processor": {
+    "id": "9d2a3ef3b9db2ddd433cbe30a9378093e9dee0bfdc66edee00129fcc1fe45c52",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32851,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.185835832Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 7,
+    "last_telemetry": {
+      "boot_id": "4001ffe221aa44044fac737027a73916",
+      "data": {
+        "context_updates": 284,
+        "datagrams": 57433,
+        "downstream_delivery": null,
+        "malformed": 0,
+        "observed_unix_ns": 1790374755576679562,
+        "packet_gaps": 0,
+        "processing_calls": 57433,
+        "processing_ns_total": 1334264958,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "rx_bytes": 235925840,
+        "send_failures": 0,
+        "spectra": 28573,
+        "tx_bytes": 245042048,
+        "tx_packets": 28573,
+        "unavailable": 0
+      },
+      "event": "heartbeat",
+      "instance": "processor",
+      "last_successful_activity": "2026-09-25T22:19:15.576Z",
+      "ready": true,
+      "role": "processor",
+      "schema": "vrt.telemetry/1",
+      "sequence": 7,
+      "state": "healthy",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T22:19:15.576Z",
+      "uptime_ms": 30224
+    },
+    "boot_ids": [
+      "4001ffe221aa44044fac737027a73916"
+    ]
+  },
+  "detector": {
+    "id": "6b9fbd7785cc1925331b579419a5384b00ed5b9be2262f88850a2556d48528d7",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32819,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.177102469Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 167,
+    "last_telemetry": {
+      "boot_id": "e18ddc9624d91ace9daba6ab7e839f17",
+      "data": {
+        "datagrams": 28177,
+        "detections": 28177,
+        "downstream_delivery": null,
+        "gapped": 0,
+        "malformed": 0,
+        "observed_unix_ns": 1790374755374116438,
+        "processing_calls": 28177,
+        "processing_ns_total": 245265464,
+        "proven_packet_loss": null,
+        "queue_depth": null,
+        "rx_bytes": 241645952,
+        "sequence_gaps": 0,
+        "tx_bytes": null,
+        "tx_packets": null,
+        "unavailable": 0,
+        "zero": 0
+      },
+      "event": "heartbeat",
+      "instance": "detector",
+      "last_successful_activity": "2026-09-25T22:19:15.374Z",
+      "ready": true,
+      "role": "detector",
+      "schema": "vrt.telemetry/1",
+      "sequence": 157,
+      "state": "healthy",
+      "suppressed_events": 28027,
+      "timestamp": "2026-09-25T22:19:15.374Z",
+      "uptime_ms": 30026
+    },
+    "boot_ids": [
+      "e18ddc9624d91ace9daba6ab7e839f17"
+    ]
+  },
+  "recorder": {
+    "id": "07c34e9153157f4bdc988c3a26bf7e0ed79b2b0c6fd38fa1adb5b224eda7861e",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32845,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.183791536Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0,
+    "telemetry_count": 7,
+    "last_telemetry": {
+      "boot_id": "bdb422119474dbb0ff2910462e3c9a92",
+      "data": {
+        "durably_committed_bytes": null,
+        "kernel_drops": 0,
+        "pcap_bytes_accepted": 0,
+        "pcap_enabled": false,
+        "pcap_frames": 0,
+        "pcap_io_errors": 0,
+        "pcap_limit_reached": false,
+        "queue_depth": null,
+        "receive_errors": 0,
+        "receive_truncations": 0,
+        "rx_frames": 85566,
+        "rx_wire_bytes": 479263373
+      },
+      "event": "heartbeat",
+      "instance": "recorder",
+      "last_successful_activity": "2026-09-25T22:19:15.414Z",
+      "ready": true,
+      "role": "recorder",
+      "schema": "vrt.telemetry/1",
+      "sequence": 7,
+      "state": "healthy",
+      "suppressed_events": 0,
+      "timestamp": "2026-09-25T22:19:15.414Z",
+      "uptime_ms": 30147
+    },
+    "boot_ids": [
+      "bdb422119474dbb0ff2910462e3c9a92"
+    ]
+  },
+  "switch1": {
+    "id": "25343bed6eb84a26821d624f0f0929caa19ed3dd89478e2989956ba0d680607f",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 32976,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-25T22:18:45.196998583Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "restart_count": 0
+  }
+}

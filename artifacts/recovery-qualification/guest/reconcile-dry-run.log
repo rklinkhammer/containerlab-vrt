@@ -1,0 +1,17 @@
+{
+  "dry-run": true,
+  "deployed-lab": false,
+  "added-nodes": [],
+  "deleted-nodes": [],
+  "recreated-nodes": [],
+  "started-nodes": [],
+  "added-links": [
+    "detector:eth1 -- switch1:e1-6"
+  ],
+  "deleted-endpoints": [],
+  "restarted-nodes": []
+}
+18:27:27 INFO Containerlab started version=0.79.0
+18:27:27 INFO Parsing & checking topology file=four-radio.clab.yml
+18:27:27 INFO Applying link change without node lifecycle action node=switch1 change="added link"
+18:27:27 INFO Applying link change without node lifecycle action node=detector change="added link"

@@ -1,0 +1,18 @@
+{
+  "vm": "clab-vrt-recovery-20260925-222243",
+  "source_commit": "8ae49ca60a59444228d9019f38042459c7754363",
+  "scope": "Containerlab-managed recovery; new dedicated VM",
+  "source_archive_sha256": "75e468fcc8ce38b61d4467258c5ab9d15698cdf56164a1a1231f0159de037fb4",
+  "vrt_manifest": {
+    "revision": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+    "include_tree_sha256": "0f3f858114d2a70f112b1fc40e05a2ac8bdb8afd43ebcb6e8fbbd1a5d7d09d3c",
+    "base_include_tree_sha256": "cfb6b98be0f6cc6cadc0701cceda992e726a5b8cc85c77378599163d69786259",
+    "patches": [
+      {
+        "path": "patches/vrt-runtime-progress.patch",
+        "sha256": "a4ebe2d9904650283145f0ce2bffeb288298d611226ad55c99b09d0b9e8ab662"
+      }
+    ]
+  },
+  "guest_home": "/home/rklinkhammer.guest"
+}

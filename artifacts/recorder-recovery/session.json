@@ -1,0 +1,23 @@
+{
+  "vm": "clab-vrt-recorder-20260926-011019",
+  "source_commit": "8ae49ca60a59444228d9019f38042459c7754363",
+  "source_archive_sha256": "f6d1274b2033bd830021c8995bbda4496f743ed4b976bcfbb0232cf183eb003a",
+  "vrt_manifest": {
+    "revision": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+    "include_tree_sha256": "cb95ce93ac12fbad50c58335aee98f805db9964b27ed1451e5f56cfc1347d313",
+    "base_include_tree_sha256": "cfb6b98be0f6cc6cadc0701cceda992e726a5b8cc85c77378599163d69786259",
+    "patches": [
+      {
+        "path": "patches/vrt-runtime-progress.patch",
+        "sha256": "a4ebe2d9904650283145f0ce2bffeb288298d611226ad55c99b09d0b9e8ab662"
+      },
+      {
+        "path": "patches/vrt-command-resumption.patch",
+        "sha256": "fe8fa74af94f54d42da6fca5457e12463fd0df255351e806ff25b16c2700e361"
+      }
+    ]
+  },
+  "qualification_overrides": {
+    "scripts/capture_session.py": "e02e9b899c918b61e4e09bbcc2ba8c2a5eb2e3ffcaf6b41c04050ae75b9feadd"
+  }
+}

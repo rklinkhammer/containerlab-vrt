@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-09-25T22:28:19.222051+00:00",
+  "nodes": {
+    "radio1": {
+      "id": "62343ab34804945837976c8ce9eb1af5601b886f9ac61a7810548b2bcc3ff3f4",
+      "started_at": "2026-09-25T22:26:29.863077305Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio2": {
+      "id": "bfbc32270f15ebe6c8cc43bc0e13ecb33d187c6ccb6d50ccc08e7141e42b3199",
+      "started_at": "2026-09-25T22:26:29.867860415Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio3": {
+      "id": "f211b1d51d54b9ef3773760b8f3088793a2883e51dde207e142227830875a7a5",
+      "started_at": "2026-09-25T22:26:29.860383374Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio4": {
+      "id": "e846957a7a9576007581406f7351d0bb0f691550fef9548c1c68d256b50bd563",
+      "started_at": "2026-09-25T22:26:29.858326237Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "processor": {
+      "id": "cb3f021489b3dd4acb6210f56275e59a1bd3c0ba63af3ce53d76ac2ee592651a",
+      "started_at": "2026-09-25T22:26:29.864249562Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "detector": {
+      "id": "3c949ffecfe1cf19d041d3058d634ab24a691d9bd713ba179aad0f6bbe5ea247",
+      "started_at": "2026-09-25T22:27:15.656148533Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "recorder": {
+      "id": "143bff6ae7467ad4125e670525addf99fa371aba6a3d64108d2eca4651b41b10",
+      "started_at": "2026-09-25T22:26:29.8576474Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "switch1": {
+      "id": "18c5d8c2435ad3e33f84795118273a52fe44baee69f828b80a57df85607e3a50",
+      "started_at": "2026-09-25T22:26:29.867466788Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    }
+  },
+  "detector_interface": {
+    "exit": 0,
+    "interfaces": [
+      {
+        "ifindex": 37,
+        "link_index": 38,
+        "ifname": "eth1",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 9500,
+        "qdisc": "noqueue",
+        "operstate": "UP",
+        "group": "default",
+        "link_type": "ether",
+        "address": "aa:c1:ab:eb:65:5e",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "link_netnsid": 1,
+        "altnames": [
+          "clab-o-51e6de6307cb2563"
+        ],
+        "addr_info": [
+          {
+            "family": "inet6",
+            "local": "fe80::a8c1:abff:feeb:655e",
+            "prefixlen": 64,
+            "scope": "link",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "heartbeat": {
+    "boot_id": "2365ccb68bbd37758fcef85064589d30",
+    "data": {
+      "datagrams": 0,
+      "detections": 0,
+      "downstream_delivery": null,
+      "gapped": 0,
+      "malformed": 0,
+      "observed_unix_ns": 1790375295786209559,
+      "processing_calls": 0,
+      "processing_ns_total": 0,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "rx_bytes": 0,
+      "sequence_gaps": 0,
+      "tx_bytes": null,
+      "tx_packets": null,
+      "unavailable": 0,
+      "zero": 0
+    },
+    "event": "heartbeat",
+    "instance": "detector",
+    "last_successful_activity": null,
+    "ready": true,
+    "role": "detector",
+    "schema": "vrt.telemetry/1",
+    "sequence": 13,
+    "state": "idle",
+    "suppressed_events": 0,
+    "timestamp": "2026-09-25T22:28:15.786Z",
+    "uptime_ms": 60082
+  },
+  "boots": [
+    "2365ccb68bbd37758fcef85064589d30"
+  ],
+  "tones": {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": []
+  }
+}

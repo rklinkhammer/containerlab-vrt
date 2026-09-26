@@ -1,0 +1,350 @@
+Hit:1 http://security.ubuntu.com/ubuntu resolute-security InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu resolute InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu resolute-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu resolute-backports InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.53.0-1ubuntu1).
+python3 is already the newest version (3.14.3-0ubuntu2).
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 162 not upgraded.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0100   1042 100   1042   0      0   9027      0                              0100   1042 100   1042   0      0   9024      0                              0100   1042 100   1042   0      0   9022      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0100 14.05M 100 14.05M   0      0 40.47M      0                              0100 14.05M 100 14.05M   0      0 40.46M      0                              0100 14.05M 100 14.05M   0      0 40.46M      0                              0
+containerlab_0.79.0_linux_arm64.tar.gz: OK
+{"log-driver":"json-file","log-opts":{"max-size":"8m","max-file":"3"}}
+
+ ⣴⡾⠛⠛⠖ ⢠⣶⠟⠛⢷⣦ ⢸⣿⣧  ⣿ ⠘⠛⢻⡟⠛⠛  ⣾⣿⡀  ⣿⡇ ⣿⣿⡄ ⢸⡇ ⣿⡟⠛⠛⠃⢸⣿⠛⠛⣷⡄ [38;2;0;201;255m⣿⡇[0m      [38;2;0;201;255m⣿⡇[0m    
+⢸⣿     ⣿⡇   ⣿⡇⢸⣿⠹⣧⡀⣿   ⢸⡇   ⣸⡏⢹⣧  ⣿⡇ ⣿⡏⢿⣄⢸⡇ ⣿⣧⣤⣤ ⢸⣿⣀⣀⣾⠇ [38;2;0;201;255m⣿⡇⠐⠟⠛⢿⡆[0m [38;2;0;201;255m⣿⡷⠛⢿⣆[0m 
+⠘⣿⣄  ⡀ ⢻⣧⡀ ⣠⣿⠃⢸⣿ ⠘⣷⣿   ⢸⡇  ⢠⣿⠷⠶⢿⡆ ⣿⡇ ⣿⡇ ⢻⣾⡇ ⣿⡇   ⢸⣿⠉⢻⣧⡀ [38;2;0;201;255m⣿⡇⢰⡟⠛⣻⡇[0m [38;2;0;201;255m⣿⡇[0m [38;2;0;201;255m⣸⡿[0m 
+ ⠈⠙⠛⠛⠉  ⠉⠛⠛⠋⠁ ⠘⠛  ⠈⠛   ⠘⠃  ⠚⠃  ⠘⠛ ⠛⠃ ⠛⠃  ⠙⠃ ⠛⠛⠛⠛⠃⠘⠛  ⠙⠓ [38;2;0;201;255m⠛⠃⠈⠛⠛⠙⠃[0m [38;2;0;201;255m⠛⠛⠛⠛⠁[0m 
+
+    version: 0.79.0
+     commit: 5ae50094a
+       date: 2026-08-21T12:00:52Z
+     source: https://github.com/srl-labs/containerlab
+ rel. notes: https://containerlab.dev/rn/0.79/
+Client:
+ Version:           29.1.3
+ API version:       1.52
+ Go version:        go1.24.13
+ Git commit:        29.1.3-0ubuntu4.1
+ Built:             Wed Apr 29 16:40:20 2026
+ OS/Arch:           linux/arm64
+ Context:           default
+
+Server:
+ Engine:
+  Version:          29.1.3
+  API version:      1.52 (minimum version 1.44)
+  Go version:       go1.24.13
+  Git commit:       29.1.3-0ubuntu4.1
+  Built:            Wed Apr 29 16:40:20 2026
+  OS/Arch:          linux/arm64
+  Experimental:     false
+ containerd:
+  Version:          2.2.2
+  GitCommit:        
+ runc:
+  Version:          1.4.0-0ubuntu1
+  GitCommit:        
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        
+Verified VRT base: 51853ba29703f51aceb2cfefe5a12a65a8e1110f patched include tree: 0f3f858114d2a70f112b1fc40e05a2ac8bdb8afd43ebcb6e8fbbd1a5d7d09d3c
+Verified VRT base: 51853ba29703f51aceb2cfefe5a12a65a8e1110f patched include tree: 0f3f858114d2a70f112b1fc40e05a2ac8bdb8afd43ebcb6e8fbbd1a5d7d09d3c
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  1.226MB
+Step 1/28 : ARG BASE_IMAGE
+Step 2/28 : FROM ${BASE_IMAGE} AS build
+bookworm-20250908-slim: Pulling from library/debian
+Digest: sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+Status: Image is up to date for debian:bookworm-20250908-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ ---> df52e55e3361
+Step 3/28 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> 7a8e01765611
+Step 4/28 : ARG NLOHMANN_JSON_VERSION
+ ---> Using cache
+ ---> 1e933e19283b
+Step 5/28 : ARG NLOHMANN_JSON_SHA256
+ ---> Using cache
+ ---> 0613ab0e7d54
+Step 6/28 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends       ca-certificates cmake curl g++ libsoapysdr-dev ninja-build     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> c64372589874
+Step 7/28 : RUN curl --fail --location --proto '=https' --tlsv1.2       "https://github.com/nlohmann/json/releases/download/v${NLOHMANN_JSON_VERSION}/json.tar.xz"       --output /tmp/nlohmann-json.tar.xz     && echo "${NLOHMANN_JSON_SHA256}  /tmp/nlohmann-json.tar.xz" | sha256sum --check --strict     && cmake -E tar xf /tmp/nlohmann-json.tar.xz     && cmake -S json -B /tmp/nlohmann-build -G Ninja       -DJSON_BuildTests=OFF -DCMAKE_BUILD_TYPE=Release       -DCMAKE_INSTALL_PREFIX=/opt/deps     && cmake --build /tmp/nlohmann-build --target install
+ ---> Using cache
+ ---> 576ce4b3b8e6
+Step 8/28 : WORKDIR /src
+ ---> Using cache
+ ---> e2ddde2079aa
+Step 9/28 : COPY CMakeLists.txt ./
+ ---> 35eb75d2d4a4
+Step 10/28 : COPY apps apps
+ ---> 599c9930d01d
+Step 11/28 : COPY include include
+ ---> 3663ce04f916
+Step 12/28 : COPY src src
+ ---> 8b40e7e16bd9
+Step 13/28 : COPY third_party/vrt_framework/include third_party/vrt_framework/include
+ ---> 66676cad5e4a
+Step 14/28 : RUN cmake -S . -B /tmp/build -G Ninja       -DBUILD_TESTING=OFF       -DCMAKE_BUILD_TYPE=Release       -DCMAKE_PREFIX_PATH=/opt/deps       -DCMAKE_INSTALL_PREFIX=/opt/containerlab-vrt     && cmake --build /tmp/build --parallel     && cmake --install /tmp/build     && test -x /opt/containerlab-vrt/bin/radio     && test -x /opt/containerlab-vrt/bin/processor     && test -x /opt/containerlab-vrt/bin/detector     && test -x /opt/containerlab-vrt/bin/recorder
+ ---> Running in 616811a3fe05
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found nlohmann_json: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable exact version "3.12.0") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/build
+[1/24] Building CXX object CMakeFiles/sdr_core.dir/src/virtual_radio.cpp.o
+[2/24] Building CXX object CMakeFiles/sdr_core.dir/src/spectrum.cpp.o
+[3/24] Building CXX object CMakeFiles/sdr_core.dir/src/soapy_virtual_device.cpp.o
+[4/24] Building CXX object CMakeFiles/detector.dir/apps/detector.cpp.o
+[5/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/vrt_radio_adapter.cpp.o
+[6/24] Building CXX object CMakeFiles/sdr_telemetry.dir/src/telemetry.cpp.o
+[7/24] Linking CXX static library libsdr_telemetry.a
+[8/24] Building CXX object CMakeFiles/sdr_recorder.dir/src/recorder.cpp.o
+[9/24] Linking CXX static library libsdr_recorder.a
+[10/24] Building CXX object CMakeFiles/processor.dir/apps/processor.cpp.o
+[11/24] Building CXX object CMakeFiles/sdr_core.dir/src/status.cpp.o
+[12/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/radio_transport.cpp.o
+[13/24] Building CXX object CMakeFiles/recorder.dir/apps/recorder.cpp.o
+[14/24] Linking CXX executable recorder
+[15/24] Building CXX object CMakeFiles/sdr_core.dir/src/radio_services.cpp.o
+[16/24] Linking CXX static library libsdr_core.a
+[17/24] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[18/24] Linking CXX static library libsdr_udp_apps.a
+[19/24] Linking CXX executable detector
+[20/24] Building CXX object CMakeFiles/radio.dir/apps/radio.cpp.o
+[21/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[22/24] Linking CXX static library libsdr_vrt_adapter.a
+[23/24] Linking CXX executable radio
+[24/24] Linking CXX executable processor
+-- Install configuration: "Release"
+-- Installing: /opt/containerlab-vrt/bin/radio
+-- Installing: /opt/containerlab-vrt/bin/processor
+-- Installing: /opt/containerlab-vrt/bin/detector
+-- Installing: /opt/containerlab-vrt/bin/recorder
+ ---> Removed intermediate container 616811a3fe05
+ ---> 5e6ecb2b145e
+Step 15/28 : FROM ${BASE_IMAGE} AS runtime
+bookworm-20250908-slim: Pulling from library/debian
+Digest: sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+Status: Image is up to date for debian:bookworm-20250908-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ ---> df52e55e3361
+Step 16/28 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> 7a8e01765611
+Step 17/28 : ARG VRT_REVISION
+ ---> Using cache
+ ---> 1b5162ebd318
+Step 18/28 : ARG GRAPHX_REFERENCE_REVISION
+ ---> Using cache
+ ---> 5b4b6bcd2589
+Step 19/28 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends iproute2 libsoapysdr0.8     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 4c146da441ba
+Step 20/28 : COPY --from=build /opt/containerlab-vrt /opt/containerlab-vrt
+ ---> Using cache
+ ---> ff23f145d44e
+Step 21/28 : COPY container/vrt-source.json /usr/share/doc/containerlab-vrt/vrt-source.json
+ ---> Using cache
+ ---> 1669d1e92c0b
+Step 22/28 : COPY patches/vrt-runtime-progress.patch /usr/share/doc/containerlab-vrt/vrt-runtime-progress.patch
+ ---> Using cache
+ ---> 0258f924daab
+Step 23/28 : COPY THIRD_PARTY_NOTICES.md /usr/share/doc/containerlab-vrt/THIRD_PARTY_NOTICES.md
+ ---> Using cache
+ ---> edb0c9466336
+Step 24/28 : COPY third_party/vrt_framework/LICENSE /usr/share/doc/containerlab-vrt/VRT_FRAMEWORK_LICENSE
+ ---> Using cache
+ ---> 983d3690f842
+Step 25/28 : ENV PATH=/opt/containerlab-vrt/bin:$PATH
+ ---> Using cache
+ ---> 32c559ce0da2
+Step 26/28 : LABEL org.opencontainers.image.title="containerlab-vrt standalone SDR applications"       org.opencontainers.image.source="https://github.com/rklinkhammer/containerlab-vrt"       org.opencontainers.image.licenses="MIT"       org.opencontainers.image.revision.vrt="${VRT_REVISION}"       org.opencontainers.image.revision.graphx-reference="${GRAPHX_REFERENCE_REVISION}"
+ ---> Using cache
+ ---> fe4ea131feb3
+Step 27/28 : WORKDIR /run/containerlab-vrt
+ ---> Using cache
+ ---> fe7c9f1c07d2
+Step 28/28 : CMD ["/bin/false"]
+ ---> Using cache
+ ---> 5340667e00bc
+Successfully built 5340667e00bc
+Successfully tagged containerlab-vrt-app:local
+built and inspected containerlab-vrt-app:local
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  1.226MB
+Step 1/15 : ARG BASE_IMAGE
+Step 2/15 : FROM ${BASE_IMAGE} AS build
+ ---> df52e55e3361
+Step 3/15 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> 7a8e01765611
+Step 4/15 : ARG NLOHMANN_JSON_VERSION
+ ---> Using cache
+ ---> 1e933e19283b
+Step 5/15 : ARG NLOHMANN_JSON_SHA256
+ ---> Using cache
+ ---> 0613ab0e7d54
+Step 6/15 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends       ca-certificates cmake curl g++ libsoapysdr-dev ninja-build     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> c64372589874
+Step 7/15 : RUN curl --fail --location --proto '=https' --tlsv1.2       "https://github.com/nlohmann/json/releases/download/v${NLOHMANN_JSON_VERSION}/json.tar.xz"       --output /tmp/nlohmann-json.tar.xz     && echo "${NLOHMANN_JSON_SHA256}  /tmp/nlohmann-json.tar.xz" | sha256sum --check --strict     && cmake -E tar xf /tmp/nlohmann-json.tar.xz     && cmake -S json -B /tmp/nlohmann-build -G Ninja       -DJSON_BuildTests=OFF -DCMAKE_BUILD_TYPE=Debug       -DCMAKE_INSTALL_PREFIX=/opt/deps     && cmake --build /tmp/nlohmann-build --target install
+ ---> Using cache
+ ---> 230eb0a09a38
+Step 8/15 : WORKDIR /src
+ ---> Using cache
+ ---> 7fbcb53fa39c
+Step 9/15 : COPY CMakeLists.txt ./
+ ---> e50b0a1d6dce
+Step 10/15 : COPY apps apps
+ ---> a65cf2e576a7
+Step 11/15 : COPY include include
+ ---> 906939f42679
+Step 12/15 : COPY src src
+ ---> 86e04d9b007e
+Step 13/15 : COPY tests tests
+ ---> e0006933fbd7
+Step 14/15 : COPY third_party/vrt_framework/include third_party/vrt_framework/include
+ ---> e104bdb8c00c
+Step 15/15 : RUN cmake -S . -B /tmp/build -G Ninja       -DBUILD_TESTING=ON       -DCMAKE_BUILD_TYPE=Debug       -DCMAKE_PREFIX_PATH=/opt/deps       -DCMAKE_INSTALL_PREFIX=/opt/containerlab-vrt     && cmake --build /tmp/build --parallel     && cmake --install /tmp/build     && test -x /opt/containerlab-vrt/bin/radio     && test -x /opt/containerlab-vrt/bin/processor     && test -x /opt/containerlab-vrt/bin/detector     && test -x /opt/containerlab-vrt/bin/recorder
+ ---> Running in db1f1da0fd8d
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found nlohmann_json: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable exact version "3.12.0") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/build
+[1/54] Building CXX object CMakeFiles/sdr_core.dir/src/virtual_radio.cpp.o
+[2/54] Building CXX object CMakeFiles/sdr_core.dir/src/spectrum.cpp.o
+[3/54] Building CXX object CMakeFiles/sdr_core.dir/src/soapy_virtual_device.cpp.o
+[4/54] Building CXX object CMakeFiles/sdr_telemetry.dir/src/telemetry.cpp.o
+[5/54] Linking CXX static library libsdr_telemetry.a
+[6/54] Building CXX object CMakeFiles/sdr_recorder.dir/src/recorder.cpp.o
+[7/54] Building CXX object CMakeFiles/sdr_core.dir/src/status.cpp.o
+[8/54] Linking CXX static library libsdr_recorder.a
+[9/54] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/vrt_radio_adapter.cpp.o
+[10/54] Building CXX object CMakeFiles/detector.dir/apps/detector.cpp.o
+[11/54] Building CXX object CMakeFiles/processor.dir/apps/processor.cpp.o
+[12/54] Building CXX object CMakeFiles/sdr_core_tests.dir/tests/sdr_core_tests.cpp.o
+[13/54] Building CXX object CMakeFiles/sdr_soapy_tests.dir/tests/soapy_virtual_device_tests.cpp.o
+[14/54] Building CXX object CMakeFiles/recorder.dir/apps/recorder.cpp.o
+[15/54] Building CXX object CMakeFiles/sdr_vrt_adapter_tests.dir/tests/vrt_radio_adapter_tests.cpp.o
+[16/54] Linking CXX executable recorder
+[17/54] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/radio_transport.cpp.o
+[18/54] Building CXX object CMakeFiles/sdr_core.dir/src/radio_services.cpp.o
+[19/54] Building CXX object CMakeFiles/sdr_p17_golden_vectors_tests.dir/tests/p17_golden_vectors_tests.cpp.o
+[20/54] Linking CXX static library libsdr_core.a
+[21/54] Linking CXX executable sdr_core_tests
+[22/54] Linking CXX executable sdr_p17_golden_vectors_tests
+[23/54] Linking CXX executable sdr_soapy_tests
+[24/54] Building CXX object CMakeFiles/sdr_radio_services_tests.dir/tests/radio_services_tests.cpp.o
+[25/54] Linking CXX executable sdr_radio_services_tests
+[26/54] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[27/54] Linking CXX static library libsdr_udp_apps.a
+[28/54] Linking CXX executable detector
+[29/54] Building CXX object CMakeFiles/sdr_recorder_tests.dir/tests/recorder_tests.cpp.o
+[30/54] Linking CXX executable sdr_recorder_tests
+[31/54] Building CXX object CMakeFiles/sdr_status_tests.dir/tests/status_tests.cpp.o
+[32/54] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[33/54] Linking CXX executable sdr_status_tests
+[34/54] Linking CXX static library libsdr_vrt_adapter.a
+[35/54] Building CXX object CMakeFiles/sdr_udp_pipeline_tests.dir/tests/udp_pipeline_tests.cpp.o
+[36/54] Linking CXX executable sdr_vrt_adapter_tests
+[37/54] Linking CXX executable processor
+[38/54] Building CXX object CMakeFiles/sdr_vrt_runtime_retention_tests.dir/tests/vrt_runtime_retention_tests.cpp.o
+[39/54] Linking CXX executable sdr_udp_pipeline_tests
+[40/54] Linking CXX executable sdr_vrt_runtime_retention_tests
+[41/54] Building CXX object CMakeFiles/sdr_udp_integration_tests.dir/tests/udp_integration_tests.cpp.o
+[42/54] Linking CXX executable sdr_udp_integration_tests
+[43/54] Building CXX object CMakeFiles/sdr_telemetry_tests.dir/tests/telemetry_tests.cpp.o
+[44/54] Linking CXX executable sdr_telemetry_tests
+[45/54] Building CXX object CMakeFiles/radio.dir/apps/radio.cpp.o
+[46/54] Linking CXX executable radio
+[47/54] Building CXX object CMakeFiles/sdr_telemetry_pipeline_tests.dir/tests/telemetry_pipeline_tests.cpp.o
+[48/54] Linking CXX executable sdr_telemetry_pipeline_tests
+[49/54] Building CXX object CMakeFiles/sdr_processor_controller_tests.dir/tests/processor_controller_tests.cpp.o
+[50/54] Building CXX object CMakeFiles/sdr_radio_transport_tests.dir/tests/radio_transport_tests.cpp.o
+[51/54] Linking CXX executable sdr_processor_controller_tests
+[52/54] Linking CXX executable sdr_radio_transport_tests
+[53/54] Building CXX object CMakeFiles/sdr_vrt_scheduled_start_tests.dir/tests/vrt_scheduled_start_tests.cpp.o
+[54/54] Linking CXX executable sdr_vrt_scheduled_start_tests
+-- Install configuration: "Debug"
+-- Installing: /opt/containerlab-vrt/bin/radio
+-- Installing: /opt/containerlab-vrt/bin/processor
+-- Installing: /opt/containerlab-vrt/bin/detector
+-- Installing: /opt/containerlab-vrt/bin/recorder
+ ---> Removed intermediate container db1f1da0fd8d
+ ---> aefbefc1d770
+Successfully built aefbefc1d770
+Successfully tagged containerlab-vrt-tests:qualification
+Internal ctest changing into directory: /tmp/build
+Test project /tmp/build
+      Start  1: sdr_p17_golden_vectors_tests
+ 1/15 Test  #1: sdr_p17_golden_vectors_tests ......   Passed    0.00 sec
+      Start  2: sdr_core_tests
+ 2/15 Test  #2: sdr_core_tests ....................   Passed    0.00 sec
+      Start  3: sdr_soapy_tests
+ 3/15 Test  #3: sdr_soapy_tests ...................   Passed    0.00 sec
+      Start  4: sdr_radio_services_tests
+ 4/15 Test  #4: sdr_radio_services_tests ..........Subprocess aborted***Exception:   0.00 sec
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  cannot open radio config: ../../generated/radio1.json
+
+      Start  5: sdr_vrt_adapter_tests
+ 5/15 Test  #5: sdr_vrt_adapter_tests .............   Passed    0.00 sec
+      Start  6: sdr_vrt_runtime_retention_tests
+ 6/15 Test  #6: sdr_vrt_runtime_retention_tests ...   Passed    0.03 sec
+      Start  7: sdr_radio_transport_tests
+ 7/15 Test  #7: sdr_radio_transport_tests .........Subprocess aborted***Exception:   0.17 sec
+sdr_radio_transport_tests: /src/tests/radio_transport_tests.cpp:288: void {anonymous}::runtime_control_path(): Assertion `recv(rejected.descriptor, &probe, 1, 0) == 0' failed.
+
+      Start  8: sdr_processor_controller_tests
+ 8/15 Test  #8: sdr_processor_controller_tests ....   Passed   10.31 sec
+      Start  9: sdr_status_tests
+ 9/15 Test  #9: sdr_status_tests ..................   Passed    0.00 sec
+      Start 10: sdr_udp_pipeline_tests
+10/15 Test #10: sdr_udp_pipeline_tests ............   Passed    0.00 sec
+      Start 11: sdr_udp_integration_tests
+11/15 Test #11: sdr_udp_integration_tests .........   Passed    0.52 sec
+      Start 12: sdr_recorder_tests
+12/15 Test #12: sdr_recorder_tests ................   Passed    0.00 sec
+      Start 13: sdr_telemetry_tests
+13/15 Test #13: sdr_telemetry_tests ...............   Passed    0.00 sec
+      Start 14: sdr_telemetry_pipeline_tests
+14/15 Test #14: sdr_telemetry_pipeline_tests ......   Passed    5.82 sec
+      Start 15: sdr_vrt_scheduled_start_tests
+15/15 Test #15: sdr_vrt_scheduled_start_tests .....   Passed    0.84 sec
+
+87% tests passed, 2 tests failed out of 15
+
+Total Test time (real) =  17.72 sec
+
+The following tests FAILED:
+	  4 - sdr_radio_services_tests (Subprocess aborted)
+	  7 - sdr_radio_transport_tests (Subprocess aborted)
+Errors while running CTest

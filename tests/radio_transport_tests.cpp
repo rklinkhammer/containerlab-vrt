@@ -13,6 +13,7 @@
 
 #include <array>
 #include <cassert>
+#include <cerrno>
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
@@ -178,7 +179,9 @@ struct Fixture {
   std::optional<Runtime::Controllee> controllee;
   std::uint64_t now{};
 
-  Fixture() {
+  explicit Fixture(std::chrono::milliseconds stale_timeout =
+                       std::chrono::milliseconds(120)) {
+    transport.config.stale_timeout = stale_timeout;
     sdr::RadioSettings defaults;
     device->apply_settings(defaults);
     auto config = vita::profiles::iq::lab::config(
@@ -231,7 +234,9 @@ void drain(int descriptor) {
 }
 
 void runtime_control_path() {
-  Fixture fixture;
+  // This case tests exclusive ownership, not idle expiry. Keep its connection
+  // live across host scheduler delays; the dedicated stale test retains 120ms.
+  Fixture fixture(std::chrono::seconds(2));
   Socket controller(connect_tcp(fixture.transport.instance->control_port()));
   fixture.pump(2'000'000, true);
   assert(fixture.transport.instance->connected());
@@ -285,13 +290,29 @@ void runtime_control_path() {
   Socket rejected(connect_tcp(fixture.transport.instance->control_port()));
   fixture.pump(77'000'000, true);
   std::byte probe{};
-  assert(recv(rejected.descriptor, &probe, 1, 0) == 0);
+  // A nonblocking TCP peer can observe EAGAIN before the FIN arrives on Linux.
+  // Keep servicing transport until closure, with a bounded wall-clock deadline.
+  const auto rejection_deadline = std::chrono::steady_clock::now() +
+                                  std::chrono::milliseconds(500);
+  ssize_t rejected_read;
+  do {
+    rejected_read = recv(rejected.descriptor, &probe, 1, 0);
+    if (rejected_read >= 0 || (errno != EAGAIN && errno != EWOULDBLOCK))
+      break;
+    fixture.pump(fixture.now + 100'000, true);
+  } while (std::chrono::steady_clock::now() < rejection_deadline);
+  if (rejected_read != 0)
+    std::fprintf(stderr, "rejected connection recv=%zd errno=%d (%s)\n",
+                 rejected_read, errno, std::strerror(errno));
+  assert(rejected_read == 0);
+  assert(fixture.transport.instance->metrics().rejected_connections == 1);
+  assert(fixture.transport.instance->connected());
 
   const auto state_version = fixture.device->settings();
   controller = Socket{};
-  fixture.pump(79'000'000, true);
+  fixture.pump(fixture.now + 2'000'000, true);
   Socket reconnected(connect_tcp(fixture.transport.instance->control_port()));
-  fixture.pump(81'000'000, true);
+  fixture.pump(fixture.now + 2'000'000, true);
   assert(fixture.transport.instance->connected());
   assert(fixture.device->settings().sample_rate_hz ==
          state_version.sample_rate_hz);
@@ -299,7 +320,7 @@ void runtime_control_path() {
 
   const std::array<std::byte, 4> malformed{};
   assert(send_all(reconnected.descriptor, malformed));
-  fixture.pump(83'000'000, true);
+  fixture.pump(fixture.now + 2'000'000, true);
   assert(!fixture.transport.instance->connected());
   assert(recv(reconnected.descriptor, &probe, 1, 0) == 0);
 }

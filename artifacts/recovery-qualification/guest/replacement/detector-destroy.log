@@ -1,0 +1,9 @@
+18:31:04 INFO Applying node filter: ["detector"]
+18:31:04 INFO Parsing & checking topology file=four-radio.clab.yml
+18:31:04 INFO Applying node filter: ["detector"]
+18:31:04 INFO Parsing & checking topology file=four-radio.clab.yml
+18:31:04 INFO Destroying lab name=four-radio-sdr
+18:31:04 INFO Stopping container: clab-four-radio-sdr-detector
+18:31:04 INFO Removed container name=clab-four-radio-sdr-detector
+18:31:04 INFO Removing host entries path=/etc/hosts
+18:31:04 INFO Removing SSH config path=/etc/ssh/ssh_config.d/clab-four-radio-sdr.conf

@@ -1,0 +1,165 @@
+{
+  "timestamp": "2026-09-26T00:29:08.912658+00:00",
+  "nodes": {
+    "radio1": {
+      "id": "47a50e56d53555d888a0bb23ed3d96c1a6a4c5fe4ed5491f3cf670d8e76e43f0",
+      "started_at": "2026-09-26T00:28:53.461449731Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio2": {
+      "id": "39a81b47ffe9e137bb9962b59c5e7e626655a204bf6c2899cfe44c763b3b41ec",
+      "started_at": "2026-09-26T00:28:53.45319834Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio3": {
+      "id": "d93b62ad696a9fdab72aed249084f5578547b9c3f22b0371df77e7ecd2c3d412",
+      "started_at": "2026-09-26T00:28:53.455218191Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio4": {
+      "id": "36e313ac841b0c98e827f8eb81a921889e4df0d12939832b4b508e9942e3c33d",
+      "started_at": "2026-09-26T00:28:53.462823879Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "processor": {
+      "id": "75ad37c8fe9f86f2180638bd4295491b6079e1144d8cbd31506b26daec5e59b2",
+      "started_at": "2026-09-26T00:28:53.463663734Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "detector": {
+      "id": "f3c2df46eab1351ba908ff1103597091eb9f3eee921130713b9af37e7f0c1e5a",
+      "started_at": "2026-09-26T00:28:53.464162905Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "recorder": {
+      "id": "cc70b442bdf946c27f9da9e48a86a3aca5184ac82520b8615561f830552aa3c2",
+      "started_at": "2026-09-26T00:28:53.459007744Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "switch1": {
+      "id": "16fe0b830c109f6dff65b7cb8e3be78266960363e62134144ae695f4dd643b4b",
+      "started_at": "2026-09-26T00:28:53.464882936Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    }
+  },
+  "detector_interface": {
+    "exit": 0,
+    "interfaces": [
+      {
+        "ifindex": 38,
+        "link_index": 37,
+        "ifname": "eth1",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 9000,
+        "qdisc": "noqueue",
+        "operstate": "UP",
+        "group": "default",
+        "link_type": "ether",
+        "address": "aa:c1:ab:a6:47:84",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "link_netnsid": 1,
+        "altnames": [
+          "clab-o-51e6de6307cb2563"
+        ],
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "10.79.0.15",
+            "prefixlen": 24,
+            "scope": "global",
+            "label": "eth1",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          },
+          {
+            "family": "inet6",
+            "local": "fe80::a8c1:abff:fea6:4784",
+            "prefixlen": 64,
+            "scope": "link",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "heartbeat": {
+    "boot_id": "1f289e9a994607202b36dd2147d085d6",
+    "data": {
+      "datagrams": 1389,
+      "detections": 1389,
+      "downstream_delivery": null,
+      "gapped": 0,
+      "malformed": 0,
+      "observed_unix_ns": 1790382548701315424,
+      "processing_calls": 1389,
+      "processing_ns_total": 11095078,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "rx_bytes": 11912064,
+      "sequence_gaps": 0,
+      "tx_bytes": null,
+      "tx_packets": null,
+      "unavailable": 0,
+      "zero": 0
+    },
+    "event": "heartbeat",
+    "instance": "detector",
+    "last_successful_activity": "2026-09-26T00:29:08.701Z",
+    "ready": true,
+    "role": "detector",
+    "schema": "vrt.telemetry/1",
+    "sequence": 14,
+    "state": "healthy",
+    "suppressed_events": 1379,
+    "timestamp": "2026-09-26T00:29:08.701Z",
+    "uptime_ms": 15020
+  },
+  "boots": [
+    "1f289e9a994607202b36dd2147d085d6"
+  ],
+  "tones": {
+    "1": [
+      100049804.6875,
+      100049804.6875,
+      100049804.6875
+    ],
+    "2": [
+      100100097.65625,
+      100100097.65625,
+      100100097.65625
+    ],
+    "3": [
+      100149902.34375,
+      100149902.34375,
+      100149902.34375
+    ],
+    "4": [
+      100200195.3125,
+      100200195.3125,
+      100200195.3125
+    ]
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "timestamp": "2026-09-25T23:58:13.283664+00:00",
+  "nodes": {
+    "radio1": {
+      "id": "24a6e53fb7c74b36e4133aceb4d90b88234e59dd00d3749ff2d46391300c9a85",
+      "started_at": "2026-09-25T23:57:47.386179304Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio2": {
+      "id": "e73c6fa0578f3f55f6a4c00a055b014c966a0ef2a37ee905063bd11f8104ff2b",
+      "started_at": "2026-09-25T23:56:54.764836537Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio3": {
+      "id": "0deeb3c65b041bef7e00ab8d4df17dfe676d272e589063a941221d6691b1aa48",
+      "started_at": "2026-09-25T23:56:54.763356923Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio4": {
+      "id": "1be21ff969cb246fe927fdb54cea26cf2305d032c8a8793f826080261f394b2f",
+      "started_at": "2026-09-25T23:56:54.772349735Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "processor": {
+      "id": "8386a6c1c709bbfca68e1f884c508b291578e07ced386c1c835701db4f7dfde3",
+      "started_at": "2026-09-25T23:56:54.784313904Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "detector": {
+      "id": "8c5ad031d5d6abdd9f84b7fcca8763d8af139fff6a53830d305324109d629ff3",
+      "started_at": "2026-09-25T23:56:54.76373807Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "recorder": {
+      "id": "f344e9ac131c6972d5bae3e3fdef15adbdbfec538ec85f560a810bd2d2df5495",
+      "started_at": "2026-09-25T23:56:54.77217054Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "switch1": {
+      "id": "47c290763f3591a209ecf304b43a0a75382c4c30d91598b91aaf6d9c6ce2e4e6",
+      "started_at": "2026-09-25T23:56:54.771249726Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    }
+  },
+  "detector_interface": {
+    "exit": 0,
+    "interfaces": [
+      {
+        "ifindex": 21,
+        "link_index": 20,
+        "ifname": "eth1",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 9000,
+        "qdisc": "noqueue",
+        "operstate": "UP",
+        "group": "default",
+        "link_type": "ether",
+        "address": "aa:c1:ab:b6:0b:ff",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "link_netnsid": 1,
+        "altnames": [
+          "clab-o-51e6de6307cb2563"
+        ],
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "10.79.0.15",
+            "prefixlen": 24,
+            "scope": "global",
+            "label": "eth1",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          },
+          {
+            "family": "inet6",
+            "local": "fe80::a8c1:abff:feb6:bff",
+            "prefixlen": 64,
+            "scope": "link",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "heartbeat": {
+    "boot_id": "e3a4a3a223917277b8bdfd2563124a77",
+    "data": {
+      "datagrams": 102793,
+      "detections": 102793,
+      "downstream_delivery": null,
+      "gapped": 0,
+      "malformed": 0,
+      "observed_unix_ns": 1790380689885135198,
+      "processing_calls": 102793,
+      "processing_ns_total": 802688004,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "rx_bytes": 881552768,
+      "sequence_gaps": 0,
+      "tx_bytes": null,
+      "tx_packets": null,
+      "unavailable": 1,
+      "zero": 0
+    },
+    "event": "heartbeat",
+    "instance": "detector",
+    "last_successful_activity": "2026-09-25T23:58:09.885Z",
+    "ready": true,
+    "role": "detector",
+    "schema": "vrt.telemetry/1",
+    "sequence": 606,
+    "state": "healthy",
+    "suppressed_events": 102204,
+    "timestamp": "2026-09-25T23:58:09.885Z",
+    "uptime_ms": 75025
+  },
+  "boots": [
+    "e3a4a3a223917277b8bdfd2563124a77"
+  ],
+  "tones": {
+    "1": [],
+    "2": [
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625,
+      100100097.65625
+    ],
+    "3": [
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375,
+      100149902.34375
+    ],
+    "4": [
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125,
+      100200195.3125
+    ]
+  }
+}

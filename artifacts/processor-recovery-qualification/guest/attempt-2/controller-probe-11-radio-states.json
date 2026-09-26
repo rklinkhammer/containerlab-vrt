@@ -1,0 +1,98 @@
+{
+  "radio1": {
+    "boot_id": "53adeede57435620b669a082900765bf",
+    "clipped_samples": 0,
+    "connection": {
+      "active": false,
+      "generation": null
+    },
+    "observation": {
+      "clock_domain": "utc",
+      "timestamp_unix_ns": 1790381546823411513
+    },
+    "radio_id": "radio1",
+    "ready": true,
+    "sample_ordinal": 124551168,
+    "settings": {
+      "bandwidth_hz": 800000,
+      "center_hz": 100000000,
+      "gain_db": 0.0,
+      "sample_rate_hz": 1000000
+    },
+    "streaming": true,
+    "uptime_ms": 138746,
+    "version": 1
+  },
+  "radio2": {
+    "boot_id": "422dc214a41ce33d99fe3a2333e8c34a",
+    "clipped_samples": 0,
+    "connection": {
+      "active": false,
+      "generation": null
+    },
+    "observation": {
+      "clock_domain": "utc",
+      "timestamp_unix_ns": 1790381546860460218
+    },
+    "radio_id": "radio2",
+    "ready": true,
+    "sample_ordinal": 124590080,
+    "settings": {
+      "bandwidth_hz": 800000,
+      "center_hz": 100000000,
+      "gain_db": 0.0,
+      "sample_rate_hz": 1000000
+    },
+    "streaming": true,
+    "uptime_ms": 138842,
+    "version": 1
+  },
+  "radio3": {
+    "boot_id": "309c10cb74f99590cfcec23418cf57eb",
+    "clipped_samples": 0,
+    "connection": {
+      "active": true,
+      "generation": 11
+    },
+    "observation": {
+      "clock_domain": "utc",
+      "timestamp_unix_ns": 1790381546897268921
+    },
+    "radio_id": "radio3",
+    "ready": true,
+    "sample_ordinal": 124627968,
+    "settings": {
+      "bandwidth_hz": 800000,
+      "center_hz": 100000000,
+      "gain_db": 0.0,
+      "sample_rate_hz": 1000000
+    },
+    "streaming": true,
+    "uptime_ms": 138744,
+    "version": 1
+  },
+  "radio4": {
+    "boot_id": "288faeab6faa71a7147eee1ec5b55076",
+    "clipped_samples": 0,
+    "connection": {
+      "active": true,
+      "generation": 11
+    },
+    "observation": {
+      "clock_domain": "utc",
+      "timestamp_unix_ns": 1790381546934785673
+    },
+    "radio_id": "radio4",
+    "ready": true,
+    "sample_ordinal": 124663808,
+    "settings": {
+      "bandwidth_hz": 800000,
+      "center_hz": 100000000,
+      "gain_db": 0.0,
+      "sample_rate_hz": 1000000
+    },
+    "streaming": true,
+    "uptime_ms": 138855,
+    "version": 1
+  }
+}

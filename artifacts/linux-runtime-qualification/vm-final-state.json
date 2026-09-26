@@ -1,0 +1,10 @@
+{
+  "name": "clab-vrt-linux-20260925-220209",
+  "status": "Stopped",
+  "vmType": "vz",
+  "arch": "aarch64",
+  "cpus": 8,
+  "memory": 17179869184,
+  "disk": 85899345920,
+  "limaVersion": "2.2.0"
+}

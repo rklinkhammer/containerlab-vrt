@@ -1,0 +1,1053 @@
+Hit:1 http://security.ubuntu.com/ubuntu resolute-security InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu resolute InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu resolute-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu resolute-backports InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.53.0-1ubuntu1).
+git set to manually installed.
+python3 is already the newest version (3.14.3-0ubuntu2).
+python3 set to manually installed.
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 162 not upgraded.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0100   1042 100   1042   0      0   5460      0                              0100   1042 100   1042   0      0   5459      0                              0100   1042 100   1042   0      0   5458      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0100 14.05M 100 14.05M   0      0 34.12M      0                              0100 14.05M 100 14.05M   0      0 34.11M      0                              0100 14.05M 100 14.05M   0      0 34.11M      0                              0
+containerlab_0.79.0_linux_arm64.tar.gz: OK
+{"log-driver":"json-file","log-opts":{"max-size":"8m","max-file":"3"}}
+
+ ⣴⡾⠛⠛⠖ ⢠⣶⠟⠛⢷⣦ ⢸⣿⣧  ⣿ ⠘⠛⢻⡟⠛⠛  ⣾⣿⡀  ⣿⡇ ⣿⣿⡄ ⢸⡇ ⣿⡟⠛⠛⠃⢸⣿⠛⠛⣷⡄ [38;2;0;201;255m⣿⡇[0m      [38;2;0;201;255m⣿⡇[0m    
+⢸⣿     ⣿⡇   ⣿⡇⢸⣿⠹⣧⡀⣿   ⢸⡇   ⣸⡏⢹⣧  ⣿⡇ ⣿⡏⢿⣄⢸⡇ ⣿⣧⣤⣤ ⢸⣿⣀⣀⣾⠇ [38;2;0;201;255m⣿⡇⠐⠟⠛⢿⡆[0m [38;2;0;201;255m⣿⡷⠛⢿⣆[0m 
+⠘⣿⣄  ⡀ ⢻⣧⡀ ⣠⣿⠃⢸⣿ ⠘⣷⣿   ⢸⡇  ⢠⣿⠷⠶⢿⡆ ⣿⡇ ⣿⡇ ⢻⣾⡇ ⣿⡇   ⢸⣿⠉⢻⣧⡀ [38;2;0;201;255m⣿⡇⢰⡟⠛⣻⡇[0m [38;2;0;201;255m⣿⡇[0m [38;2;0;201;255m⣸⡿[0m 
+ ⠈⠙⠛⠛⠉  ⠉⠛⠛⠋⠁ ⠘⠛  ⠈⠛   ⠘⠃  ⠚⠃  ⠘⠛ ⠛⠃ ⠛⠃  ⠙⠃ ⠛⠛⠛⠛⠃⠘⠛  ⠙⠓ [38;2;0;201;255m⠛⠃⠈⠛⠛⠙⠃[0m [38;2;0;201;255m⠛⠛⠛⠛⠁[0m 
+
+    version: 0.79.0
+     commit: 5ae50094a
+       date: 2026-08-21T12:00:52Z
+     source: https://github.com/srl-labs/containerlab
+ rel. notes: https://containerlab.dev/rn/0.79/
+Client:
+ Version:           29.1.3
+ API version:       1.52
+ Go version:        go1.24.13
+ Git commit:        29.1.3-0ubuntu4.1
+ Built:             Wed Apr 29 16:40:20 2026
+ OS/Arch:           linux/arm64
+ Context:           default
+
+Server:
+ Engine:
+  Version:          29.1.3
+  API version:      1.52 (minimum version 1.44)
+  Go version:       go1.24.13
+  Git commit:       29.1.3-0ubuntu4.1
+  Built:            Wed Apr 29 16:40:20 2026
+  OS/Arch:          linux/arm64
+  Experimental:     false
+ containerd:
+  Version:          2.2.2
+  GitCommit:        
+ runc:
+  Version:          1.4.0-0ubuntu1
+  GitCommit:        
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        
+Verified VRT base: 51853ba29703f51aceb2cfefe5a12a65a8e1110f patched include tree: cb95ce93ac12fbad50c58335aee98f805db9964b27ed1451e5f56cfc1347d313
+Verified VRT base: 51853ba29703f51aceb2cfefe5a12a65a8e1110f patched include tree: cb95ce93ac12fbad50c58335aee98f805db9964b27ed1451e5f56cfc1347d313
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  1.255MB
+Step 1/29 : ARG BASE_IMAGE
+Step 2/29 : FROM ${BASE_IMAGE} AS build
+bookworm-20250908-slim: Pulling from library/debian
+0878ecc8b0af: Pulling fs layer
+0878ecc8b0af: Download complete
+ac4decf0a37f: Download complete
+0878ecc8b0af: Pull complete
+Digest: sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+Status: Downloaded newer image for debian:bookworm-20250908-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ ---> df52e55e3361
+Step 3/29 : ARG DEBIAN_SNAPSHOT
+ ---> Running in 1110dcb53f8a
+ ---> Removed intermediate container 1110dcb53f8a
+ ---> 090c575f2546
+Step 4/29 : ARG NLOHMANN_JSON_VERSION
+ ---> Running in a9bce9524444
+ ---> Removed intermediate container a9bce9524444
+ ---> 57b0c7810f55
+Step 5/29 : ARG NLOHMANN_JSON_SHA256
+ ---> Running in 4d1bce62f810
+ ---> Removed intermediate container 4d1bce62f810
+ ---> 80f172ed2e0d
+Step 6/29 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends       ca-certificates cmake curl g++ libsoapysdr-dev ninja-build     && rm -rf /var/lib/apt/lists/*
+ ---> Running in f688270bb223
+Get:1 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm InRelease [151 kB]
+Get:2 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm-updates InRelease [55.4 kB]
+Get:3 http://snapshot.debian.org/archive/debian-security/20250908T000000Z bookworm-security InRelease [48.0 kB]
+Get:4 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 Packages [8693 kB]
+Get:5 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://snapshot.debian.org/archive/debian-security/20250908T000000Z bookworm-security/main arm64 Packages [273 kB]
+Fetched 9227 kB in 1s (11.2 MB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  binutils binutils-aarch64-linux-gnu binutils-common cmake-data cpp cpp-12
+  g++-12 gcc gcc-12 libarchive13 libasan8 libatomic1 libbinutils libbrotli1
+  libc-dev-bin libc6-dev libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl4
+  libexpat1 libgcc-12-dev libgomp1 libgprofng0 libgssapi-krb5-2 libhwasan0
+  libicu72 libisl23 libitm1 libjansson4 libjsoncpp25 libk5crypto3 libkeyutils1
+  libkrb5-3 libkrb5support0 libldap-2.5-0 liblsan0 libmpc3 libmpfr6
+  libncursesw6 libnghttp2-14 libnsl-dev libnsl2 libproc2-0 libpsl5 librhash0
+  librtmp1 libsasl2-2 libsasl2-modules-db libsoapysdr0.8 libssh2-1 libssl3
+  libstdc++-12-dev libtirpc-common libtirpc-dev libtirpc3 libtsan2 libubsan1
+  libuv1 libxml2 linux-libc-dev openssl procps rpcsvc-proto
+Suggested packages:
+  binutils-doc cmake-doc cmake-format elpa-cmake-mode cpp-doc gcc-12-locales
+  cpp-12-doc gcc-12-doc gcc-multilib make manpages-dev autoconf automake
+  libtool flex bison gdb gcc-doc lrzip glibc-doc krb5-doc krb5-user
+  libsoapysdr-doc libstdc++-12-doc python3
+Recommended packages:
+  make manpages manpages-dev libc-devtools krb5-locales libldap-common libgpm2
+  publicsuffix libsasl2-modules soapysdr0.8-module-all | soapysdr0.8-module
+  psmisc
+The following NEW packages will be installed:
+  binutils binutils-aarch64-linux-gnu binutils-common ca-certificates cmake
+  cmake-data cpp cpp-12 curl g++ g++-12 gcc gcc-12 libarchive13 libasan8
+  libatomic1 libbinutils libbrotli1 libc-dev-bin libc6-dev libcc1-0
+  libcrypt-dev libctf-nobfd0 libctf0 libcurl4 libexpat1 libgcc-12-dev libgomp1
+  libgprofng0 libgssapi-krb5-2 libhwasan0 libicu72 libisl23 libitm1
+  libjansson4 libjsoncpp25 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+  libldap-2.5-0 liblsan0 libmpc3 libmpfr6 libncursesw6 libnghttp2-14
+  libnsl-dev libnsl2 libproc2-0 libpsl5 librhash0 librtmp1 libsasl2-2
+  libsasl2-modules-db libsoapysdr-dev libsoapysdr0.8 libssh2-1 libssl3
+  libstdc++-12-dev libtirpc-common libtirpc-dev libtirpc3 libtsan2 libubsan1
+  libuv1 libxml2 linux-libc-dev ninja-build openssl procps rpcsvc-proto
+0 upgraded, 71 newly installed, 0 to remove and 0 not upgraded.
+Need to get 82.1 MB of archives.
+After this operation, 337 MB of additional disk space will be used.
+Get:1 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libncursesw6 arm64 6.4-4 [122 kB]
+Get:2 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libproc2-0 arm64 2:4.0.2-3 [60.1 kB]
+Get:3 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 procps arm64 2:4.0.2-3 [698 kB]
+Get:4 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libssl3 arm64 3.0.17-1~deb12u2 [1816 kB]
+Get:5 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 openssl arm64 3.0.17-1~deb12u2 [1397 kB]
+Get:6 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 ca-certificates all 20230311+deb12u1 [155 kB]
+Get:7 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 binutils-common arm64 2.40-2 [2487 kB]
+Get:8 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libbinutils arm64 2.40-2 [645 kB]
+Get:9 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libctf-nobfd0 arm64 2.40-2 [144 kB]
+Get:10 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libctf0 arm64 2.40-2 [79.2 kB]
+Get:11 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libgprofng0 arm64 2.40-2 [680 kB]
+Get:12 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libjansson4 arm64 2.14-2 [40.2 kB]
+Get:13 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 binutils-aarch64-linux-gnu arm64 2.40-2 [2637 kB]
+Get:14 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 binutils arm64 2.40-2 [64.9 kB]
+Get:15 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libicu72 arm64 72.1-3+deb12u1 [9202 kB]
+Get:16 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libxml2 arm64 2.9.14+dfsg-1.3~deb12u4 [620 kB]
+Get:17 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libarchive13 arm64 3.6.2-1+deb12u3 [317 kB]
+Get:18 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libbrotli1 arm64 1.0.9-2+b6 [269 kB]
+Get:19 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libkrb5support0 arm64 1.20.1-2+deb12u4 [32.5 kB]
+Get:20 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libk5crypto3 arm64 1.20.1-2+deb12u4 [80.2 kB]
+Get:21 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libkeyutils1 arm64 1.6.3-2 [8844 B]
+Get:22 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libkrb5-3 arm64 1.20.1-2+deb12u4 [314 kB]
+Get:23 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libgssapi-krb5-2 arm64 1.20.1-2+deb12u4 [124 kB]
+Get:24 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libsasl2-modules-db arm64 2.1.28+dfsg-10 [20.8 kB]
+Get:25 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libsasl2-2 arm64 2.1.28+dfsg-10 [58.0 kB]
+Get:26 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libldap-2.5-0 arm64 2.5.13+dfsg-5 [171 kB]
+Get:27 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libnghttp2-14 arm64 1.52.0-1+deb12u2 [68.6 kB]
+Get:28 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libpsl5 arm64 0.21.2-1 [58.6 kB]
+Get:29 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 librtmp1 arm64 2.4+20151223.gitfa8646d.1-2+b2 [59.4 kB]
+Get:30 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libssh2-1 arm64 1.10.0-3+b1 [172 kB]
+Get:31 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libcurl4 arm64 7.88.1-10+deb12u14 [367 kB]
+Get:32 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libexpat1 arm64 2.5.0-1+deb12u2 [86.3 kB]
+Get:33 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libjsoncpp25 arm64 1.9.5-4 [72.3 kB]
+Get:34 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 librhash0 arm64 1.4.3-3 [131 kB]
+Get:35 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libuv1 arm64 1.44.2-1+deb12u1 [130 kB]
+Get:36 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 cmake-data all 3.25.1-1 [2026 kB]
+Get:37 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 cmake arm64 3.25.1-1 [6806 kB]
+Get:38 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libisl23 arm64 0.25-1.1 [610 kB]
+Get:39 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libmpfr6 arm64 4.2.0-1 [600 kB]
+Get:40 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libmpc3 arm64 1.3.1-1 [49.2 kB]
+Get:41 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 cpp-12 arm64 12.2.0-14+deb12u1 [8228 kB]
+Get:42 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 cpp arm64 4:12.2.0-3 [6832 B]
+Get:43 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 curl arm64 7.88.1-10+deb12u14 [309 kB]
+Get:44 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libcc1-0 arm64 12.2.0-14+deb12u1 [37.7 kB]
+Get:45 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libgomp1 arm64 12.2.0-14+deb12u1 [104 kB]
+Get:46 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libitm1 arm64 12.2.0-14+deb12u1 [24.0 kB]
+Get:47 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libatomic1 arm64 12.2.0-14+deb12u1 [9568 B]
+Get:48 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libasan8 arm64 12.2.0-14+deb12u1 [2096 kB]
+Get:49 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 liblsan0 arm64 12.2.0-14+deb12u1 [926 kB]
+Get:50 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libtsan2 arm64 12.2.0-14+deb12u1 [2178 kB]
+Get:51 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libubsan1 arm64 12.2.0-14+deb12u1 [862 kB]
+Get:52 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libhwasan0 arm64 12.2.0-14+deb12u1 [999 kB]
+Get:53 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libgcc-12-dev arm64 12.2.0-14+deb12u1 [956 kB]
+Get:54 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 gcc-12 arm64 12.2.0-14+deb12u1 [16.3 MB]
+Get:55 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 gcc arm64 4:12.2.0-3 [5244 B]
+Get:56 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libc-dev-bin arm64 2.36-9+deb12u13 [46.5 kB]
+Get:57 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 linux-libc-dev arm64 6.1.148-1 [2153 kB]
+Get:58 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libcrypt-dev arm64 1:4.4.33-2 [121 kB]
+Get:59 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libtirpc-common all 1.3.3+ds-1 [14.0 kB]
+Get:60 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libtirpc3 arm64 1.3.3+ds-1 [80.9 kB]
+Get:61 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libnsl2 arm64 1.3.0-2 [36.9 kB]
+Get:62 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libtirpc-dev arm64 1.3.3+ds-1 [194 kB]
+Get:63 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libnsl-dev arm64 1.3.0-2 [66.1 kB]
+Get:64 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 rpcsvc-proto arm64 1.4.3-1 [59.7 kB]
+Get:65 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libc6-dev arm64 2.36-9+deb12u13 [1435 kB]
+Get:66 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libstdc++-12-dev arm64 12.2.0-14+deb12u1 [2007 kB]
+Get:67 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 g++-12 arm64 12.2.0-14+deb12u1 [9072 kB]
+Get:68 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 g++ arm64 4:12.2.0-3 [1336 B]
+Get:69 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libsoapysdr0.8 arm64 0.8.1-3 [94.7 kB]
+Get:70 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libsoapysdr-dev arm64 0.8.1-3 [33.5 kB]
+Get:71 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 ninja-build arm64 1.11.1-2~deb12u1 [126 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 82.1 MB in 31s (2606 kB/s)
+Selecting previously unselected package libncursesw6:arm64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6089 files and directories currently installed.)
+Preparing to unpack .../00-libncursesw6_6.4-4_arm64.deb ...
+Unpacking libncursesw6:arm64 (6.4-4) ...
+Selecting previously unselected package libproc2-0:arm64.
+Preparing to unpack .../01-libproc2-0_2%3a4.0.2-3_arm64.deb ...
+Unpacking libproc2-0:arm64 (2:4.0.2-3) ...
+Selecting previously unselected package procps.
+Preparing to unpack .../02-procps_2%3a4.0.2-3_arm64.deb ...
+Unpacking procps (2:4.0.2-3) ...
+Selecting previously unselected package libssl3:arm64.
+Preparing to unpack .../03-libssl3_3.0.17-1~deb12u2_arm64.deb ...
+Unpacking libssl3:arm64 (3.0.17-1~deb12u2) ...
+Selecting previously unselected package openssl.
+Preparing to unpack .../04-openssl_3.0.17-1~deb12u2_arm64.deb ...
+Unpacking openssl (3.0.17-1~deb12u2) ...
+Selecting previously unselected package ca-certificates.
+Preparing to unpack .../05-ca-certificates_20230311+deb12u1_all.deb ...
+Unpacking ca-certificates (20230311+deb12u1) ...
+Selecting previously unselected package binutils-common:arm64.
+Preparing to unpack .../06-binutils-common_2.40-2_arm64.deb ...
+Unpacking binutils-common:arm64 (2.40-2) ...
+Selecting previously unselected package libbinutils:arm64.
+Preparing to unpack .../07-libbinutils_2.40-2_arm64.deb ...
+Unpacking libbinutils:arm64 (2.40-2) ...
+Selecting previously unselected package libctf-nobfd0:arm64.
+Preparing to unpack .../08-libctf-nobfd0_2.40-2_arm64.deb ...
+Unpacking libctf-nobfd0:arm64 (2.40-2) ...
+Selecting previously unselected package libctf0:arm64.
+Preparing to unpack .../09-libctf0_2.40-2_arm64.deb ...
+Unpacking libctf0:arm64 (2.40-2) ...
+Selecting previously unselected package libgprofng0:arm64.
+Preparing to unpack .../10-libgprofng0_2.40-2_arm64.deb ...
+Unpacking libgprofng0:arm64 (2.40-2) ...
+Selecting previously unselected package libjansson4:arm64.
+Preparing to unpack .../11-libjansson4_2.14-2_arm64.deb ...
+Unpacking libjansson4:arm64 (2.14-2) ...
+Selecting previously unselected package binutils-aarch64-linux-gnu.
+Preparing to unpack .../12-binutils-aarch64-linux-gnu_2.40-2_arm64.deb ...
+Unpacking binutils-aarch64-linux-gnu (2.40-2) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../13-binutils_2.40-2_arm64.deb ...
+Unpacking binutils (2.40-2) ...
+Selecting previously unselected package libicu72:arm64.
+Preparing to unpack .../14-libicu72_72.1-3+deb12u1_arm64.deb ...
+Unpacking libicu72:arm64 (72.1-3+deb12u1) ...
+Selecting previously unselected package libxml2:arm64.
+Preparing to unpack .../15-libxml2_2.9.14+dfsg-1.3~deb12u4_arm64.deb ...
+Unpacking libxml2:arm64 (2.9.14+dfsg-1.3~deb12u4) ...
+Selecting previously unselected package libarchive13:arm64.
+Preparing to unpack .../16-libarchive13_3.6.2-1+deb12u3_arm64.deb ...
+Unpacking libarchive13:arm64 (3.6.2-1+deb12u3) ...
+Selecting previously unselected package libbrotli1:arm64.
+Preparing to unpack .../17-libbrotli1_1.0.9-2+b6_arm64.deb ...
+Unpacking libbrotli1:arm64 (1.0.9-2+b6) ...
+Selecting previously unselected package libkrb5support0:arm64.
+Preparing to unpack .../18-libkrb5support0_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libkrb5support0:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libk5crypto3:arm64.
+Preparing to unpack .../19-libk5crypto3_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libk5crypto3:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libkeyutils1:arm64.
+Preparing to unpack .../20-libkeyutils1_1.6.3-2_arm64.deb ...
+Unpacking libkeyutils1:arm64 (1.6.3-2) ...
+Selecting previously unselected package libkrb5-3:arm64.
+Preparing to unpack .../21-libkrb5-3_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libkrb5-3:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libgssapi-krb5-2:arm64.
+Preparing to unpack .../22-libgssapi-krb5-2_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libgssapi-krb5-2:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libsasl2-modules-db:arm64.
+Preparing to unpack .../23-libsasl2-modules-db_2.1.28+dfsg-10_arm64.deb ...
+Unpacking libsasl2-modules-db:arm64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libsasl2-2:arm64.
+Preparing to unpack .../24-libsasl2-2_2.1.28+dfsg-10_arm64.deb ...
+Unpacking libsasl2-2:arm64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libldap-2.5-0:arm64.
+Preparing to unpack .../25-libldap-2.5-0_2.5.13+dfsg-5_arm64.deb ...
+Unpacking libldap-2.5-0:arm64 (2.5.13+dfsg-5) ...
+Selecting previously unselected package libnghttp2-14:arm64.
+Preparing to unpack .../26-libnghttp2-14_1.52.0-1+deb12u2_arm64.deb ...
+Unpacking libnghttp2-14:arm64 (1.52.0-1+deb12u2) ...
+Selecting previously unselected package libpsl5:arm64.
+Preparing to unpack .../27-libpsl5_0.21.2-1_arm64.deb ...
+Unpacking libpsl5:arm64 (0.21.2-1) ...
+Selecting previously unselected package librtmp1:arm64.
+Preparing to unpack .../28-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_arm64.deb ...
+Unpacking librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Selecting previously unselected package libssh2-1:arm64.
+Preparing to unpack .../29-libssh2-1_1.10.0-3+b1_arm64.deb ...
+Unpacking libssh2-1:arm64 (1.10.0-3+b1) ...
+Selecting previously unselected package libcurl4:arm64.
+Preparing to unpack .../30-libcurl4_7.88.1-10+deb12u14_arm64.deb ...
+Unpacking libcurl4:arm64 (7.88.1-10+deb12u14) ...
+Selecting previously unselected package libexpat1:arm64.
+Preparing to unpack .../31-libexpat1_2.5.0-1+deb12u2_arm64.deb ...
+Unpacking libexpat1:arm64 (2.5.0-1+deb12u2) ...
+Selecting previously unselected package libjsoncpp25:arm64.
+Preparing to unpack .../32-libjsoncpp25_1.9.5-4_arm64.deb ...
+Unpacking libjsoncpp25:arm64 (1.9.5-4) ...
+Selecting previously unselected package librhash0:arm64.
+Preparing to unpack .../33-librhash0_1.4.3-3_arm64.deb ...
+Unpacking librhash0:arm64 (1.4.3-3) ...
+Selecting previously unselected package libuv1:arm64.
+Preparing to unpack .../34-libuv1_1.44.2-1+deb12u1_arm64.deb ...
+Unpacking libuv1:arm64 (1.44.2-1+deb12u1) ...
+Selecting previously unselected package cmake-data.
+Preparing to unpack .../35-cmake-data_3.25.1-1_all.deb ...
+Unpacking cmake-data (3.25.1-1) ...
+Selecting previously unselected package cmake.
+Preparing to unpack .../36-cmake_3.25.1-1_arm64.deb ...
+Unpacking cmake (3.25.1-1) ...
+Selecting previously unselected package libisl23:arm64.
+Preparing to unpack .../37-libisl23_0.25-1.1_arm64.deb ...
+Unpacking libisl23:arm64 (0.25-1.1) ...
+Selecting previously unselected package libmpfr6:arm64.
+Preparing to unpack .../38-libmpfr6_4.2.0-1_arm64.deb ...
+Unpacking libmpfr6:arm64 (4.2.0-1) ...
+Selecting previously unselected package libmpc3:arm64.
+Preparing to unpack .../39-libmpc3_1.3.1-1_arm64.deb ...
+Unpacking libmpc3:arm64 (1.3.1-1) ...
+Selecting previously unselected package cpp-12.
+Preparing to unpack .../40-cpp-12_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking cpp-12 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package cpp.
+Preparing to unpack .../41-cpp_4%3a12.2.0-3_arm64.deb ...
+Unpacking cpp (4:12.2.0-3) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../42-curl_7.88.1-10+deb12u14_arm64.deb ...
+Unpacking curl (7.88.1-10+deb12u14) ...
+Selecting previously unselected package libcc1-0:arm64.
+Preparing to unpack .../43-libcc1-0_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libcc1-0:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libgomp1:arm64.
+Preparing to unpack .../44-libgomp1_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libgomp1:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libitm1:arm64.
+Preparing to unpack .../45-libitm1_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libitm1:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libatomic1:arm64.
+Preparing to unpack .../46-libatomic1_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libatomic1:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libasan8:arm64.
+Preparing to unpack .../47-libasan8_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libasan8:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package liblsan0:arm64.
+Preparing to unpack .../48-liblsan0_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking liblsan0:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libtsan2:arm64.
+Preparing to unpack .../49-libtsan2_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libtsan2:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libubsan1:arm64.
+Preparing to unpack .../50-libubsan1_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libubsan1:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libhwasan0:arm64.
+Preparing to unpack .../51-libhwasan0_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libhwasan0:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libgcc-12-dev:arm64.
+Preparing to unpack .../52-libgcc-12-dev_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libgcc-12-dev:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package gcc-12.
+Preparing to unpack .../53-gcc-12_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking gcc-12 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package gcc.
+Preparing to unpack .../54-gcc_4%3a12.2.0-3_arm64.deb ...
+Unpacking gcc (4:12.2.0-3) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../55-libc-dev-bin_2.36-9+deb12u13_arm64.deb ...
+Unpacking libc-dev-bin (2.36-9+deb12u13) ...
+Selecting previously unselected package linux-libc-dev:arm64.
+Preparing to unpack .../56-linux-libc-dev_6.1.148-1_arm64.deb ...
+Unpacking linux-libc-dev:arm64 (6.1.148-1) ...
+Selecting previously unselected package libcrypt-dev:arm64.
+Preparing to unpack .../57-libcrypt-dev_1%3a4.4.33-2_arm64.deb ...
+Unpacking libcrypt-dev:arm64 (1:4.4.33-2) ...
+Selecting previously unselected package libtirpc-common.
+Preparing to unpack .../58-libtirpc-common_1.3.3+ds-1_all.deb ...
+Unpacking libtirpc-common (1.3.3+ds-1) ...
+Selecting previously unselected package libtirpc3:arm64.
+Preparing to unpack .../59-libtirpc3_1.3.3+ds-1_arm64.deb ...
+Unpacking libtirpc3:arm64 (1.3.3+ds-1) ...
+Selecting previously unselected package libnsl2:arm64.
+Preparing to unpack .../60-libnsl2_1.3.0-2_arm64.deb ...
+Unpacking libnsl2:arm64 (1.3.0-2) ...
+Selecting previously unselected package libtirpc-dev:arm64.
+Preparing to unpack .../61-libtirpc-dev_1.3.3+ds-1_arm64.deb ...
+Unpacking libtirpc-dev:arm64 (1.3.3+ds-1) ...
+Selecting previously unselected package libnsl-dev:arm64.
+Preparing to unpack .../62-libnsl-dev_1.3.0-2_arm64.deb ...
+Unpacking libnsl-dev:arm64 (1.3.0-2) ...
+Selecting previously unselected package rpcsvc-proto.
+Preparing to unpack .../63-rpcsvc-proto_1.4.3-1_arm64.deb ...
+Unpacking rpcsvc-proto (1.4.3-1) ...
+Selecting previously unselected package libc6-dev:arm64.
+Preparing to unpack .../64-libc6-dev_2.36-9+deb12u13_arm64.deb ...
+Unpacking libc6-dev:arm64 (2.36-9+deb12u13) ...
+Selecting previously unselected package libstdc++-12-dev:arm64.
+Preparing to unpack .../65-libstdc++-12-dev_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking libstdc++-12-dev:arm64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package g++-12.
+Preparing to unpack .../66-g++-12_12.2.0-14+deb12u1_arm64.deb ...
+Unpacking g++-12 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../67-g++_4%3a12.2.0-3_arm64.deb ...
+Unpacking g++ (4:12.2.0-3) ...
+Selecting previously unselected package libsoapysdr0.8:arm64.
+Preparing to unpack .../68-libsoapysdr0.8_0.8.1-3_arm64.deb ...
+Unpacking libsoapysdr0.8:arm64 (0.8.1-3) ...
+Selecting previously unselected package libsoapysdr-dev:arm64.
+Preparing to unpack .../69-libsoapysdr-dev_0.8.1-3_arm64.deb ...
+Unpacking libsoapysdr-dev:arm64 (0.8.1-3) ...
+Selecting previously unselected package ninja-build.
+Preparing to unpack .../70-ninja-build_1.11.1-2~deb12u1_arm64.deb ...
+Unpacking ninja-build (1.11.1-2~deb12u1) ...
+Setting up libexpat1:arm64 (2.5.0-1+deb12u2) ...
+Setting up libkeyutils1:arm64 (1.6.3-2) ...
+Setting up libpsl5:arm64 (0.21.2-1) ...
+Setting up libicu72:arm64 (72.1-3+deb12u1) ...
+Setting up libtirpc-common (1.3.3+ds-1) ...
+Setting up libbrotli1:arm64 (1.0.9-2+b6) ...
+Setting up binutils-common:arm64 (2.40-2) ...
+Setting up libssl3:arm64 (3.0.17-1~deb12u2) ...
+Setting up libnghttp2-14:arm64 (1.52.0-1+deb12u2) ...
+Setting up linux-libc-dev:arm64 (6.1.148-1) ...
+Setting up libctf-nobfd0:arm64 (2.40-2) ...
+Setting up libgomp1:arm64 (12.2.0-14+deb12u1) ...
+Setting up ninja-build (1.11.1-2~deb12u1) ...
+Setting up libsoapysdr0.8:arm64 (0.8.1-3) ...
+Setting up libjansson4:arm64 (2.14-2) ...
+Setting up libkrb5support0:arm64 (1.20.1-2+deb12u4) ...
+Setting up libsasl2-modules-db:arm64 (2.1.28+dfsg-10) ...
+Setting up libuv1:arm64 (1.44.2-1+deb12u1) ...
+Setting up rpcsvc-proto (1.4.3-1) ...
+Setting up libsoapysdr-dev:arm64 (0.8.1-3) ...
+Setting up libmpfr6:arm64 (4.2.0-1) ...
+Setting up librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Setting up libproc2-0:arm64 (2:4.0.2-3) ...
+Setting up libmpc3:arm64 (1.3.1-1) ...
+Setting up libatomic1:arm64 (12.2.0-14+deb12u1) ...
+Setting up libjsoncpp25:arm64 (1.9.5-4) ...
+Setting up libncursesw6:arm64 (6.4-4) ...
+Setting up libk5crypto3:arm64 (1.20.1-2+deb12u4) ...
+Setting up libsasl2-2:arm64 (2.1.28+dfsg-10) ...
+Setting up libubsan1:arm64 (12.2.0-14+deb12u1) ...
+Setting up libhwasan0:arm64 (12.2.0-14+deb12u1) ...
+Setting up librhash0:arm64 (1.4.3-3) ...
+Setting up libcrypt-dev:arm64 (1:4.4.33-2) ...
+Setting up libasan8:arm64 (12.2.0-14+deb12u1) ...
+Setting up procps (2:4.0.2-3) ...
+Setting up libssh2-1:arm64 (1.10.0-3+b1) ...
+Setting up cmake-data (3.25.1-1) ...
+Setting up libkrb5-3:arm64 (1.20.1-2+deb12u4) ...
+Setting up libtsan2:arm64 (12.2.0-14+deb12u1) ...
+Setting up libbinutils:arm64 (2.40-2) ...
+Setting up libisl23:arm64 (0.25-1.1) ...
+Setting up libc-dev-bin (2.36-9+deb12u13) ...
+Setting up openssl (3.0.17-1~deb12u2) ...
+Setting up libxml2:arm64 (2.9.14+dfsg-1.3~deb12u4) ...
+Setting up libcc1-0:arm64 (12.2.0-14+deb12u1) ...
+Setting up liblsan0:arm64 (12.2.0-14+deb12u1) ...
+Setting up libitm1:arm64 (12.2.0-14+deb12u1) ...
+Setting up libctf0:arm64 (2.40-2) ...
+Setting up cpp-12 (12.2.0-14+deb12u1) ...
+Setting up libarchive13:arm64 (3.6.2-1+deb12u3) ...
+Setting up libldap-2.5-0:arm64 (2.5.13+dfsg-5) ...
+Setting up ca-certificates (20230311+deb12u1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/aarch64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/aarch64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/aarch64-linux-gnu/perl-base /usr/lib/aarch64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Updating certificates in /etc/ssl/certs...
+142 added, 0 removed; done.
+Setting up libgprofng0:arm64 (2.40-2) ...
+Setting up libgcc-12-dev:arm64 (12.2.0-14+deb12u1) ...
+Setting up libgssapi-krb5-2:arm64 (1.20.1-2+deb12u4) ...
+Setting up cpp (4:12.2.0-3) ...
+Setting up libcurl4:arm64 (7.88.1-10+deb12u14) ...
+Setting up curl (7.88.1-10+deb12u14) ...
+Setting up libtirpc3:arm64 (1.3.3+ds-1) ...
+Setting up binutils-aarch64-linux-gnu (2.40-2) ...
+Setting up binutils (2.40-2) ...
+Setting up libtirpc-dev:arm64 (1.3.3+ds-1) ...
+Setting up gcc-12 (12.2.0-14+deb12u1) ...
+Setting up libnsl2:arm64 (1.3.0-2) ...
+Setting up cmake (3.25.1-1) ...
+Setting up gcc (4:12.2.0-3) ...
+Setting up libnsl-dev:arm64 (1.3.0-2) ...
+Setting up libc6-dev:arm64 (2.36-9+deb12u13) ...
+Setting up libstdc++-12-dev:arm64 (12.2.0-14+deb12u1) ...
+Setting up g++-12 (12.2.0-14+deb12u1) ...
+Setting up g++ (4:12.2.0-3) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Processing triggers for libc-bin (2.36-9+deb12u13) ...
+Processing triggers for ca-certificates (20230311+deb12u1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+ ---> Removed intermediate container f688270bb223
+ ---> 693ddf243740
+Step 7/29 : RUN curl --fail --location --proto '=https' --tlsv1.2       "https://github.com/nlohmann/json/releases/download/v${NLOHMANN_JSON_VERSION}/json.tar.xz"       --output /tmp/nlohmann-json.tar.xz     && echo "${NLOHMANN_JSON_SHA256}  /tmp/nlohmann-json.tar.xz" | sha256sum --check --strict     && cmake -E tar xf /tmp/nlohmann-json.tar.xz     && cmake -S json -B /tmp/nlohmann-build -G Ninja       -DJSON_BuildTests=OFF -DCMAKE_BUILD_TYPE=Release       -DCMAKE_INSTALL_PREFIX=/opt/deps     && cmake --build /tmp/nlohmann-build --target install
+ ---> Running in f0e96080765b
+[91m  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                          [0m[91m       Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[0m[91m  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+[0m[91m100  111k  100  111k    0     0   648k      0 --:--:-- --:--:-- --:--:--  648k
+[0m/tmp/nlohmann-json.tar.xz: OK
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Using the multi-header code from /json/include/
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/nlohmann-build
+[0/1] Install the project...
+-- Install configuration: "Release"
+-- Installing: /opt/deps/include
+-- Installing: /opt/deps/include/nlohmann
+-- Installing: /opt/deps/include/nlohmann/detail
+-- Installing: /opt/deps/include/nlohmann/detail/string_escape.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/output
+-- Installing: /opt/deps/include/nlohmann/detail/output/binary_writer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/output/serializer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/output/output_adapters.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/macro_scope.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/json_pointer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/string_utils.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta
+-- Installing: /opt/deps/include/nlohmann/detail/meta/call_std
+-- Installing: /opt/deps/include/nlohmann/detail/meta/call_std/end.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/call_std/begin.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/cpp_future.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/std_fs.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/void_t.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/detected.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/identity_tag.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/is_sax.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/type_traits.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/json_ref.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/iteration_proxy.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/iter_impl.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/primitive_iterator.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/iterator_traits.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/internal_iterator.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/json_reverse_iterator.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/abi_macros.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/json_custom_base_class.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/macro_unscope.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/value_t.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/exceptions.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/string_concat.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input
+-- Installing: /opt/deps/include/nlohmann/detail/input/json_sax.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/lexer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/position_t.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/binary_reader.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/input_adapters.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/parser.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/conversions
+-- Installing: /opt/deps/include/nlohmann/detail/conversions/to_chars.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/conversions/to_json.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/conversions/from_json.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/hash.hpp
+-- Installing: /opt/deps/include/nlohmann/json.hpp
+-- Installing: /opt/deps/include/nlohmann/byte_container_with_subtype.hpp
+-- Installing: /opt/deps/include/nlohmann/adl_serializer.hpp
+-- Installing: /opt/deps/include/nlohmann/json_fwd.hpp
+-- Installing: /opt/deps/include/nlohmann/ordered_map.hpp
+-- Installing: /opt/deps/include/nlohmann/thirdparty
+-- Installing: /opt/deps/include/nlohmann/thirdparty/hedley
+-- Installing: /opt/deps/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+-- Installing: /opt/deps/include/nlohmann/thirdparty/hedley/hedley.hpp
+-- Installing: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake
+-- Installing: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake
+-- Installing: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonTargets.cmake
+-- Installing: /opt/deps/share/pkgconfig/nlohmann_json.pc
+ ---> Removed intermediate container f0e96080765b
+ ---> dfc29aa10d13
+Step 8/29 : WORKDIR /src
+ ---> Running in 8556c0605b81
+ ---> Removed intermediate container 8556c0605b81
+ ---> 01d215c6e7e9
+Step 9/29 : COPY CMakeLists.txt ./
+ ---> 299f07343e08
+Step 10/29 : COPY apps apps
+ ---> 46da2be82a62
+Step 11/29 : COPY include include
+ ---> 30869c9beeaf
+Step 12/29 : COPY src src
+ ---> 072b36611ba1
+Step 13/29 : COPY third_party/vrt_framework/include third_party/vrt_framework/include
+ ---> fabc15375485
+Step 14/29 : RUN cmake -S . -B /tmp/build -G Ninja       -DBUILD_TESTING=OFF       -DCMAKE_BUILD_TYPE=Release       -DCMAKE_PREFIX_PATH=/opt/deps       -DCMAKE_INSTALL_PREFIX=/opt/containerlab-vrt     && cmake --build /tmp/build --parallel     && cmake --install /tmp/build     && test -x /opt/containerlab-vrt/bin/radio     && test -x /opt/containerlab-vrt/bin/processor     && test -x /opt/containerlab-vrt/bin/detector     && test -x /opt/containerlab-vrt/bin/recorder
+ ---> Running in bfc554e55a39
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found nlohmann_json: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable exact version "3.12.0") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/build
+[1/24] Building CXX object CMakeFiles/sdr_core.dir/src/virtual_radio.cpp.o
+[2/24] Building CXX object CMakeFiles/sdr_core.dir/src/spectrum.cpp.o
+[3/24] Building CXX object CMakeFiles/sdr_core.dir/src/soapy_virtual_device.cpp.o
+[4/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/vrt_radio_adapter.cpp.o
+[5/24] Building CXX object CMakeFiles/detector.dir/apps/detector.cpp.o
+[6/24] Building CXX object CMakeFiles/processor.dir/apps/processor.cpp.o
+[7/24] Building CXX object CMakeFiles/sdr_core.dir/src/status.cpp.o
+[8/24] Building CXX object CMakeFiles/sdr_recorder.dir/src/recorder.cpp.o
+[9/24] Building CXX object CMakeFiles/sdr_telemetry.dir/src/telemetry.cpp.o
+[10/24] Linking CXX static library libsdr_telemetry.a
+[11/24] Linking CXX static library libsdr_recorder.a
+[12/24] Building CXX object CMakeFiles/recorder.dir/apps/recorder.cpp.o
+[13/24] Linking CXX executable recorder
+[14/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/radio_transport.cpp.o
+[15/24] Building CXX object CMakeFiles/sdr_core.dir/src/radio_services.cpp.o
+[16/24] Linking CXX static library libsdr_core.a
+[17/24] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[18/24] Linking CXX static library libsdr_udp_apps.a
+[19/24] Linking CXX executable detector
+[20/24] Building CXX object CMakeFiles/radio.dir/apps/radio.cpp.o
+[21/24] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[22/24] Linking CXX static library libsdr_vrt_adapter.a
+[23/24] Linking CXX executable processor
+[24/24] Linking CXX executable radio
+-- Install configuration: "Release"
+-- Installing: /opt/containerlab-vrt/bin/radio
+-- Installing: /opt/containerlab-vrt/bin/processor
+-- Installing: /opt/containerlab-vrt/bin/detector
+-- Installing: /opt/containerlab-vrt/bin/recorder
+ ---> Removed intermediate container bfc554e55a39
+ ---> 365362c70609
+Step 15/29 : FROM ${BASE_IMAGE} AS runtime
+bookworm-20250908-slim: Pulling from library/debian
+Digest: sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+Status: Image is up to date for debian:bookworm-20250908-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ ---> df52e55e3361
+Step 16/29 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> 090c575f2546
+Step 17/29 : ARG VRT_REVISION
+ ---> Running in 00e29a75e3cc
+ ---> Removed intermediate container 00e29a75e3cc
+ ---> 3068be1cd764
+Step 18/29 : ARG GRAPHX_REFERENCE_REVISION
+ ---> Running in 0936283794f4
+ ---> Removed intermediate container 0936283794f4
+ ---> 03d9204bc0a3
+Step 19/29 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends iproute2 libsoapysdr0.8     && rm -rf /var/lib/apt/lists/*
+ ---> Running in b129d5185911
+Get:1 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm InRelease [151 kB]
+Get:2 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm-updates InRelease [55.4 kB]
+Get:3 http://snapshot.debian.org/archive/debian-security/20250908T000000Z bookworm-security InRelease [48.0 kB]
+Get:4 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 Packages [8693 kB]
+Get:5 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://snapshot.debian.org/archive/debian-security/20250908T000000Z bookworm-security/main arm64 Packages [273 kB]
+Fetched 9227 kB in 4s (2633 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  libbpf1 libbsd0 libcap2-bin libelf1 libgssapi-krb5-2 libk5crypto3
+  libkeyutils1 libkrb5-3 libkrb5support0 libmnl0 libssl3 libtirpc-common
+  libtirpc3 libxtables12
+Suggested packages:
+  iproute2-doc python3:any krb5-doc krb5-user
+Recommended packages:
+  libatm1 libpam-cap krb5-locales soapysdr0.8-module-all | soapysdr0.8-module
+The following NEW packages will be installed:
+  iproute2 libbpf1 libbsd0 libcap2-bin libelf1 libgssapi-krb5-2 libk5crypto3
+  libkeyutils1 libkrb5-3 libkrb5support0 libmnl0 libsoapysdr0.8 libssl3
+  libtirpc-common libtirpc3 libxtables12
+0 upgraded, 16 newly installed, 0 to remove and 0 not upgraded.
+Need to get 4073 kB of archives.
+After this operation, 15.5 MB of additional disk space will be used.
+Get:1 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libelf1 arm64 0.188-2.1 [173 kB]
+Get:2 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libbpf1 arm64 1:1.1.2-0+deb12u1 [136 kB]
+Get:3 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libbsd0 arm64 0.11.7-2 [115 kB]
+Get:4 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libmnl0 arm64 1.0.4-3 [12.1 kB]
+Get:5 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libkrb5support0 arm64 1.20.1-2+deb12u4 [32.5 kB]
+Get:6 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libk5crypto3 arm64 1.20.1-2+deb12u4 [80.2 kB]
+Get:7 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libkeyutils1 arm64 1.6.3-2 [8844 B]
+Get:8 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libssl3 arm64 3.0.17-1~deb12u2 [1816 kB]
+Get:9 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libkrb5-3 arm64 1.20.1-2+deb12u4 [314 kB]
+Get:10 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libgssapi-krb5-2 arm64 1.20.1-2+deb12u4 [124 kB]
+Get:11 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libtirpc-common all 1.3.3+ds-1 [14.0 kB]
+Get:12 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libtirpc3 arm64 1.3.3+ds-1 [80.9 kB]
+Get:13 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libxtables12 arm64 1.8.9-2 [29.6 kB]
+Get:14 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libcap2-bin arm64 1:2.66-4+deb12u2 [34.1 kB]
+Get:15 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 iproute2 arm64 6.1.0-3 [1008 kB]
+Get:16 http://snapshot.debian.org/archive/debian/20250908T000000Z bookworm/main arm64 libsoapysdr0.8 arm64 0.8.1-3 [94.7 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 4073 kB in 0s (29.1 MB/s)
+Selecting previously unselected package libelf1:arm64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6089 files and directories currently installed.)
+Preparing to unpack .../00-libelf1_0.188-2.1_arm64.deb ...
+Unpacking libelf1:arm64 (0.188-2.1) ...
+Selecting previously unselected package libbpf1:arm64.
+Preparing to unpack .../01-libbpf1_1%3a1.1.2-0+deb12u1_arm64.deb ...
+Unpacking libbpf1:arm64 (1:1.1.2-0+deb12u1) ...
+Selecting previously unselected package libbsd0:arm64.
+Preparing to unpack .../02-libbsd0_0.11.7-2_arm64.deb ...
+Unpacking libbsd0:arm64 (0.11.7-2) ...
+Selecting previously unselected package libmnl0:arm64.
+Preparing to unpack .../03-libmnl0_1.0.4-3_arm64.deb ...
+Unpacking libmnl0:arm64 (1.0.4-3) ...
+Selecting previously unselected package libkrb5support0:arm64.
+Preparing to unpack .../04-libkrb5support0_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libkrb5support0:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libk5crypto3:arm64.
+Preparing to unpack .../05-libk5crypto3_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libk5crypto3:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libkeyutils1:arm64.
+Preparing to unpack .../06-libkeyutils1_1.6.3-2_arm64.deb ...
+Unpacking libkeyutils1:arm64 (1.6.3-2) ...
+Selecting previously unselected package libssl3:arm64.
+Preparing to unpack .../07-libssl3_3.0.17-1~deb12u2_arm64.deb ...
+Unpacking libssl3:arm64 (3.0.17-1~deb12u2) ...
+Selecting previously unselected package libkrb5-3:arm64.
+Preparing to unpack .../08-libkrb5-3_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libkrb5-3:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libgssapi-krb5-2:arm64.
+Preparing to unpack .../09-libgssapi-krb5-2_1.20.1-2+deb12u4_arm64.deb ...
+Unpacking libgssapi-krb5-2:arm64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libtirpc-common.
+Preparing to unpack .../10-libtirpc-common_1.3.3+ds-1_all.deb ...
+Unpacking libtirpc-common (1.3.3+ds-1) ...
+Selecting previously unselected package libtirpc3:arm64.
+Preparing to unpack .../11-libtirpc3_1.3.3+ds-1_arm64.deb ...
+Unpacking libtirpc3:arm64 (1.3.3+ds-1) ...
+Selecting previously unselected package libxtables12:arm64.
+Preparing to unpack .../12-libxtables12_1.8.9-2_arm64.deb ...
+Unpacking libxtables12:arm64 (1.8.9-2) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../13-libcap2-bin_1%3a2.66-4+deb12u2_arm64.deb ...
+Unpacking libcap2-bin (1:2.66-4+deb12u2) ...
+Selecting previously unselected package iproute2.
+Preparing to unpack .../14-iproute2_6.1.0-3_arm64.deb ...
+Unpacking iproute2 (6.1.0-3) ...
+Selecting previously unselected package libsoapysdr0.8:arm64.
+Preparing to unpack .../15-libsoapysdr0.8_0.8.1-3_arm64.deb ...
+Unpacking libsoapysdr0.8:arm64 (0.8.1-3) ...
+Setting up libkeyutils1:arm64 (1.6.3-2) ...
+Setting up libtirpc-common (1.3.3+ds-1) ...
+Setting up libssl3:arm64 (3.0.17-1~deb12u2) ...
+Setting up libsoapysdr0.8:arm64 (0.8.1-3) ...
+Setting up libkrb5support0:arm64 (1.20.1-2+deb12u4) ...
+Setting up libcap2-bin (1:2.66-4+deb12u2) ...
+Setting up libmnl0:arm64 (1.0.4-3) ...
+Setting up libk5crypto3:arm64 (1.20.1-2+deb12u4) ...
+Setting up libxtables12:arm64 (1.8.9-2) ...
+Setting up libkrb5-3:arm64 (1.20.1-2+deb12u4) ...
+Setting up libbsd0:arm64 (0.11.7-2) ...
+Setting up libelf1:arm64 (0.188-2.1) ...
+Setting up libbpf1:arm64 (1:1.1.2-0+deb12u1) ...
+Setting up libgssapi-krb5-2:arm64 (1.20.1-2+deb12u4) ...
+Setting up libtirpc3:arm64 (1.3.3+ds-1) ...
+Setting up iproute2 (6.1.0-3) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/aarch64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/aarch64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/aarch64-linux-gnu/perl-base /usr/lib/aarch64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Processing triggers for libc-bin (2.36-9+deb12u13) ...
+ ---> Removed intermediate container b129d5185911
+ ---> 1b0cfa8f6408
+Step 20/29 : COPY --from=build /opt/containerlab-vrt /opt/containerlab-vrt
+ ---> 3e25ee5f731e
+Step 21/29 : COPY container/vrt-source.json /usr/share/doc/containerlab-vrt/vrt-source.json
+ ---> 5819708cae1a
+Step 22/29 : COPY patches/vrt-runtime-progress.patch /usr/share/doc/containerlab-vrt/vrt-runtime-progress.patch
+ ---> 6e9f05495965
+Step 23/29 : COPY patches/vrt-command-resumption.patch /usr/share/doc/containerlab-vrt/vrt-command-resumption.patch
+ ---> f4596cf856ac
+Step 24/29 : COPY THIRD_PARTY_NOTICES.md /usr/share/doc/containerlab-vrt/THIRD_PARTY_NOTICES.md
+ ---> c5aa6fb33cd9
+Step 25/29 : COPY third_party/vrt_framework/LICENSE /usr/share/doc/containerlab-vrt/VRT_FRAMEWORK_LICENSE
+ ---> 1f13a3bb42fb
+Step 26/29 : ENV PATH=/opt/containerlab-vrt/bin:$PATH
+ ---> Running in 379b3f994872
+ ---> Removed intermediate container 379b3f994872
+ ---> 5234d5931ee3
+Step 27/29 : LABEL org.opencontainers.image.title="containerlab-vrt standalone SDR applications"       org.opencontainers.image.source="https://github.com/rklinkhammer/containerlab-vrt"       org.opencontainers.image.licenses="MIT"       org.opencontainers.image.revision.vrt="${VRT_REVISION}"       org.opencontainers.image.revision.graphx-reference="${GRAPHX_REFERENCE_REVISION}"
+ ---> Running in fadcb5fabb03
+ ---> Removed intermediate container fadcb5fabb03
+ ---> fec31cec9351
+Step 28/29 : WORKDIR /run/containerlab-vrt
+ ---> Running in f8018710792f
+ ---> Removed intermediate container f8018710792f
+ ---> 68b64981202c
+Step 29/29 : CMD ["/bin/false"]
+ ---> Running in a6ffc7c6f4c3
+ ---> Removed intermediate container a6ffc7c6f4c3
+ ---> f4bf75514187
+Successfully built f4bf75514187
+Successfully tagged containerlab-vrt-app:local
+built and inspected containerlab-vrt-app:local
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  1.262MB
+Step 1/15 : ARG BASE_IMAGE
+Step 2/15 : FROM ${BASE_IMAGE} AS build
+ ---> df52e55e3361
+Step 3/15 : ARG DEBIAN_SNAPSHOT
+ ---> Using cache
+ ---> 090c575f2546
+Step 4/15 : ARG NLOHMANN_JSON_VERSION
+ ---> Using cache
+ ---> 57b0c7810f55
+Step 5/15 : ARG NLOHMANN_JSON_SHA256
+ ---> Using cache
+ ---> 80f172ed2e0d
+Step 6/15 : RUN printf '%s\n'       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/ bookworm-updates main"       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/ bookworm-security main"       > /etc/apt/sources.list     && rm -f /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Check-Valid-Until=false update     && apt-get install -y --no-install-recommends       ca-certificates cmake curl g++ libsoapysdr-dev ninja-build     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 693ddf243740
+Step 7/15 : RUN curl --fail --location --proto '=https' --tlsv1.2       "https://github.com/nlohmann/json/releases/download/v${NLOHMANN_JSON_VERSION}/json.tar.xz"       --output /tmp/nlohmann-json.tar.xz     && echo "${NLOHMANN_JSON_SHA256}  /tmp/nlohmann-json.tar.xz" | sha256sum --check --strict     && cmake -E tar xf /tmp/nlohmann-json.tar.xz     && cmake -S json -B /tmp/nlohmann-build -G Ninja       -DJSON_BuildTests=OFF -DCMAKE_BUILD_TYPE=Debug       -DCMAKE_INSTALL_PREFIX=/opt/deps     && cmake --build /tmp/nlohmann-build --target install
+ ---> Running in fc110a7dd168
+[91m  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+[0m[91m  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--[0m[91m     0[0m[91m  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+[0m[91m  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[0m[91m100  111k  100  111k    0     0   436k      0 --:--:-- --:--:-- --:--:-- 6581k
+[0m/tmp/nlohmann-json.tar.xz: OK
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Using the multi-header code from /json/include/
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/nlohmann-build
+[0/1] Install the project...
+-- Install configuration: "Debug"
+-- Installing: /opt/deps/include
+-- Installing: /opt/deps/include/nlohmann
+-- Installing: /opt/deps/include/nlohmann/detail
+-- Installing: /opt/deps/include/nlohmann/detail/string_escape.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/output
+-- Installing: /opt/deps/include/nlohmann/detail/output/binary_writer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/output/serializer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/output/output_adapters.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/macro_scope.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/json_pointer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/string_utils.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta
+-- Installing: /opt/deps/include/nlohmann/detail/meta/call_std
+-- Installing: /opt/deps/include/nlohmann/detail/meta/call_std/end.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/call_std/begin.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/cpp_future.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/std_fs.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/void_t.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/detected.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/identity_tag.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/is_sax.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/meta/type_traits.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/json_ref.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/iteration_proxy.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/iter_impl.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/primitive_iterator.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/iterator_traits.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/internal_iterator.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/iterators/json_reverse_iterator.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/abi_macros.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/json_custom_base_class.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/macro_unscope.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/value_t.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/exceptions.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/string_concat.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input
+-- Installing: /opt/deps/include/nlohmann/detail/input/json_sax.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/lexer.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/position_t.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/binary_reader.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/input_adapters.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/input/parser.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/conversions
+-- Installing: /opt/deps/include/nlohmann/detail/conversions/to_chars.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/conversions/to_json.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/conversions/from_json.hpp
+-- Installing: /opt/deps/include/nlohmann/detail/hash.hpp
+-- Installing: /opt/deps/include/nlohmann/json.hpp
+-- Installing: /opt/deps/include/nlohmann/byte_container_with_subtype.hpp
+-- Installing: /opt/deps/include/nlohmann/adl_serializer.hpp
+-- Installing: /opt/deps/include/nlohmann/json_fwd.hpp
+-- Installing: /opt/deps/include/nlohmann/ordered_map.hpp
+-- Installing: /opt/deps/include/nlohmann/thirdparty
+-- Installing: /opt/deps/include/nlohmann/thirdparty/hedley
+-- Installing: /opt/deps/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+-- Installing: /opt/deps/include/nlohmann/thirdparty/hedley/hedley.hpp
+-- Installing: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake
+-- Installing: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake
+-- Installing: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonTargets.cmake
+-- Installing: /opt/deps/share/pkgconfig/nlohmann_json.pc
+ ---> Removed intermediate container fc110a7dd168
+ ---> 9d81790c8b55
+Step 8/15 : WORKDIR /src
+ ---> Running in 0e7b1ce68c36
+ ---> Removed intermediate container 0e7b1ce68c36
+ ---> 2abf81b7e3df
+Step 9/15 : COPY CMakeLists.txt ./
+ ---> 7ead469c3994
+Step 10/15 : COPY apps apps
+ ---> c9de1ab77757
+Step 11/15 : COPY include include
+ ---> 6363fa593bd5
+Step 12/15 : COPY src src
+ ---> aa372fa9b621
+Step 13/15 : COPY tests tests
+ ---> c74930c81cde
+Step 14/15 : COPY third_party/vrt_framework/include third_party/vrt_framework/include
+ ---> dfbcb48f733f
+Step 15/15 : RUN cmake -S . -B /tmp/build -G Ninja       -DBUILD_TESTING=ON       -DCMAKE_BUILD_TYPE=Debug       -DCMAKE_PREFIX_PATH=/opt/deps       -DCMAKE_INSTALL_PREFIX=/opt/containerlab-vrt     && cmake --build /tmp/build --parallel     && cmake --install /tmp/build     && test -x /opt/containerlab-vrt/bin/radio     && test -x /opt/containerlab-vrt/bin/processor     && test -x /opt/containerlab-vrt/bin/detector     && test -x /opt/containerlab-vrt/bin/recorder
+ ---> Running in ee3ac1184a13
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found nlohmann_json: /opt/deps/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable exact version "3.12.0") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/build
+[1/56] Building CXX object CMakeFiles/sdr_core.dir/src/virtual_radio.cpp.o
+[2/56] Building CXX object CMakeFiles/sdr_core.dir/src/soapy_virtual_device.cpp.o
+[3/56] Building CXX object CMakeFiles/sdr_core.dir/src/spectrum.cpp.o
+[4/56] Building CXX object CMakeFiles/detector.dir/apps/detector.cpp.o
+[5/56] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/vrt_radio_adapter.cpp.o
+[6/56] Building CXX object CMakeFiles/sdr_core.dir/src/status.cpp.o
+[7/56] Building CXX object CMakeFiles/sdr_telemetry.dir/src/telemetry.cpp.o
+[8/56] Linking CXX static library libsdr_telemetry.a
+[9/56] Building CXX object CMakeFiles/sdr_recorder.dir/src/recorder.cpp.o
+[10/56] Linking CXX static library libsdr_recorder.a
+[11/56] Building CXX object CMakeFiles/sdr_core_tests.dir/tests/sdr_core_tests.cpp.o
+[12/56] Building CXX object CMakeFiles/sdr_soapy_tests.dir/tests/soapy_virtual_device_tests.cpp.o
+[13/56] Building CXX object CMakeFiles/recorder.dir/apps/recorder.cpp.o
+[14/56] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/radio_transport.cpp.o
+[15/56] Building CXX object CMakeFiles/processor.dir/apps/processor.cpp.o
+[16/56] Linking CXX executable recorder
+[17/56] Building CXX object CMakeFiles/sdr_core.dir/src/radio_services.cpp.o
+[18/56] Linking CXX static library libsdr_core.a
+[19/56] Linking CXX executable sdr_core_tests
+[20/56] Linking CXX executable sdr_soapy_tests
+[21/56] Building CXX object CMakeFiles/sdr_vrt_adapter_tests.dir/tests/vrt_radio_adapter_tests.cpp.o
+[22/56] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[23/56] Linking CXX static library libsdr_udp_apps.a
+[24/56] Linking CXX executable detector
+[25/56] Building CXX object CMakeFiles/sdr_p17_golden_vectors_tests.dir/tests/p17_golden_vectors_tests.cpp.o
+[26/56] Linking CXX executable sdr_p17_golden_vectors_tests
+[27/56] Building CXX object CMakeFiles/sdr_status_tests.dir/tests/status_tests.cpp.o
+[28/56] Linking CXX executable sdr_status_tests
+[29/56] Building CXX object CMakeFiles/sdr_radio_services_tests.dir/tests/radio_services_tests.cpp.o
+[30/56] Linking CXX executable sdr_radio_services_tests
+[31/56] Building CXX object CMakeFiles/sdr_recorder_tests.dir/tests/recorder_tests.cpp.o
+[32/56] Linking CXX executable sdr_recorder_tests
+[33/56] Building CXX object CMakeFiles/sdr_vrt_adapter.dir/src/processor_controller.cpp.o
+[34/56] Linking CXX static library libsdr_vrt_adapter.a
+[35/56] Building CXX object CMakeFiles/sdr_udp_integration_tests.dir/tests/udp_integration_tests.cpp.o
+[36/56] Linking CXX executable sdr_vrt_adapter_tests
+[37/56] Building CXX object CMakeFiles/radio.dir/apps/radio.cpp.o
+[38/56] Linking CXX executable sdr_udp_integration_tests
+[39/56] Building CXX object CMakeFiles/sdr_vrt_runtime_retention_tests.dir/tests/vrt_runtime_retention_tests.cpp.o
+[40/56] Linking CXX executable radio
+[41/56] Linking CXX executable processor
+[42/56] Linking CXX executable sdr_vrt_runtime_retention_tests
+[43/56] Building CXX object CMakeFiles/sdr_udp_pipeline_tests.dir/tests/udp_pipeline_tests.cpp.o
+[44/56] Building CXX object CMakeFiles/sdr_telemetry_tests.dir/tests/telemetry_tests.cpp.o
+[45/56] Linking CXX executable sdr_telemetry_tests
+[46/56] Linking CXX executable sdr_udp_pipeline_tests
+[47/56] Building CXX object CMakeFiles/sdr_vrt_command_resumption_tests.dir/tests/vrt_command_resumption_tests.cpp.o
+[48/56] Linking CXX executable sdr_vrt_command_resumption_tests
+[49/56] Building CXX object CMakeFiles/sdr_radio_transport_tests.dir/tests/radio_transport_tests.cpp.o
+[50/56] Building CXX object CMakeFiles/sdr_processor_controller_tests.dir/tests/processor_controller_tests.cpp.o
+[51/56] Linking CXX executable sdr_radio_transport_tests
+[52/56] Linking CXX executable sdr_processor_controller_tests
+[53/56] Building CXX object CMakeFiles/sdr_telemetry_pipeline_tests.dir/tests/telemetry_pipeline_tests.cpp.o
+[54/56] Linking CXX executable sdr_telemetry_pipeline_tests
+[55/56] Building CXX object CMakeFiles/sdr_vrt_scheduled_start_tests.dir/tests/vrt_scheduled_start_tests.cpp.o
+[56/56] Linking CXX executable sdr_vrt_scheduled_start_tests
+-- Install configuration: "Debug"
+-- Installing: /opt/containerlab-vrt/bin/radio
+-- Installing: /opt/containerlab-vrt/bin/processor
+-- Installing: /opt/containerlab-vrt/bin/detector
+-- Installing: /opt/containerlab-vrt/bin/recorder
+ ---> Removed intermediate container ee3ac1184a13
+ ---> b131fc54b260
+Successfully built b131fc54b260
+Successfully tagged containerlab-vrt-tests:qualification
+Internal ctest changing into directory: /tmp/build
+Test project /tmp/build
+      Start  1: sdr_p17_golden_vectors_tests
+ 1/16 Test  #1: sdr_p17_golden_vectors_tests .......   Passed    0.00 sec
+      Start  2: sdr_core_tests
+ 2/16 Test  #2: sdr_core_tests .....................   Passed    0.00 sec
+      Start  3: sdr_soapy_tests
+ 3/16 Test  #3: sdr_soapy_tests ....................   Passed    0.00 sec
+      Start  4: sdr_radio_services_tests
+ 4/16 Test  #4: sdr_radio_services_tests ...........   Passed    0.00 sec
+      Start  5: sdr_vrt_adapter_tests
+ 5/16 Test  #5: sdr_vrt_adapter_tests ..............   Passed    0.00 sec
+      Start  6: sdr_vrt_runtime_retention_tests
+ 6/16 Test  #6: sdr_vrt_runtime_retention_tests ....   Passed    0.03 sec
+      Start  7: sdr_radio_transport_tests
+ 7/16 Test  #7: sdr_radio_transport_tests ..........   Passed    0.39 sec
+      Start  8: sdr_processor_controller_tests
+ 8/16 Test  #8: sdr_processor_controller_tests .....   Passed   14.77 sec
+      Start  9: sdr_vrt_command_resumption_tests
+ 9/16 Test  #9: sdr_vrt_command_resumption_tests ...   Passed    0.00 sec
+      Start 10: sdr_status_tests
+10/16 Test #10: sdr_status_tests ...................   Passed    0.00 sec
+      Start 11: sdr_udp_pipeline_tests
+11/16 Test #11: sdr_udp_pipeline_tests .............   Passed    0.00 sec
+      Start 12: sdr_udp_integration_tests
+12/16 Test #12: sdr_udp_integration_tests ..........   Passed    0.52 sec
+      Start 13: sdr_recorder_tests
+13/16 Test #13: sdr_recorder_tests .................   Passed    0.00 sec
+      Start 14: sdr_telemetry_tests
+14/16 Test #14: sdr_telemetry_tests ................   Passed    0.01 sec
+      Start 15: sdr_telemetry_pipeline_tests
+15/16 Test #15: sdr_telemetry_pipeline_tests .......   Passed    6.33 sec
+      Start 16: sdr_vrt_scheduled_start_tests
+16/16 Test #16: sdr_vrt_scheduled_start_tests ......   Passed    0.84 sec
+
+100% tests passed, 0 tests failed out of 16
+
+Total Test time (real) =  22.90 sec

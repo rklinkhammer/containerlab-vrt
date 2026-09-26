@@ -1,0 +1,20 @@
+{
+  "vm": "clab-vrt-health-20260926-004831",
+  "source_commit": "8ae49ca60a59444228d9019f38042459c7754363",
+  "source_archive_sha256": "dea1f9f5f30f493a7803b2449df21cca2bd78d8137e6285e7b4712d44aaf1ca3",
+  "vrt_manifest": {
+    "revision": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+    "include_tree_sha256": "cb95ce93ac12fbad50c58335aee98f805db9964b27ed1451e5f56cfc1347d313",
+    "base_include_tree_sha256": "cfb6b98be0f6cc6cadc0701cceda992e726a5b8cc85c77378599163d69786259",
+    "patches": [
+      {
+        "path": "patches/vrt-runtime-progress.patch",
+        "sha256": "a4ebe2d9904650283145f0ce2bffeb288298d611226ad55c99b09d0b9e8ab662"
+      },
+      {
+        "path": "patches/vrt-command-resumption.patch",
+        "sha256": "fe8fa74af94f54d42da6fca5457e12463fd0df255351e806ff25b16c2700e361"
+      }
+    ]
+  }
+}

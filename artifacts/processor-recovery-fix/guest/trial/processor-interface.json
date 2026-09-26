@@ -1,0 +1,41 @@
+{
+  "ifindex": 41,
+  "link_index": 42,
+  "ifname": "eth1",
+  "flags": [
+    "BROADCAST",
+    "MULTICAST",
+    "UP",
+    "LOWER_UP"
+  ],
+  "mtu": 9000,
+  "qdisc": "noqueue",
+  "operstate": "UP",
+  "group": "default",
+  "link_type": "ether",
+  "address": "aa:c1:ab:d9:72:36",
+  "broadcast": "ff:ff:ff:ff:ff:ff",
+  "link_netnsid": 1,
+  "altnames": [
+    "clab-o-7bcfe50769e62d2e"
+  ],
+  "addr_info": [
+    {
+      "family": "inet",
+      "local": "10.79.0.14",
+      "prefixlen": 24,
+      "scope": "global",
+      "label": "eth1",
+      "valid_life_time": 4294967295,
+      "preferred_life_time": 4294967295
+    },
+    {
+      "family": "inet6",
+      "local": "fe80::a8c1:abff:fed9:7236",
+      "prefixlen": 64,
+      "scope": "link",
+      "valid_life_time": 4294967295,
+      "preferred_life_time": 4294967295
+    }
+  ]
+}

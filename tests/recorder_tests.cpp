@@ -7,6 +7,7 @@
 #include <nlohmann/json.hpp>
 #include <stdexcept>
 #include <vector>
+#include <fstream>
 
 namespace {
 sdr::recorder::Options parse(std::initializer_list<const char *> arguments) {
@@ -98,7 +99,22 @@ void pcap_bound_contract() {
     writer.finish();
   }
   assert(std::filesystem::file_size(path) == 44);
+  // Existing files, including symlink destinations, must remain untouched.
+  bool refused = false;
+  try { sdr::recorder::PcapWriter duplicate(path, 100); }
+  catch (const std::runtime_error &) { refused = true; }
+  assert(refused && std::filesystem::file_size(path) == 44);
+  const auto link = path.string() + ".link";
+  std::filesystem::remove(link);
+  std::filesystem::create_symlink(path, link);
+  refused = false;
+  try { sdr::recorder::PcapWriter duplicate(link, 100); }
+  catch (const std::runtime_error &) { refused = true; }
+  assert(refused && std::filesystem::file_size(path) == 44);
+  std::filesystem::remove(link);
   std::filesystem::remove(path);
+  rejected([&] { sdr::recorder::PcapWriter invalid(path, 39); });
+  assert(!std::filesystem::exists(path));
 }
 } // namespace
 

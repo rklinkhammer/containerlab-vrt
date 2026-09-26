@@ -1,0 +1,4 @@
+[1/2] Building CXX object CMakeFiles/sdr_radio_transport_tests.dir/tests/radio_transport_tests.cpp.o
+[2/2] Linking CXX executable sdr_radio_transport_tests
+rejected connection recv=-1 errno=11 (Resource temporarily unavailable)
+sdr_radio_transport_tests: /src/tests/radio_transport_tests.cpp:291: void {anonymous}::runtime_control_path(): Assertion `rejected_read == 0' failed.

@@ -1,0 +1,15 @@
+TRACE duplicate-path sid=1 mid=1 highwater=189 generation=1
+TRACE duplicate-path sid=2 mid=1 highwater=189 generation=1
+TRACE duplicate-path sid=3 mid=1 highwater=189 generation=1
+TRACE duplicate-path sid=4 mid=1 highwater=188 generation=1
+TRACE duplicate-path sid=1 mid=2 highwater=189 generation=1
+TRACE duplicate-path sid=2 mid=2 highwater=189 generation=1
+TRACE duplicate-path sid=3 mid=2 highwater=189 generation=1
+TRACE duplicate-path sid=4 mid=2 highwater=188 generation=1
+TRACE duplicate-path sid=1 mid=3 highwater=189 generation=1
+TRACE duplicate-path sid=2 mid=3 highwater=189 generation=1
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio1","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio2","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio3","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio4","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+replacement configurations=0 starts=0 protocol_failures=9

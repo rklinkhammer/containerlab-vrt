@@ -1,10 +1,24 @@
 # Four-radio SDR Containerlab lab
 
+[Recorder recovery qualification](artifacts/recorder-recovery/RESULTS.md) passed: native replacement restored mirrored traffic, preserved the other seven nodes, and retained completed capture files. Capture attempts now use separate directories and manifests; interruptions remain explicit. Both captures hit byte limits and reported drops, so this does not qualify lossless recording.
+
+[Health recovery qualification](artifacts/health-recovery/RESULTS.md) passed: the replacement processor recovered from degraded to healthy local activity while retaining 145 historical context-wait discards. Both local and Linux test suites pass; the dedicated VM is stopped.
+
+Processor transition discards now have [explicit reasons](docs/DISCARD_DIAGNOSTICS.md). The [fresh replacement trial](artifacts/discard-classification/RESULTS.md) recorded 141 signals waiting for context, no other discard reasons, and no growth during sustained recovery. The legacy aggregate remains intact; [local health now recovers](docs/HEALTH_POLICY.md) after a quiet interval and fresh successful activity.
+
 Standalone C++23 radio, processor, detector, and passive recorder applications for the generated Nokia SR Linux Containerlab topology. Containerlab owns topology and lifecycle. The project-owned VRT source under `third_party/vrt_framework` supplies the renamed SDR profile; graphx-docker is not a build or runtime dependency.
 
 ## Telemetry update
 
 All four application roles now emit bounded `vrt.telemetry/1` JSON heartbeats. Configure `telemetry.interval_ms` in `config/lab.json` (default5000;0 disables new telemetry), then regenerate and rebuild. Detection events are rate limited; counters distinguish sequence gaps from proven loss and buffered PCAP writes from durable storage. See [contract and measurements](docs/TELEMETRY.md) and [actual qualification](artifacts/telemetry/RESULTS.md). No GUI, serial endpoint or new service is added.
+
+## Current Linux qualification
+
+The patched ARM64 images passed 15/15 Linux tests and a 340-second switched four-radio run, with all four tones detected and no observed sequence gaps. Qualification fixed a recorder startup race and test portability issues. Pause/resume recovers traffic, but direct Docker restart did not; the bounded capture also reached its size cap and measured kernel drops. See [results, image identity, failures and cleanup](artifacts/linux-runtime-qualification/RESULTS.md). The dedicated VM is stopped.
+
+## Recovery
+
+[Detector and single-radio replacement through Containerlab](docs/RECOVERY.md) are qualified on ARM64: each native workflow restored traffic while preserving the other seven node identities. Radio recovery included controller reconfiguration and a new start epoch; retries and sequence discontinuities were observed. See [radio evidence](artifacts/radio-recovery-qualification/RESULTS.md). Full-lab redeployment is a verified disruptive fallback. Link-only reconciliation after Docker restart did not restore the exec-configured address/MTU. See [recovery evidence](artifacts/recovery-qualification/RESULTS.md). [Processor replacement now passes on the updated images](artifacts/processor-recovery-fix/RESULTS.md): the command-resumption fix preserves stream IDs and restores controller and data operation. Upgrade radios and processor together. Native stop/reconfigure/start remains disruptive; [original failures](artifacts/processor-recovery-qualification/RESULTS.md) are preserved.
 
 ## Start here
 
@@ -83,7 +97,7 @@ The image build uses `container/dependencies.env`, the immutable Debian base dig
 
 The scripts operate only on lab `four-radio-sdr`, network `four-radio-sdr-mgmt`, and the eight exact `clab-four-radio-sdr-*` container names. Deploy refuses existing names and cleans a partial deployment through the same generated topology. Destroy audits those exact names and never prunes globally.
 
-Capture is fixed to all mirrored frames on recorder `eth1`, at most 60 seconds, and at most 64 MiB. It accepts no caller-provided filter. The PCAP and JSON metrics are written under ignored `artifacts/runtime/` in the Linux checkout; SHA-256 is printed, not saved. Each capture replaces the previous files: copy evidence out first and run only one capture at a time. A zero exit status does not establish capture completeness; inspect the drop counters. See the macOS guide for copying results to the Mac.
+Capture is fixed to all mirrored frames on recorder `eth1`, at most 60 seconds, and at most 64 MiB. It accepts no caller-provided filter. Each attempt writes a separate session under ignored `artifacts/runtime/captures/` in the Linux checkout, with a manifest containing exact container identity, timestamps and file SHA-256 values. Previous files are retained; run one capture at a time to avoid competing for receive resources. Interrupted attempts remain explicitly incomplete. See [preservation semantics](docs/CAPTURE_PRESERVATION.md). A zero exit status does not establish capture completeness; inspect the drop counters. See the macOS guide for copying results to the Mac.
 
 ## Configuration
 

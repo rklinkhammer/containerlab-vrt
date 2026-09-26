@@ -1,0 +1,7 @@
+ghcr.io/nokia/srlinux@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c: Pulling from nokia/srlinux
+5433a9682dd6: Pulling fs layer
+5433a9682dd6: Download complete
+5433a9682dd6: Pull complete
+Digest: sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c
+Status: Downloaded newer image for ghcr.io/nokia/srlinux@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c
+ghcr.io/nokia/srlinux:25.10.1@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c

@@ -16,6 +16,7 @@
 #include <arpa/inet.h>
 #include <cerrno>
 #include <linux/if_packet.h>
+#include <ifaddrs.h>
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <poll.h>
@@ -83,9 +84,23 @@ void collect_kernel_statistics(int descriptor,
 int run(const sdr::recorder::Options &options) {
   const auto interface_deadline = std::chrono::steady_clock::now() +
                                   std::chrono::seconds(30);
-  while (if_nametoindex(options.interface.c_str()) == 0) {
+  // Containerlab creates the link before its post-create commands bring it up.
+  // AF_PACKET can report POLLERR on an administratively down interface.
+  const auto interface_ready = [&] {
+    ifaddrs *addresses = nullptr;
+    if (getifaddrs(&addresses) != 0)
+      throw std::runtime_error("cannot inspect capture interface readiness");
+    bool ready = false;
+    for (const auto *address = addresses; address; address = address->ifa_next)
+      if (address->ifa_name && options.interface == address->ifa_name &&
+          (address->ifa_flags & IFF_UP) != 0)
+        ready = true;
+    freeifaddrs(addresses);
+    return ready;
+  };
+  while (!interface_ready()) {
     if (std::chrono::steady_clock::now() >= interface_deadline)
-      throw std::runtime_error("capture interface did not appear before timeout");
+      throw std::runtime_error("capture interface did not become ready before timeout");
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
   PacketSocket socket(options.interface);

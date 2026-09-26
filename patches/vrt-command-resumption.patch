@@ -1,0 +1,57 @@
+--- a/include/vita/runtime/transaction/manager.hpp
++++ b/include/vita/runtime/transaction/manager.hpp
+@@ -100,6 +100,8 @@
+                      RetentionStore<Entries, BytesCapacity> &retention,
+                      AdmissionPool &admission,bool monotonic_ids=false) noexcept
+       : engine_(engine), retention_(retention), admission_(admission),monotonic_ids_(monotonic_ids) {}
++
++  std::uint32_t admitted_message_id() const noexcept { return highwater_id_; }
+ 
+   void close_admission() noexcept {if(!closed_)closed_generation_=engine_.association_generation();closed_=true;}
+   ManagerDrainStatus drain_status() const noexcept {
+--- a/include/vita/runtime/transaction/controller.hpp
++++ b/include/vita/runtime/transaction/controller.hpp
+@@ -121,6 +121,16 @@
+         }
+         for(std::size_t i=0;i<Relationships;++i)if(!storage_->relationships[i].used){storage_->relationships[i]={true,profile==profiles::iq::Profile::sdr_radio,identity,next_mid};return RelationshipHandle{i};}
+         return std::unexpected(Error{ErrorCode::capacity_exhausted});
++    }
++    // Advance only: caller must supply a watermark bound to the current peer session.
++    Result<void> resume_after(RelationshipHandle relationship,std::uint32_t watermark) noexcept {
++        if(relationship.slot>=Relationships||!storage_->relationships[relationship.slot].used)
++            return std::unexpected(Error{ErrorCode::invalid_argument});
++        if(watermark==UINT32_MAX)return std::unexpected(Error{ErrorCode::resource_limit});
++        auto& rel=storage_->relationships[relationship.slot];
++        const auto next=static_cast<std::uint64_t>(watermark)+1;
++        if(next>rel.next_mid)rel.next_mid=next;
++        return {};
+     }
+     Result<TrackedRequest> track(RelationshipHandle relationship,const codec::PacketView& request,timing::MonoTime now,std::uint64_t timeout_ns) noexcept {
+         if(relationship.slot>=Relationships||!storage_->relationships[relationship.slot].used)return std::unexpected(Error{ErrorCode::invalid_argument});
+--- a/include/vita/runtime/public/runtime.hpp
++++ b/include/vita/runtime/public/runtime.hpp
+@@ -48,6 +48,13 @@
+     std::uint32_t sid() const noexcept {
+       return runtime_->streams_[index_]->config.sid;
+     }
++    // Serialized runtime domain; not safe to read from an unrelated status thread.
++    std::uint32_t admitted_message_id() const noexcept {
++      return runtime_->streams_[index_]->manager.admitted_message_id();
++    }
++    std::uint64_t association_generation() const noexcept {
++      return runtime_->streams_[index_]->generation;
++    }
+     runtime::StateSnapshot confirmed_state() const noexcept {
+       return runtime_->streams_[index_]->engine.state();
+     }
+@@ -79,6 +86,10 @@
+     Controller(VitaRuntime *r, std::size_t i) : runtime_(r), index_(i) {}
+ 
+   public:
++    Result<void> resume_commands_after(std::uint32_t watermark) {
++      if(runtime_->progressing_)return std::unexpected(Error{ErrorCode::would_deadlock});
++      return runtime_->controllers_.resume_after(runtime_->streams_[index_]->relationship,watermark);
++    }
+     Result<TransactionHandle> set_sample_rate(Hertz rate,
+                                               CommandOptions options = {}) {
+       return runtime_->command(index_, rate, 1u << 1, options, false);

@@ -40,7 +40,18 @@ struct DetectorConfig {
   std::size_t receive_bytes{};
 };
 
+struct ProcessorDiscards {
+  std::uint64_t limits{};
+  std::uint64_t invalid_envelope{};
+  std::uint64_t invalid_context{};
+  std::uint64_t invalid_data{};
+  std::uint64_t invalid_samples{};
+  std::uint64_t waiting_context{};
+  std::uint64_t timestamp_range{};
+};
+
 struct ProcessorMetrics {
+  ProcessorDiscards discards{};
   std::uint64_t datagrams{};
   std::uint64_t malformed{};
   std::uint64_t context_updates{};

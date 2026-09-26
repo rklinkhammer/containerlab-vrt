@@ -1,0 +1,101 @@
+{
+  "baseline": {
+    "checked_records": 62,
+    "max_line_bytes": 877,
+    "last": {
+      "context_updates": 692,
+      "datagrams": 139737,
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 0
+      },
+      "discard_schema": "processor.discards/1",
+      "discarded": 0,
+      "malformed": 0,
+      "observed_unix_ns": 1790383330563045618,
+      "packet_gaps": 0,
+      "send_failures": 0,
+      "spectra": 69521,
+      "type": "metrics",
+      "unavailable": 0
+    }
+  },
+  "replaced": {
+    "checked_records": 49,
+    "max_line_bytes": 883,
+    "last": {
+      "context_updates": 656,
+      "datagrams": 133470,
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 141
+      },
+      "discard_schema": "processor.discards/1",
+      "discarded": 141,
+      "downstream_delivery": null,
+      "malformed": 141,
+      "observed_unix_ns": 1790383371982893651,
+      "packet_gaps": 0,
+      "processing_calls": 133470,
+      "processing_ns_total": 2942464684,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "rx_bytes": 548290304,
+      "send_failures": 0,
+      "spectra": 66336,
+      "tx_bytes": 568897536,
+      "tx_packets": 66336,
+      "unavailable": 0
+    },
+    "sustained_window": {
+      "records": 36,
+      "seconds": 29.080687976,
+      "discard_deltas": {
+        "limits": 0,
+        "timestamp_range": 0,
+        "invalid_samples": 0,
+        "invalid_data": 0,
+        "waiting_context": 0,
+        "invalid_envelope": 0,
+        "invalid_context": 0
+      },
+      "stable": true
+    }
+  },
+  "shutdown": {
+    "checked_records": 51,
+    "max_line_bytes": 884,
+    "last": {
+      "context_updates": 674,
+      "datagrams": 136870,
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 141
+      },
+      "discard_schema": "processor.discards/1",
+      "discarded": 141,
+      "malformed": 141,
+      "observed_unix_ns": 1790383372849171336,
+      "packet_gaps": 0,
+      "send_failures": 0,
+      "spectra": 68026,
+      "type": "metrics",
+      "unavailable": 0
+    }
+  }
+}

@@ -4,11 +4,15 @@
 
 The project-owned source under `third_party/vrt_framework` derives from
 `rklinkhammer/vrt_framework` revision
-`dbe85d37155145842da60367af1c4beef8801b0c`, licensed under the MIT License.
+`51853ba29703f51aceb2cfefe5a12a65a8e1110f`, licensed under the MIT License.
+Local changes are explicitly recorded in `patches/vrt-runtime-progress.patch`
+and `patches/vrt-command-resumption.patch`; `container/vrt-source.json` pins
+the patch hashes and resulting header tree.
 Copyright (c) 2026 rklinkhammer.
 
 The minimal P17 protocol vectors under `tests/golden` and their capture utility
-under `tools` derive from the same revision and remain covered by that MIT
+under `tools` derive from historical revision
+`dbe85d37155145842da60367af1c4beef8801b0c` and remain covered by that MIT
 license and attribution.
 
 ## Four-radio behavioral reference

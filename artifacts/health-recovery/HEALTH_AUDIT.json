@@ -1,0 +1,255 @@
+{
+  "outcome": "PASS",
+  "observations": [
+    {
+      "sequence": 1,
+      "timestamp": "2026-09-26T00:54:46.369Z",
+      "state": "idle",
+      "ready": true,
+      "last_successful_activity": null,
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 0,
+        "new_errors": 0,
+        "reason": "no_recent_activity",
+        "sample_window_ms": null,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 0
+      }
+    },
+    {
+      "sequence": 2,
+      "timestamp": "2026-09-26T00:54:51.438Z",
+      "state": "degraded",
+      "ready": true,
+      "last_successful_activity": null,
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 145,
+        "reason": "new_errors",
+        "sample_window_ms": 5068,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 3,
+      "timestamp": "2026-09-26T00:54:56.439Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:54:56.439Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 4,
+      "timestamp": "2026-09-26T00:55:01.439Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:55:01.439Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 5,
+      "timestamp": "2026-09-26T00:55:06.439Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:55:06.439Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 6,
+      "timestamp": "2026-09-26T00:55:11.439Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:55:11.439Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 7,
+      "timestamp": "2026-09-26T00:55:16.439Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:55:16.439Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 8,
+      "timestamp": "2026-09-26T00:55:21.439Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:55:21.439Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 9,
+      "timestamp": "2026-09-26T00:55:26.440Z",
+      "state": "healthy",
+      "ready": true,
+      "last_successful_activity": "2026-09-26T00:55:26.440Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "recent_activity",
+        "sample_window_ms": 5000,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    },
+    {
+      "sequence": 10,
+      "timestamp": "2026-09-26T00:55:27.318Z",
+      "state": "unknown",
+      "ready": false,
+      "last_successful_activity": "2026-09-26T00:55:27.317Z",
+      "health": {
+        "activity_window_ms": 10000,
+        "counter_reset": false,
+        "error_total": 145,
+        "new_errors": 0,
+        "reason": "shutdown",
+        "sample_window_ms": 878,
+        "scope": "local_activity"
+      },
+      "discard_reasons": {
+        "invalid_context": 0,
+        "invalid_data": 0,
+        "invalid_envelope": 0,
+        "invalid_samples": 0,
+        "limits": 0,
+        "timestamp_range": 0,
+        "waiting_context": 145
+      }
+    }
+  ]
+}

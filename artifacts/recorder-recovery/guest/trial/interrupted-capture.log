@@ -1,0 +1,22 @@
+capture_directory=/home/rklinkhammer.guest/containerlab-vrt/artifacts/runtime/captures/capture-9jqa2ddk
+{
+  "schema": "recorder.capture/1",
+  "container_id": "84fb8207e7de45bdf16ec118459f019a317c6748b4df246043072bce385f3588",
+  "started_at": "2026-09-26T01:17:47.905622+00:00",
+  "status": "incomplete",
+  "duration_limit_seconds": 60,
+  "byte_limit": 67108864,
+  "durable_commit": "not_measured",
+  "files": {
+    "capture.pcap": {
+      "copy_exit": 0,
+      "bytes": 36909056,
+      "sha256": "b2c9fcb0d6b29992884e55462ca5ca483abbb3dfeaef4f50d31e6661df4d30e7"
+    },
+    "metrics.json": {
+      "copy_exit": 1
+    }
+  },
+  "capture_exit": 137,
+  "finished_at": "2026-09-26T01:17:51.131851+00:00"
+}

@@ -1,0 +1,131 @@
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+{
+  "cases": [],
+  "target": "recorder",
+  "input_hashes_before": {
+    "generated/detector.json": "e209f6d64d2052ea5c7fef85a552c9f2b63f268b272a8a49ed27521c778cf06e",
+    "generated/four-radio.clab.yml": "7a89d7d3d86bf2146bf67785dc94f81e15e786a903c8ba6cb34b004325a9ffd4",
+    "generated/manifest.json": "ee5def9b0fa9880d804053dbeaad9619d4bc4e62bcf54a0408416016e1d3eaa0",
+    "generated/processor.json": "7aaa8146b1124f8beb0b6f41239d02adfd983bd2b6ee34157b9f8519d28c7a6d",
+    "generated/radio1.json": "7b20bef7f65a49a3a39f118fc81659f128cf25450382c253e329a37590c81dee",
+    "generated/radio2.json": "4dcdc95e643afaf1f02692b2b8bdc90bcec023223d3977e03941687a04eda543",
+    "generated/radio3.json": "49238f0cffb8ed7e9d70cce6e4b3f494543171d9b5341fd516bd7ebfda6552a7",
+    "generated/radio4.json": "5dffcb37f73716a6a1539ff4e5e05eeb78da65b0f9c973e7bcb31e2fe0798bd1",
+    "generated/srlinux.cli": "d645daeed713ab8d8db3416177440de0e8a5f965c23f18964bb10913ef13de57"
+  },
+  "before_capture": {
+    "sha256": "b4b6478811520e94de5ea70ca548a5ae60147b7ea5da579b9bca45b5d2ba24bb",
+    "bytes": 67106704,
+    "records": 11976,
+    "first_timestamp": [
+      1790385407,
+      610698
+    ],
+    "last_timestamp": [
+      1790385411,
+      512077
+    ],
+    "metrics": {
+      "interface": "eth1",
+      "limits": {
+        "capture_bytes": 67108864,
+        "duration_seconds": 60,
+        "receive_buffer_bytes": 65535,
+        "socket_receive_bytes": 4194304
+      },
+      "observation_clock": "unix",
+      "observed_unix_ns": 1790385467611145227,
+      "passive": true,
+      "pcap": {
+        "bytes": 67106704,
+        "enabled": true,
+        "frames": 11976,
+        "io_errors": 0,
+        "limit_reached": true
+      },
+      "receive": {
+        "errors": 0,
+        "frames": 342864,
+        "kernel_drops": 11037,
+        "kernel_packets": 353901,
+        "truncations": 0,
+        "wire_bytes": 1925107062
+      },
+      "role": "recorder",
+      "schema": 1,
+      "status": "stopped",
+      "uptime_ms": 60001
+    },
+    "complete_record_boundaries": true
+  },
+  "replacement_started_at": "2026-09-26T01:17:50.935682+00:00",
+  "interrupted_exit": 137,
+  "recorder_frames_recovered_at": "2026-09-26T01:18:27.780574+00:00",
+  "after_capture": {
+    "sha256": "de6d3eabc19c99340e50e9f13e8a830211311844b32657f0bba1cc6ea9ae3594",
+    "bytes": 67107198,
+    "records": 11961,
+    "first_timestamp": [
+      1790385507,
+      893152
+    ],
+    "last_timestamp": [
+      1790385511,
+      773078
+    ],
+    "metrics": {
+      "interface": "eth1",
+      "limits": {
+        "capture_bytes": 67108864,
+        "duration_seconds": 60,
+        "receive_buffer_bytes": 65535,
+        "socket_receive_bytes": 4194304
+      },
+      "observation_clock": "unix",
+      "observed_unix_ns": 1790385567893343564,
+      "passive": true,
+      "pcap": {
+        "bytes": 67107198,
+        "enabled": true,
+        "frames": 11961,
+        "io_errors": 0,
+        "limit_reached": true
+      },
+      "receive": {
+        "errors": 0,
+        "frames": 342985,
+        "kernel_drops": 10917,
+        "kernel_packets": 353902,
+        "truncations": 0,
+        "wire_bytes": 1925841848
+      },
+      "role": "recorder",
+      "schema": 1,
+      "status": "stopped",
+      "uptime_ms": 60000
+    },
+    "complete_record_boundaries": true
+  },
+  "non_target_changes": [],
+  "capture_gap_seconds": 96.38107490539551,
+  "capture_gap_note": "Unrecorded interval between finite captures; not a packet-loss count or precise recorder outage duration.",
+  "outcome": "PASS",
+  "input_hashes_after": {
+    "generated/detector.json": "e209f6d64d2052ea5c7fef85a552c9f2b63f268b272a8a49ed27521c778cf06e",
+    "generated/four-radio.clab.yml": "7a89d7d3d86bf2146bf67785dc94f81e15e786a903c8ba6cb34b004325a9ffd4",
+    "generated/manifest.json": "ee5def9b0fa9880d804053dbeaad9619d4bc4e62bcf54a0408416016e1d3eaa0",
+    "generated/processor.json": "7aaa8146b1124f8beb0b6f41239d02adfd983bd2b6ee34157b9f8519d28c7a6d",
+    "generated/radio1.json": "7b20bef7f65a49a3a39f118fc81659f128cf25450382c253e329a37590c81dee",
+    "generated/radio2.json": "4dcdc95e643afaf1f02692b2b8bdc90bcec023223d3977e03941687a04eda543",
+    "generated/radio3.json": "49238f0cffb8ed7e9d70cce6e4b3f494543171d9b5341fd516bd7ebfda6552a7",
+    "generated/radio4.json": "5dffcb37f73716a6a1539ff4e5e05eeb78da65b0f9c973e7bcb31e2fe0798bd1",
+    "generated/srlinux.cli": "d645daeed713ab8d8db3416177440de0e8a5f965c23f18964bb10913ef13de57"
+  },
+  "inputs_unchanged": true,
+  "cleanup_exit": 0,
+  "remaining_containers": []
+}

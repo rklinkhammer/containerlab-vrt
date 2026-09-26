@@ -1,0 +1,105 @@
+{
+  "workload": "Linux ARM64 Debug finite loopback UDP integration; five interleaved repetitions; no concurrent qualification load",
+  "samples": [
+    {
+      "interval_ms": 0,
+      "wall_s": 0.5102274079999916,
+      "cpu_s": 0.007528
+    },
+    {
+      "interval_ms": 5000,
+      "wall_s": 0.5165633419999267,
+      "cpu_s": 0.011574999999999998
+    },
+    {
+      "interval_ms": 100,
+      "wall_s": 0.5157794499999682,
+      "cpu_s": 0.013257000000000001
+    },
+    {
+      "interval_ms": 100,
+      "wall_s": 0.5132673099999465,
+      "cpu_s": 0.013236
+    },
+    {
+      "interval_ms": 5000,
+      "wall_s": 0.5145964230000573,
+      "cpu_s": 0.013076999999999995
+    },
+    {
+      "interval_ms": 0,
+      "wall_s": 0.5221712600000501,
+      "cpu_s": 0.010143999999999993
+    },
+    {
+      "interval_ms": 0,
+      "wall_s": 0.512586085999942,
+      "cpu_s": 0.009451999999999995
+    },
+    {
+      "interval_ms": 5000,
+      "wall_s": 0.5135163150000608,
+      "cpu_s": 0.011580000000000007
+    },
+    {
+      "interval_ms": 100,
+      "wall_s": 0.5141445379999823,
+      "cpu_s": 0.008933999999999997
+    },
+    {
+      "interval_ms": 100,
+      "wall_s": 0.5176440329998968,
+      "cpu_s": 0.010393
+    },
+    {
+      "interval_ms": 5000,
+      "wall_s": 0.5085846209999545,
+      "cpu_s": 0.010967000000000011
+    },
+    {
+      "interval_ms": 0,
+      "wall_s": 0.5161449999999377,
+      "cpu_s": 0.008911000000000016
+    },
+    {
+      "interval_ms": 0,
+      "wall_s": 0.5179612069999848,
+      "cpu_s": 0.008311000000000013
+    },
+    {
+      "interval_ms": 5000,
+      "wall_s": 0.5107622120000315,
+      "cpu_s": 0.012476999999999974
+    },
+    {
+      "interval_ms": 100,
+      "wall_s": 0.5201492150000604,
+      "cpu_s": 0.01465799999999999
+    }
+  ],
+  "means": {
+    "0": {
+      "wall_s": 0.5158181921999813,
+      "cpu_s": 0.008869200000000004
+    },
+    "5000": {
+      "wall_s": 0.5128045826000062,
+      "cpu_s": 0.011935199999999997
+    },
+    "100": {
+      "wall_s": 0.5161969091999709,
+      "cpu_s": 0.012095599999999998
+    }
+  },
+  "change_percent": {
+    "5000": {
+      "wall_s": -0.5842387192902088,
+      "cpu_s": 34.56907049113778
+    },
+    "100": {
+      "wall_s": 0.07342063651814001,
+      "cpu_s": 36.377576331574346
+    }
+  },
+  "limitations": "Short timing-driven workload; noise is not an optimization claim; disabled reporter retains legacy logging and counter instrumentation. Not an end-to-end switched throughput benchmark."
+}

@@ -1,0 +1,157 @@
+{
+  "timestamp": "2026-09-25T22:29:15.639329+00:00",
+  "nodes": {
+    "radio1": {
+      "id": "e4998eabf5d738ca155ea66f9f583753879b89b75a8c6bb76cb6748771a08498",
+      "started_at": "2026-09-25T22:29:00.659625874Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio2": {
+      "id": "47d0340f6c83c40c6b90e56c5ed81bf6ed2832c9a4641c3276e4810b3c691309",
+      "started_at": "2026-09-25T22:29:00.659022374Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio3": {
+      "id": "259b11b00166f363c2854a549481b320025e742af6b0a24a7e2fb0395698d74d",
+      "started_at": "2026-09-25T22:29:00.651319456Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "radio4": {
+      "id": "0424395c1861e81a52c4697963849300faa0f2801e8fd35c522655966de58c58",
+      "started_at": "2026-09-25T22:29:00.660364125Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "processor": {
+      "id": "b2a86fb3521365ab30963fc5702d90908f31a48f06c2c0f4ecce54410039da3e",
+      "started_at": "2026-09-25T22:29:00.656668915Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "detector": {
+      "id": "b897bbe06bd142e94e5ec1e3d85182948f605b8974fdd74e5310f7497df1a8a8",
+      "started_at": "2026-09-25T22:29:00.659962Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "recorder": {
+      "id": "ade476538cdf60e420c78c684add0871d09583b01a02da0c139385ca59bcb5fb",
+      "started_at": "2026-09-25T22:29:00.650937206Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    },
+    "switch1": {
+      "id": "5ff314e2cd6d0300a6c64348f2f99b0d50f58141463964ad3eed106c7879c1f0",
+      "started_at": "2026-09-25T22:29:00.668267501Z",
+      "running": true,
+      "exit": 0,
+      "oom": false
+    }
+  },
+  "detector_interface": {
+    "exit": 0,
+    "interfaces": [
+      {
+        "ifindex": 64,
+        "link_index": 63,
+        "ifname": "eth1",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 9000,
+        "qdisc": "noqueue",
+        "operstate": "UP",
+        "group": "default",
+        "link_type": "ether",
+        "address": "aa:c1:ab:7c:7f:6a",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "link_netnsid": 1,
+        "altnames": [
+          "clab-o-51e6de6307cb2563"
+        ],
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "10.79.0.15",
+            "prefixlen": 24,
+            "scope": "global",
+            "label": "eth1",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          },
+          {
+            "family": "inet6",
+            "local": "fe80::a8c1:abff:fe7c:7f6a",
+            "prefixlen": 64,
+            "scope": "link",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "heartbeat": {
+    "boot_id": "3f5adf241680529fb21c1cc3957f08e6",
+    "data": {
+      "datagrams": 0,
+      "detections": 0,
+      "downstream_delivery": null,
+      "gapped": 0,
+      "malformed": 0,
+      "observed_unix_ns": 1790375350862912375,
+      "processing_calls": 0,
+      "processing_ns_total": 0,
+      "proven_packet_loss": null,
+      "queue_depth": null,
+      "rx_bytes": 0,
+      "sequence_gaps": 0,
+      "tx_bytes": null,
+      "tx_packets": null,
+      "unavailable": 0,
+      "zero": 0
+    },
+    "event": "heartbeat",
+    "instance": "detector",
+    "last_successful_activity": null,
+    "ready": true,
+    "role": "detector",
+    "schema": "vrt.telemetry/1",
+    "sequence": 3,
+    "state": "idle",
+    "suppressed_events": 0,
+    "timestamp": "2026-09-25T22:29:10.862Z",
+    "uptime_ms": 10016
+  },
+  "boots": [
+    "3f5adf241680529fb21c1cc3957f08e6"
+  ],
+  "tones": {
+    "1": [
+      100049804.6875
+    ],
+    "2": [
+      100100097.65625
+    ],
+    "3": [
+      100149902.34375
+    ],
+    "4": [
+      100200195.3125
+    ]
+  }
+}

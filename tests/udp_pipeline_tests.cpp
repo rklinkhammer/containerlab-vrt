@@ -11,6 +11,7 @@
 #include <cassert>
 #include <cmath>
 #include <numbers>
+#include <nlohmann/json.hpp>
 
 namespace {
 using namespace vita;
@@ -54,7 +55,7 @@ std::vector<std::byte> context_wire() {
 }
 
 std::vector<std::byte> signal_wire(std::uint8_t count, std::size_t pairs,
-                                   std::size_t offset = 0) {
+                                   std::size_t offset = 0, std::uint32_t seconds = 1000) {
   std::vector<codec::Iq<std::int16_t>> samples(pairs);
   for (std::size_t index = 0; index < pairs; ++index) {
     const auto phase = 2 * std::numbers::pi * 102 * (offset + index) / 2048;
@@ -67,7 +68,7 @@ std::vector<std::byte> signal_wire(std::uint8_t count, std::size_t pairs,
   envelope.type = codec::PacketType::signal;
   envelope.stream_id = 1;
   envelope.class_id = codec::ClassId{profiles::iq::sdr_unknown_oui, 0, 0};
-  envelope.timestamp = {codec::Tsi::utc, codec::Tsf::picoseconds, 1000,
+  envelope.timestamp = {codec::Tsi::utc, codec::Tsf::picoseconds, seconds,
                         offset * 1'000'000};
   envelope.packet_count = count;
   envelope.trailer = true;
@@ -82,6 +83,47 @@ std::vector<std::byte> signal_wire(std::uint8_t count, std::size_t pairs,
 } // namespace
 
 int main() {
+  {
+    sdr::udp::ProcessorCore cold(processor_config());
+    assert(cold.metrics().malformed==0);
+    assert(cold.consume(1,signal_wire(0,1024)).empty());
+    assert(cold.metrics().discards.waiting_context==1);
+    auto bad=signal_wire(0,1024);bad.back()^=std::byte{1};
+    assert(cold.consume(1,bad).empty());
+    assert(cold.metrics().discards.invalid_data==1);
+    assert(cold.consume(1,{}).empty());
+    assert(cold.metrics().discards.invalid_envelope==1);
+    assert(cold.consume(0,context_wire()).empty());
+    assert(cold.metrics().discards.limits==1);
+    assert(cold.consume(1,signal_wire(0,2049)).empty());
+    assert(cold.metrics().discards.invalid_samples==1);
+    codec::Envelope envelope;
+    envelope.type=codec::PacketType::context;envelope.stream_id=1;
+    std::vector<std::byte> bad_context(64);
+    auto length=codec::encode_envelope(envelope,{},std::nullopt,bad_context);
+    assert(length);bad_context.resize(*length);
+    assert(cold.consume(1,bad_context).empty());
+    assert(cold.metrics().discards.invalid_context==1);
+    auto report=nlohmann::json::parse(sdr::udp::metrics_json(cold.metrics()));
+    std::uint64_t sum=0;
+    for(const auto &value:report["discard_reasons"])sum+=value.get<std::uint64_t>();
+    assert(sum==6 && report["discarded"]==6 && report["malformed"]==6);
+    assert(report["discard_schema"]=="processor.discards/1");
+    assert(cold.consume(1,context_wire()).empty());
+    assert(cold.consume(1,signal_wire(0,1024)).empty());
+    auto spectra=cold.consume(1,signal_wire(1,1024,1024));assert(spectra.size()==1);
+    auto frequency=sdr::detect_frequency(sdr::decode_spectrum(spectra.front()));
+    assert(frequency && std::abs(*frequency-100'049'804.6875)<1.0);
+    assert(cold.metrics().malformed==6); // accepted processing never erases history
+    assert(cold.consume(1,signal_wire(3,1024,0,0)).empty());
+    assert(cold.metrics().discards.timestamp_range==1 && cold.metrics().malformed==7);
+    report=nlohmann::json::parse(sdr::udp::metrics_json(cold.metrics()));sum=0;
+    for(const auto &value:report["discard_reasons"])sum+=value.get<std::uint64_t>();
+    assert(sum==7 && report["discarded"]==7);
+    sdr::udp::ProcessorCore fresh(processor_config());
+    assert(fresh.metrics().malformed==0 && fresh.metrics().discards.waiting_context==0);
+  }
+
   sdr::udp::ProcessorCore processor(processor_config());
   const auto context = context_wire();
   assert(processor.consume(1, context).empty());

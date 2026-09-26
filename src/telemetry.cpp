@@ -49,6 +49,27 @@ std::chrono::milliseconds interval() {
   return std::chrono::milliseconds(n);
 }
 } // namespace
+HealthAssessment ActivityHealth::assess(Clock::time_point now,
+    std::optional<Clock::time_point> activity, std::uint64_t errors,
+    std::chrono::milliseconds interval, bool final) {
+  const bool reset=previous_ && errors<errors_;
+  HealthAssessment result{"unknown","recovery_unproven",std::nullopt,reset,std::nullopt};
+  if(previous_)result.sample_window_ms=std::chrono::duration_cast<std::chrono::milliseconds>(now-*previous_).count();
+  if(!reset)result.new_errors=errors-errors_;
+  if(reset || result.new_errors.value_or(0)>0)recovery_since_=now;
+  errors_=errors;
+  previous_=now;
+  if(failed_) { result.state="failed";result.reason="fatal_error"; }
+  else if(final) { result.reason="shutdown"; }
+  else if(reset) { result.reason="counter_reset"; }
+  else if(result.new_errors.value_or(0)>0) { result.state="degraded";result.reason="new_errors"; }
+  else if(activity && *activity>now) { result.reason="invalid_activity_time"; }
+  else if(!activity || now-*activity>interval*2) { result.state="idle";result.reason="no_recent_activity"; }
+  else if(!recovery_since_ || (*activity>*recovery_since_ && now-*recovery_since_>=interval)) {
+    result.state="healthy";result.reason="recent_activity";recovery_since_.reset();
+  }
+  return result;
+}
 void write_line(std::ostream &out, const std::string &line) {
   std::lock_guard lock(output_mutex);
   out << line << '\n' << std::flush;
@@ -83,6 +104,7 @@ void Reporter::emit(const char *event, const char *state, bool ready,
                     const nlohmann::json &fields) {
   nlohmann::json j = {
       {"schema", "vrt.telemetry/1"},
+      {"health_policy", "local-activity/2"},
       {"event", event},
       {"timestamp", utc()},
       {"role", role_},
@@ -115,14 +137,17 @@ void Reporter::heartbeat(const nlohmann::json &counters, std::uint64_t errors,
   auto now = std::chrono::steady_clock::now();
   if (!final && now < next_)
     return;
-  const char *state = errors > 0 ? "degraded"
-                      : activity_ == std::chrono::steady_clock::time_point{} ||
-                              now - activity_ > interval_ * 2
-                          ? "idle"
-                          : "healthy";
-  emit(final ? "shutdown" : "heartbeat",
-       final && errors == 0 ? "unknown" : state, !final, counters);
-  errors_ = errors;
+  const auto assessment=health_.assess(now,
+      activity_==std::chrono::steady_clock::time_point{} ? std::nullopt : std::optional{activity_},
+      errors,interval_,final);
+  auto fields=counters;
+  fields["health"]={{"scope","local_activity"},{"reason",assessment.reason},
+    {"error_total",errors},
+    {"new_errors",assessment.new_errors ? nlohmann::json(*assessment.new_errors) : nlohmann::json(nullptr)},
+    {"counter_reset",assessment.counter_reset},
+    {"sample_window_ms",assessment.sample_window_ms ? nlohmann::json(*assessment.sample_window_ms) : nlohmann::json(nullptr)},
+    {"activity_window_ms",interval_.count()*2}};
+  emit(final ? "shutdown" : "heartbeat",assessment.state,!final && !health_.failed(),fields);
   next_ = now + interval_;
 }
 void Reporter::detection(const nlohmann::json &fields) {
@@ -142,6 +167,7 @@ void Reporter::detection(const nlohmann::json &fields) {
 }
 void Reporter::failed() {
   std::lock_guard lock(mutex_);
+  health_.fail();
   if (interval_.count() != 0)
     emit("failure", "failed", false, {{"reason", "APPLICATION_ERROR"}});
 }

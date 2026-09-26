@@ -12,7 +12,7 @@ python3 scripts/test_telemetry_process.py
 python3 scripts/benchmark_telemetry.py
 ```
 
-Configure a new macOS build when needed with `cmake -S . -B build/dev -DCMAKE_BUILD_TYPE=Debug`; pinned nlohmann/json3.12.0 and SoapySDR0.8.1 must be installed. Local CTest currently has two independently recorded baseline failures; do not interpret a nonzero CTest exit as a telemetry-only failure. Ordinary tests never create VMs.
+Configure a new macOS build when needed with `cmake -S . -B build/dev -DCMAKE_BUILD_TYPE=Debug`; pinned nlohmann/json3.12.0 and SoapySDR0.8.1 must be installed. The historical telemetry baseline had two independently recorded failures. They are repaired and the subsequent Linux qualification passes 15/15; see ../linux-runtime-qualification/RESULTS.md. Ordinary tests never create VMs.
 
 Explicit Linux qualification: follow docs/MACOS.md to create a **new** dedicated VM from the pinned template. Do not reuse a stopped VM. Copy the current checkout into that new guest (no host mounts), including the vendored headers, config and generated files. In the guest source directory:
 
@@ -28,4 +28,4 @@ The explicit qualification script starts finite task-named containers on `--netw
 
 Collect guest artifacts/telemetry/linux-results.json and the image ID, then stop the exact newly created VM from the Mac with `limactl stop "$VM_NAME"`. Keep a task-owned VM name record and clean up even after failure. Do not broadly prune containers or VMs. The recorded run created no Containerlab lab and published no services.
 
-To qualify the full eight-node workflow later, first resolve or explicitly disposition the VRT retention/coordinated-start failures, then use the existing reviewed deployment and destruction scripts in another fresh VM. Do not treat the isolated heartbeat tests as proof of coordinated streaming.
+To qualify the full eight-node workflow later, use the existing reviewed deployment and destruction scripts in another fresh VM. Do not treat the isolated heartbeat tests as proof of coordinated streaming.

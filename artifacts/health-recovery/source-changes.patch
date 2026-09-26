@@ -1,0 +1,1127 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f0cf249..db2a791 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -74,7 +74,7 @@ if(BUILD_TESTING)
+     message(FATAL_ERROR "P17 pre-rename golden-vector corpus integrity failure")
+   endif()
+   add_executable(sdr_p17_golden_vectors_tests tests/p17_golden_vectors_tests.cpp)
+-  target_include_directories(sdr_p17_golden_vectors_tests PRIVATE
++  target_include_directories(sdr_p17_golden_vectors_tests SYSTEM PRIVATE
+     third_party/vrt_framework/include)
+   target_compile_definitions(sdr_p17_golden_vectors_tests PRIVATE
+     P17_GOLDEN_FILE="${P17_GOLDEN_FILE}")
+@@ -91,7 +91,7 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_soapy_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_soapy_tests COMMAND sdr_soapy_tests)
+   add_executable(sdr_radio_services_tests tests/radio_services_tests.cpp)
+-  target_include_directories(sdr_radio_services_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_radio_services_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_radio_services_tests PRIVATE sdr_core)
+   target_compile_options(sdr_radio_services_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_radio_services_tests COMMAND sdr_radio_services_tests)
+@@ -100,7 +100,7 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_vrt_adapter_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_vrt_adapter_tests COMMAND sdr_vrt_adapter_tests)
+   add_executable(sdr_vrt_runtime_retention_tests tests/vrt_runtime_retention_tests.cpp)
+-  target_include_directories(sdr_vrt_runtime_retention_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_vrt_runtime_retention_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_compile_options(sdr_vrt_runtime_retention_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_vrt_runtime_retention_tests COMMAND sdr_vrt_runtime_retention_tests)
+   add_executable(sdr_radio_transport_tests tests/radio_transport_tests.cpp)
+@@ -111,18 +111,22 @@ if(BUILD_TESTING)
+   target_link_libraries(sdr_processor_controller_tests PRIVATE sdr_vrt_adapter)
+   target_compile_options(sdr_processor_controller_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_processor_controller_tests COMMAND sdr_processor_controller_tests)
+-  set_tests_properties(sdr_processor_controller_tests PROPERTIES TIMEOUT 15)
++  set_tests_properties(sdr_processor_controller_tests PROPERTIES TIMEOUT 30)
++  add_executable(sdr_vrt_command_resumption_tests tests/vrt_command_resumption_tests.cpp)
++  target_link_libraries(sdr_vrt_command_resumption_tests PRIVATE sdr_vrt_adapter)
++  target_compile_options(sdr_vrt_command_resumption_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
++  add_test(NAME sdr_vrt_command_resumption_tests COMMAND sdr_vrt_command_resumption_tests)
+   add_executable(sdr_status_tests tests/status_tests.cpp)
+   target_link_libraries(sdr_status_tests PRIVATE sdr_core)
+   target_compile_options(sdr_status_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_status_tests COMMAND sdr_status_tests)
+   add_executable(sdr_udp_pipeline_tests tests/udp_pipeline_tests.cpp)
+-  target_include_directories(sdr_udp_pipeline_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_udp_pipeline_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_udp_pipeline_tests PRIVATE sdr_udp_apps)
+   target_compile_options(sdr_udp_pipeline_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_udp_pipeline_tests COMMAND sdr_udp_pipeline_tests)
+   add_executable(sdr_udp_integration_tests tests/udp_integration_tests.cpp)
+-  target_include_directories(sdr_udp_integration_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_udp_integration_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_udp_integration_tests PRIVATE sdr_udp_apps)
+   target_compile_options(sdr_udp_integration_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_udp_integration_tests COMMAND sdr_udp_integration_tests)
+diff --git a/Dockerfile b/Dockerfile
+index 4c7a806..1fca99b 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -60,6 +60,7 @@ RUN printf '%s\n' \
+ COPY --from=build /opt/containerlab-vrt /opt/containerlab-vrt
+ COPY container/vrt-source.json /usr/share/doc/containerlab-vrt/vrt-source.json
+ COPY patches/vrt-runtime-progress.patch /usr/share/doc/containerlab-vrt/vrt-runtime-progress.patch
++COPY patches/vrt-command-resumption.patch /usr/share/doc/containerlab-vrt/vrt-command-resumption.patch
+ COPY THIRD_PARTY_NOTICES.md /usr/share/doc/containerlab-vrt/THIRD_PARTY_NOTICES.md
+ COPY third_party/vrt_framework/LICENSE /usr/share/doc/containerlab-vrt/VRT_FRAMEWORK_LICENSE
+ ENV PATH=/opt/containerlab-vrt/bin:$PATH
+diff --git a/IMPLEMENTATION.md b/IMPLEMENTATION.md
+index 6a42ad2..7c6f86e 100644
+--- a/IMPLEMENTATION.md
++++ b/IMPLEMENTATION.md
+@@ -1,3 +1,27 @@
++# Latest discard classification
++
++[Completed qualification](artifacts/discard-classification/RESULTS.md): 141 transition discards were all waiting_context, with no growth in the sustained window. 16/16 tests pass on macOS and Linux; actual controller/data recovery still passes and the fresh VM is stopped. Historical 130 counts remain unclassified. Next: current-health recovery semantics using recent activity/counter deltas without erasing history.
++
++# Latest processor recovery fix
++
++[Qualified recovery](artifacts/processor-recovery-fix/RESULTS.md) now preserves stream IDs through a pinned native command-resumption extension and bounded status handshake. Native stop precedes reconfiguration of streaming radios. 16/16 tests pass on macOS and Linux; the fresh actual runtime trial passed four configurations/starts and four-tone recovery, and the VM is stopped. Transition data discard classification is the next bounded step. Earlier failures below remain historical.
++
++# Latest processor recovery qualification
++
++[Processor replacement failed control-plane acceptance](artifacts/processor-recovery-qualification/RESULTS.md) in two attempts despite recovered four-stream data processing. New controller VRT status reconciliation timed out; no configurations or starts succeeded. Both labs were removed and the fresh VM stopped. Next: deterministic fresh-controller/surviving-radio regression and native association-lifecycle diagnosis, followed by a focused fix and new runtime qualification. No application source changes in this slice.
++
++# Latest radio recovery qualification
++
++[Single-radio replacement](artifacts/radio-recovery-qualification/RESULTS.md) passed native lifecycle, controller boot-change/reconfiguration/start, actual streaming and four-tone recovery checks. Other seven nodes were unchanged. Retries and sequence discontinuities make this disruptive recovery. All task resources were cleaned and the fresh VM is stopped. Processor replacement is the next unqualified recovery boundary. No application source changed in this slice.
++
++# Latest recovery qualification
++
++[Native detector replacement](artifacts/recovery-qualification/RESULTS.md) restored traffic while preserving all seven non-target container IDs and start times. Full native redeploy also passed as a disruptive fallback. Link-only reconciliation did not restore the existing node's exec-configured address/MTU. The new qualification VM is stopped; no application code changed in this slice.
++
++# Latest Linux qualification
++
++[Patched ARM64 qualification](artifacts/linux-runtime-qualification/RESULTS.md) now records 15/15 Linux tests, sustained switched traffic, telemetry/recorder checks, overhead and stopped-VM cleanup. Direct Docker restart recovery and capture completeness remain unqualified. This supersedes the prior “not rerun on Linux” status, not historical evidence.
++
+ # Current telemetry slice
+ 
+ Versioned heartbeats and role counters are implemented without changing VITA payload semantics or third-party headers. See [telemetry contract](docs/TELEMETRY.md) and [evidence](artifacts/telemetry/RESULTS.md). The telemetry baseline passed 12/14; the subsequent [runtime fixes](artifacts/runtime-fixes/RESULTS.md) address both failures with a documented patch against the pinned framework. Six finite Linux container cases qualify local heartbeat and recorder failures, not the complete coordinated eight-node workflow. Historical qualification below is unchanged.
+diff --git a/README.md b/README.md
+index f3716f0..2ed9d4d 100644
+--- a/README.md
++++ b/README.md
+@@ -1,11 +1,21 @@
+ # Four-radio SDR Containerlab lab
+ 
++Processor transition discards now have [explicit reasons](docs/DISCARD_DIAGNOSTICS.md). The [fresh replacement trial](artifacts/discard-classification/RESULTS.md) recorded 141 signals waiting for context, no other discard reasons, and no growth during sustained recovery. The legacy aggregate/health policy remains unchanged.
++
+ Standalone C++23 radio, processor, detector, and passive recorder applications for the generated Nokia SR Linux Containerlab topology. Containerlab owns topology and lifecycle. The project-owned VRT source under `third_party/vrt_framework` supplies the renamed SDR profile; graphx-docker is not a build or runtime dependency.
+ 
+ ## Telemetry update
+ 
+ All four application roles now emit bounded `vrt.telemetry/1` JSON heartbeats. Configure `telemetry.interval_ms` in `config/lab.json` (default5000;0 disables new telemetry), then regenerate and rebuild. Detection events are rate limited; counters distinguish sequence gaps from proven loss and buffered PCAP writes from durable storage. See [contract and measurements](docs/TELEMETRY.md) and [actual qualification](artifacts/telemetry/RESULTS.md). No GUI, serial endpoint or new service is added.
+ 
++## Current Linux qualification
++
++The patched ARM64 images passed 15/15 Linux tests and a 340-second switched four-radio run, with all four tones detected and no observed sequence gaps. Qualification fixed a recorder startup race and test portability issues. Pause/resume recovers traffic, but direct Docker restart did not; the bounded capture also reached its size cap and measured kernel drops. See [results, image identity, failures and cleanup](artifacts/linux-runtime-qualification/RESULTS.md). The dedicated VM is stopped.
++
++## Recovery
++
++[Detector and single-radio replacement through Containerlab](docs/RECOVERY.md) are qualified on ARM64: each native workflow restored traffic while preserving the other seven node identities. Radio recovery included controller reconfiguration and a new start epoch; retries and sequence discontinuities were observed. See [radio evidence](artifacts/radio-recovery-qualification/RESULTS.md). Full-lab redeployment is a verified disruptive fallback. Link-only reconciliation after Docker restart did not restore the exec-configured address/MTU. See [recovery evidence](artifacts/recovery-qualification/RESULTS.md). [Processor replacement now passes on the updated images](artifacts/processor-recovery-fix/RESULTS.md): the command-resumption fix preserves stream IDs and restores controller and data operation. Upgrade radios and processor together. Native stop/reconfigure/start remains disruptive; [original failures](artifacts/processor-recovery-qualification/RESULTS.md) are preserved.
++
+ ## Start here
+ 
+ **macOS:** follow [the Apple Silicon / Lima guide](docs/MACOS.md). Build and deploy inside the dedicated Linux guest. Docker Desktop and OrbStack are not required; their images and containers are separate from the guest's Docker daemon.
+diff --git a/THIRD_PARTY_NOTICES.md b/THIRD_PARTY_NOTICES.md
+index eda2a36..90b6ff7 100644
+--- a/THIRD_PARTY_NOTICES.md
++++ b/THIRD_PARTY_NOTICES.md
+@@ -4,11 +4,15 @@
+ 
+ The project-owned source under `third_party/vrt_framework` derives from
+ `rklinkhammer/vrt_framework` revision
+-`dbe85d37155145842da60367af1c4beef8801b0c`, licensed under the MIT License.
++`51853ba29703f51aceb2cfefe5a12a65a8e1110f`, licensed under the MIT License.
++Local changes are explicitly recorded in `patches/vrt-runtime-progress.patch`
++and `patches/vrt-command-resumption.patch`; `container/vrt-source.json` pins
++the patch hashes and resulting header tree.
+ Copyright (c) 2026 rklinkhammer.
+ 
+ The minimal P17 protocol vectors under `tests/golden` and their capture utility
+-under `tools` derive from the same revision and remain covered by that MIT
++under `tools` derive from historical revision
++`dbe85d37155145842da60367af1c4beef8801b0c` and remain covered by that MIT
+ license and attribution.
+ 
+ ## Four-radio behavioral reference
+diff --git a/apps/radio.cpp b/apps/radio.cpp
+index f9e9147..dcac0d2 100644
+--- a/apps/radio.cpp
++++ b/apps/radio.cpp
+@@ -15,6 +15,8 @@
+ 
+ #include <atomic>
+ #include <chrono>
++#include <condition_variable>
++#include <mutex>
+ #include <csignal>
+ #include <cstddef>
+ #include <cstdint>
+@@ -81,31 +83,29 @@ std::string boot_id() {
+   return result;
+ }
+ 
+-void status_worker(int listener, const sdr::RadioConfig &config,
+-                   const std::string &id,
+-                   const std::shared_ptr<sdr::SoapyVirtualDevice> &device,
+-                   const sdr::ControlSlot &control,
+-                   std::chrono::steady_clock::time_point started) {
++struct StatusCache {
++  std::mutex mutex;
++  std::condition_variable updated;
++  std::atomic<bool> requested{false};
++  std::uint64_t sequence{};
++  nlohmann::json value;
++};
++
++void status_worker(int listener, StatusCache &cache) {
+   while (running.load()) {
+     pollfd item{listener, POLLIN, 0};
+-    if (poll(&item, 1, 100) != 1)
+-      continue;
++    if (poll(&item, 1, 100) != 1) continue;
+     Descriptor client(accept(listener, nullptr, nullptr));
+-    if (client.value < 0)
+-      continue;
+-    const auto status = sdr::radio_status(
+-        config, id, control.snapshot(), device->settings(),
+-      device->sample_ordinal(), device->clipped_samples(), device->streaming(),
+-      static_cast<std::uint64_t>(
+-        std::chrono::duration_cast<std::chrono::milliseconds>(
+-          std::chrono::steady_clock::now() - started)
+-          .count()),
+-      static_cast<std::uint64_t>(
+-        std::chrono::duration_cast<std::chrono::nanoseconds>(
+-          std::chrono::system_clock::now().time_since_epoch())
+-          .count()),
+-      true);
+-    static_cast<void>(sdr::serve_status_transaction(client.value, status));
++    if (client.value < 0) continue;
++    nlohmann::json status;
++    {
++      std::unique_lock lock(cache.mutex);
++      const auto before=cache.sequence;
++      cache.requested.store(true);
++      if(!cache.updated.wait_for(lock,std::chrono::milliseconds(500),[&]{return cache.sequence>before;}))continue;
++      status=cache.value;
++    }
++    static_cast<void>(sdr::serve_status_transaction(client.value,status));
+   }
+ }
+ 
+@@ -189,11 +189,10 @@ int main(int argc, char **argv) {
+     auto listener = tcp_listener(config.status_bind, config.status_port);
+     const auto id = boot_id();
+     const auto started = std::chrono::steady_clock::now();
++    StatusCache status_cache;
+     std::vector<std::jthread> status_workers;
+     for (std::size_t index = 0; index < config.status_connections; ++index)
+-      status_workers.emplace_back(status_worker, listener.value,
+-                                  std::cref(config), std::cref(id),
+-                                  std::cref(device), std::cref(control), started);
++      status_workers.emplace_back(status_worker,listener.value,std::ref(status_cache));
+     std::signal(SIGINT, stop);
+     std::signal(SIGTERM, stop);
+     std::signal(SIGHUP, restart);
+@@ -224,6 +223,17 @@ int main(int argc, char **argv) {
+         running.store(false);
+         throw std::runtime_error("radio runtime progress failed");
+       }
++      // Snapshot in the serialized runtime domain, after progress. Status threads
++      // never read native state or assemble a watermark from a different session.
++      if(status_cache.requested.exchange(false)) {
++        auto snapshot=sdr::radio_status(config,id,control.snapshot(),device->settings(),
++          device->sample_ordinal(),device->clipped_samples(),device->streaming(),
++          static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-started).count()),
++          static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count()),true);
++        snapshot["command_resume"]={{"version",1},{"sid",config.sid},{"last_admitted_id",controllee->admitted_message_id()},{"association_generation",controllee->association_generation()}};
++        {std::lock_guard lock(status_cache.mutex);status_cache.value=std::move(snapshot);++status_cache.sequence;}
++        status_cache.updated.notify_all();
++      }
+       report();
+       std::this_thread::sleep_for(std::chrono::microseconds(100));
+     }
+diff --git a/apps/recorder.cpp b/apps/recorder.cpp
+index 946530c..1837e4b 100644
+--- a/apps/recorder.cpp
++++ b/apps/recorder.cpp
+@@ -16,6 +16,7 @@
+ #include <arpa/inet.h>
+ #include <cerrno>
+ #include <linux/if_packet.h>
++#include <ifaddrs.h>
+ #include <net/ethernet.h>
+ #include <net/if.h>
+ #include <poll.h>
+@@ -83,9 +84,23 @@ void collect_kernel_statistics(int descriptor,
+ int run(const sdr::recorder::Options &options) {
+   const auto interface_deadline = std::chrono::steady_clock::now() +
+                                   std::chrono::seconds(30);
+-  while (if_nametoindex(options.interface.c_str()) == 0) {
++  // Containerlab creates the link before its post-create commands bring it up.
++  // AF_PACKET can report POLLERR on an administratively down interface.
++  const auto interface_ready = [&] {
++    ifaddrs *addresses = nullptr;
++    if (getifaddrs(&addresses) != 0)
++      throw std::runtime_error("cannot inspect capture interface readiness");
++    bool ready = false;
++    for (const auto *address = addresses; address; address = address->ifa_next)
++      if (address->ifa_name && options.interface == address->ifa_name &&
++          (address->ifa_flags & IFF_UP) != 0)
++        ready = true;
++    freeifaddrs(addresses);
++    return ready;
++  };
++  while (!interface_ready()) {
+     if (std::chrono::steady_clock::now() >= interface_deadline)
+-      throw std::runtime_error("capture interface did not appear before timeout");
++      throw std::runtime_error("capture interface did not become ready before timeout");
+     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+   }
+   PacketSocket socket(options.interface);
+diff --git a/apps/udp_pipeline.cpp b/apps/udp_pipeline.cpp
+index 0671d02..dc9b90a 100644
+--- a/apps/udp_pipeline.cpp
++++ b/apps/udp_pipeline.cpp
+@@ -307,6 +307,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+   if (listener_stream_id < 1 || listener_stream_id > 4 ||
+       datagram.size() > config_.receive_bytes) {
+     ++metrics_.malformed;
++    ++metrics_.discards.limits;
+     return output;
+   }
+   auto &stream = (*streams_)[listener_stream_id - 1];
+@@ -314,6 +315,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+   const auto envelope = vita::codec::decode_envelope(bytes);
+   if (!envelope || envelope->envelope.stream_id != listener_stream_id) {
+     ++metrics_.malformed;
++    ++metrics_.discards.invalid_envelope;
+     return output;
+   }
+   if (envelope->envelope.type == vita::codec::PacketType::context) {
+@@ -325,10 +327,12 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+         packet->envelope.envelope.timestamp.fractional >=
+             picoseconds_per_second) {
+       ++metrics_.malformed;
++      ++metrics_.discards.invalid_context;
+       return output;
+     }
+     if (packet->fields.size() != 4) {
+       ++metrics_.malformed;
++      ++metrics_.discards.invalid_context;
+       return output;
+     }
+     std::optional<std::uint64_t> center;
+@@ -340,17 +344,20 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+       if (field.kind != vita::BodyKind::values ||
+           field.attribute != vita::Attribute::current) {
+         ++metrics_.malformed;
++        ++metrics_.discards.invalid_context;
+         return output;
+       }
+       const auto value = field.value();
+       if (!value) {
+         ++metrics_.malformed;
++        ++metrics_.discards.invalid_context;
+         return output;
+       }
+       if (field.id == vita::RFReferenceFrequency::id) {
+         const auto *hertz = std::get_if<vita::Hertz>(&*value);
+         if (!hertz || hertz->q20 < 0 || hertz->q20 % (1LL << 20)) {
+           ++metrics_.malformed;
++          ++metrics_.discards.invalid_context;
+           return output;
+         }
+         center = static_cast<std::uint64_t>(hertz->q20 >> 20);
+@@ -359,6 +366,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+         if (!hertz || hertz->q20 <= 0 || hertz->q20 % (1LL << 20) ||
+             (hertz->q20 >> 20) > std::numeric_limits<std::uint32_t>::max()) {
+           ++metrics_.malformed;
++          ++metrics_.discards.invalid_context;
+           return output;
+         }
+         rate = static_cast<std::uint32_t>(hertz->q20 >> 20);
+@@ -366,6 +374,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+         const auto *hertz = std::get_if<vita::Hertz>(&*value);
+         if (!hertz) {
+           ++metrics_.malformed;
++          ++metrics_.discards.invalid_context;
+           return output;
+         }
+         bandwidth = hertz->q20;
+@@ -373,11 +382,13 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+         const auto *stages = std::get_if<vita::GainStages>(&*value);
+         if (!stages) {
+           ++metrics_.malformed;
++          ++metrics_.discards.invalid_context;
+           return output;
+         }
+         gain = *stages;
+       } else {
+         ++metrics_.malformed;
++        ++metrics_.discards.invalid_context;
+         return output;
+       }
+     }
+@@ -386,6 +397,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+       gain->stage2_q7 != 0 || gain->stage1_q7 < -60 * 128 ||
+       gain->stage1_q7 > 60 * 128) {
+       ++metrics_.malformed;
++      ++metrics_.discards.invalid_context;
+       return output;
+     }
+     try {
+@@ -398,6 +410,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+               "invalid center frequency");
+     } catch (const std::invalid_argument &) {
+       ++metrics_.malformed;
++      ++metrics_.discards.invalid_context;
+       return output;
+     }
+     if (!stream.samples.empty() &&
+@@ -414,11 +427,11 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+     ++metrics_.context_updates;
+     return output;
+   }
+-  if (!stream.metadata_valid ||
+-      !valid_sdr_envelope(envelope->envelope, listener_stream_id) ||
++  if (!valid_sdr_envelope(envelope->envelope, listener_stream_id) ||
+       !envelope->trailer ||
+       (*envelope->trailer & ~std::uint32_t{0x00000c00}) != 0x00c00000) {
+     ++metrics_.malformed;
++    ++metrics_.discards.invalid_data;
+     return output;
+   }
+   const auto sample_view =
+@@ -426,6 +439,12 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+   if (!sample_view || sample_view->size() == 0 ||
+       sample_view->size() > config_.processing.fft_size) {
+     ++metrics_.malformed;
++    ++metrics_.discards.invalid_samples;
++    return output;
++  }
++  if (!stream.metadata_valid) {
++    ++metrics_.malformed; // legacy aggregate includes all these discards
++    ++metrics_.discards.waiting_context;
+     return output;
+   }
+   std::size_t missing_pairs = 0;
+@@ -451,6 +470,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+           subtract_samples(packet_time, missing_pairs, stream.sample_rate_hz);
+   } catch (const std::invalid_argument &) {
+     ++metrics_.malformed;
++    ++metrics_.discards.timestamp_range;
+     return output;
+   }
+   auto append = [&](std::complex<double> sample, bool missing,
+@@ -496,6 +516,7 @@ ProcessorCore::consume(std::uint32_t listener_stream_id,
+     const auto pair = sample_view->at(index);
+     if (!pair) {
+       ++metrics_.malformed;
++      ++metrics_.discards.invalid_samples;
+       return {};
+     }
+     append({static_cast<double>(pair->i) / 32768.0,
+@@ -575,6 +596,15 @@ std::string metrics_json(const ProcessorMetrics &metrics) {
+                    .count()},
+               {"datagrams", metrics.datagrams},
+               {"malformed", metrics.malformed},
++              {"discarded", metrics.malformed},
++              {"discard_schema", "processor.discards/1"},
++              {"discard_reasons", {{"limits",metrics.discards.limits},
++                {"invalid_envelope",metrics.discards.invalid_envelope},
++                {"invalid_context",metrics.discards.invalid_context},
++                {"invalid_data",metrics.discards.invalid_data},
++                {"invalid_samples",metrics.discards.invalid_samples},
++                {"waiting_context",metrics.discards.waiting_context},
++                {"timestamp_range",metrics.discards.timestamp_range}}},
+               {"context_updates", metrics.context_updates},
+               {"packet_gaps", metrics.packet_gaps},
+               {"spectra", metrics.spectra},
+@@ -785,4 +815,4 @@ parse_duration(int argc, char **argv, std::string &config_path) {
+   }
+   return duration;
+ }
+-} // namespace sdr::udp
+\ No newline at end of file
++} // namespace sdr::udp
+diff --git a/apps/udp_pipeline.hpp b/apps/udp_pipeline.hpp
+index 6a9dd22..b618aee 100644
+--- a/apps/udp_pipeline.hpp
++++ b/apps/udp_pipeline.hpp
+@@ -40,7 +40,18 @@ struct DetectorConfig {
+   std::size_t receive_bytes{};
+ };
+ 
++struct ProcessorDiscards {
++  std::uint64_t limits{};
++  std::uint64_t invalid_envelope{};
++  std::uint64_t invalid_context{};
++  std::uint64_t invalid_data{};
++  std::uint64_t invalid_samples{};
++  std::uint64_t waiting_context{};
++  std::uint64_t timestamp_range{};
++};
++
+ struct ProcessorMetrics {
++  ProcessorDiscards discards{};
+   std::uint64_t datagrams{};
+   std::uint64_t malformed{};
+   std::uint64_t context_updates{};
+diff --git a/artifacts/telemetry/README.md b/artifacts/telemetry/README.md
+index 78ae9f0..01cde2a 100644
+--- a/artifacts/telemetry/README.md
++++ b/artifacts/telemetry/README.md
+@@ -12,7 +12,7 @@ python3 scripts/test_telemetry_process.py
+ python3 scripts/benchmark_telemetry.py
+ ```
+ 
+-Configure a new macOS build when needed with `cmake -S . -B build/dev -DCMAKE_BUILD_TYPE=Debug`; pinned nlohmann/json3.12.0 and SoapySDR0.8.1 must be installed. Local CTest currently has two independently recorded baseline failures; do not interpret a nonzero CTest exit as a telemetry-only failure. Ordinary tests never create VMs.
++Configure a new macOS build when needed with `cmake -S . -B build/dev -DCMAKE_BUILD_TYPE=Debug`; pinned nlohmann/json3.12.0 and SoapySDR0.8.1 must be installed. The historical telemetry baseline had two independently recorded failures. They are repaired and the subsequent Linux qualification passes 15/15; see ../linux-runtime-qualification/RESULTS.md. Ordinary tests never create VMs.
+ 
+ Explicit Linux qualification: follow docs/MACOS.md to create a **new** dedicated VM from the pinned template. Do not reuse a stopped VM. Copy the current checkout into that new guest (no host mounts), including the vendored headers, config and generated files. In the guest source directory:
+ 
+@@ -28,4 +28,4 @@ The explicit qualification script starts finite task-named containers on `--netw
+ 
+ Collect guest artifacts/telemetry/linux-results.json and the image ID, then stop the exact newly created VM from the Mac with `limactl stop "$VM_NAME"`. Keep a task-owned VM name record and clean up even after failure. Do not broadly prune containers or VMs. The recorded run created no Containerlab lab and published no services.
+ 
+-To qualify the full eight-node workflow later, first resolve or explicitly disposition the VRT retention/coordinated-start failures, then use the existing reviewed deployment and destruction scripts in another fresh VM. Do not treat the isolated heartbeat tests as proof of coordinated streaming.
++To qualify the full eight-node workflow later, use the existing reviewed deployment and destruction scripts in another fresh VM. Do not treat the isolated heartbeat tests as proof of coordinated streaming.
+diff --git a/container/DEPENDENCIES.md b/container/DEPENDENCIES.md
+index d205f4c..1a470e7 100644
+--- a/container/DEPENDENCIES.md
++++ b/container/DEPENDENCIES.md
+@@ -6,7 +6,7 @@
+ | Debian archive | `20250908T000000Z` | Immutable package repository snapshot |
+ | Debian security archive | `20250908T000000Z` | Immutable security package repository snapshot |
+ | nlohmann/json | `3.12.0`, SHA-256 `42f6e95cad6ec532fd372391373363b62a14af6d771056dbfc86160e6dfff7aa` | JSON parsing and metrics |
+-| VRT framework | `51853ba29703f51aceb2cfefe5a12a65a8e1110f` | Upstream base plus `patches/vrt-runtime-progress.patch`, MIT |
++| VRT framework | `51853ba29703f51aceb2cfefe5a12a65a8e1110f` | Upstream base plus runtime-progress and command-resumption patches pinned in `container/vrt-source.json`, MIT |
+ | graphx-docker | `7cad4da8646eda302a005070228495c1aa87d89a` | Behavioral reference only, MIT; absent from build context and image |
+ | Nokia SR Linux | `25.10.1@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c` | Switch image, generated from `config/lab.json` |
+ 
+@@ -16,7 +16,7 @@ The application image itself is local and therefore has no repository digest bef
+ 
+ ## Current source verification
+ 
+-VRT_REVISION identifies the upstream base; the source also requires the explicit local patch listed in `container/vrt-source.json`. After submodule initialization, run `python3 scripts/verify_vrt_source.py --apply`. This refuses unknown header trees and is idempotent on the verified patched tree. The manifest records the base hash, patch hash, and resulting include-tree hash. The patch repairs transaction expiry and absolute SDR start scheduling across PPS updates; see `artifacts/runtime-fixes/RESULTS.md`. The image includes the patch and manifest under `/usr/share/doc/containerlab-vrt/`. `scripts/build-image.sh` runs `scripts/verify_vrt_source.py`, checking the pinned include-tree hash in `container/vrt-source.json` and matching revision metadata before building. Direct Dockerfile invocation bypasses that host-side check; use the reviewed build script and retain image ID evidence.
++VRT_REVISION identifies the upstream base; the source also requires the explicit local patches listed in `container/vrt-source.json`. After submodule initialization, run `python3 scripts/verify_vrt_source.py --apply`. This refuses unknown header trees and is idempotent on the verified patched tree. The manifest records the base hash, patch hash, and resulting include-tree hash. The original patch repairs transaction expiry and absolute SDR start scheduling across PPS updates; the command-resumption extension preserves stream IDs across processor replacement, as specified in [COMMAND_RESUMPTION.md](../docs/COMMAND_RESUMPTION.md); see `artifacts/runtime-fixes/RESULTS.md`. The image includes the patch and manifest under `/usr/share/doc/containerlab-vrt/`. `scripts/build-image.sh` runs `scripts/verify_vrt_source.py`, checking the pinned include-tree hash in `container/vrt-source.json` and matching revision metadata before building. Direct Dockerfile invocation bypasses that host-side check; use the reviewed build script and retain image ID evidence.
+ 
+ ## Historical source provenance caveat
+ 
+diff --git a/container/vrt-source.json b/container/vrt-source.json
+index fc27d3b..445cf9c 100644
+--- a/container/vrt-source.json
++++ b/container/vrt-source.json
+@@ -1,11 +1,15 @@
+ {
+   "revision": "51853ba29703f51aceb2cfefe5a12a65a8e1110f",
+-  "include_tree_sha256": "0f3f858114d2a70f112b1fc40e05a2ac8bdb8afd43ebcb6e8fbbd1a5d7d09d3c",
++  "include_tree_sha256": "cb95ce93ac12fbad50c58335aee98f805db9964b27ed1451e5f56cfc1347d313",
+   "base_include_tree_sha256": "cfb6b98be0f6cc6cadc0701cceda992e726a5b8cc85c77378599163d69786259",
+   "patches": [
+     {
+       "path": "patches/vrt-runtime-progress.patch",
+       "sha256": "a4ebe2d9904650283145f0ce2bffeb288298d611226ad55c99b09d0b9e8ab662"
++    },
++    {
++      "path": "patches/vrt-command-resumption.patch",
++      "sha256": "fe8fa74af94f54d42da6fca5457e12463fd0df255351e806ff25b16c2700e361"
+     }
+   ]
+ }
+diff --git a/docs/MACOS.md b/docs/MACOS.md
+index 8c93488..f73be81 100644
+--- a/docs/MACOS.md
++++ b/docs/MACOS.md
+@@ -161,6 +161,10 @@ Read the destroy audit and investigate any residual resources. If destruction fa
+ | Capture missing on Mac | It is initially in the guest checkout; use the copy step. |
+ | Build passes but control tests fail | Verify the pinned framework patch with `python3 scripts/verify_vrt_source.py`; see runtime fix evidence. Preserve any new failure instead of relying on historical qualification. |
+ 
++## Current patched-image qualification
++
++The fresh ARM64 run is recorded in [Linux qualification results](../artifacts/linux-runtime-qualification/RESULTS.md). Both the unit/integration suite and sustained switched traffic passed. The recorder now waits for its interface to become administratively up before opening its packet socket. Do not use a bare Docker stop/start as a qualified Containerlab node recovery procedure: that trial restarted the detector process but did not restore its traffic. Subsequent [detector and single-radio replacement workflows](RECOVERY.md) are qualified through native filtered destruction and full-topology deployment; processor replacement subsequently passed with the [command-resumption fix](../artifacts/processor-recovery-fix/RESULTS.md), after the original controller-recovery failure. Upgrade radios and processor together. Recorder and switch recovery remain untested. Full native redeploy is the disruptive fallback.
++
+ ## Telemetry qualification
+ 
+ The new stdout telemetry is described in [TELEMETRY.md](TELEMETRY.md). Local C++ and process checks run on macOS; AF_PACKET recorder checks require Linux. Use [the explicit telemetry qualification](../artifacts/telemetry/README.md) only in a newly created guest. Its finite isolated containers need no Containerlab deployment or SR Linux image; they do not establish full workflow health. Collect image ID/results and stop that exact VM afterward. Existing node logs can display the JSON records without serial ports.
+diff --git a/include/sdr/telemetry.hpp b/include/sdr/telemetry.hpp
+index e9e7545..6835284 100644
+--- a/include/sdr/telemetry.hpp
++++ b/include/sdr/telemetry.hpp
+@@ -4,9 +4,32 @@
+ #include <mutex>
+ #include <nlohmann/json.hpp>
+ #include <ostream>
++#include <optional>
+ #include <string>
+ namespace sdr::telemetry {
+ void write_line(std::ostream &, const std::string &);
++struct HealthAssessment {
++  const char *state;
++  const char *reason;
++  std::optional<std::uint64_t> new_errors;
++  bool counter_reset;
++  std::optional<std::int64_t> sample_window_ms;
++};
++// Serialized policy; monotonic time is supplied explicitly for independent tests.
++class ActivityHealth {
++public:
++  using Clock = std::chrono::steady_clock;
++  HealthAssessment assess(Clock::time_point now,
++                          std::optional<Clock::time_point> activity,
++                          std::uint64_t error_total,
++                          std::chrono::milliseconds interval, bool final=false);
++  void fail() noexcept { failed_=true; }
++  bool failed() const noexcept { return failed_; }
++private:
++  std::uint64_t errors_{};
++  std::optional<Clock::time_point> previous_, recovery_since_;
++  bool failed_{};
++};
+ class Reporter {
+ public:
+   Reporter(std::string role, std::ostream &output, std::string instance = "");
+@@ -24,7 +47,8 @@ private:
+   std::chrono::milliseconds interval_;
+   std::chrono::steady_clock::time_point started_, next_, activity_{}, window_;
+   std::chrono::system_clock::time_point activity_wall_{};
+-  std::uint64_t suppressed_{}, errors_{};
++  std::uint64_t suppressed_{};
++  ActivityHealth health_;
+   unsigned events_{};
+   mutable std::mutex mutex_;
+ };
+diff --git a/src/processor_controller.cpp b/src/processor_controller.cpp
+index e312de0..5c21dfd 100644
+--- a/src/processor_controller.cpp
++++ b/src/processor_controller.cpp
+@@ -66,6 +66,8 @@ bool set_nonblocking(int descriptor) noexcept {
+ struct StatusSnapshot {
+   std::string boot_id;
+   std::optional<std::uint64_t> generation;
++  std::uint32_t admitted_message_id{};
++  std::uint64_t association_generation{};
+   bool ready{};
+   bool active{};
+   bool streaming{};
+@@ -176,7 +178,15 @@ read_status(const ProcessorRadioControlConfig &config,
+     const auto value = nlohmann::json::parse(response.data(), response.data() + size);
+     if (value.at("version") != 1 || value.at("radio_id") != config.id)
+       return std::nullopt;
++    const auto &resume=value.at("command_resume");
++    if(resume.at("version")!=1 || resume.at("sid")!=config.sid ||
++       !resume.at("last_admitted_id").is_number_unsigned() ||
++       resume.at("last_admitted_id").get<std::uint64_t>()>UINT32_MAX ||
++       !resume.at("association_generation").is_number_unsigned() ||
++       resume.at("association_generation").get<std::uint64_t>()==0)return std::nullopt;
+     StatusSnapshot result;
++    result.admitted_message_id=resume.at("last_admitted_id").get<std::uint32_t>();
++    result.association_generation=resume.at("association_generation").get<std::uint64_t>();
+     result.boot_id = value.at("boot_id").get<std::string>();
+     result.ready = value.at("ready").get<bool>();
+     result.active = value.at("connection").at("active").get<bool>();
+@@ -628,6 +638,8 @@ struct ProcessorController::Implementation {
+         return session.controller->release(handle).has_value();
+       }
+     }
++    const auto observation=session.controller->observation(handle);
++    sdr::telemetry::write_line(*events,nlohmann::json{{"type","controller_error"},{"radio_id",session.transport.config.id},{"reason","command_evidence_timeout"},{"observation_kind",observation?static_cast<unsigned>(observation->kind):999u},{"validation_accepted",observation&&observation->validation_accepted},{"confirms_execution",observation&&observation->confirms_execution}}.dump());
+     static_cast<void>(session.controller->release(handle));
+     return false;
+   }
+@@ -665,19 +677,18 @@ struct ProcessorController::Implementation {
+       return false;
+     const auto after = read_status(session.transport.config, config.io_timeout);
+     if (!after || before->boot_id != after->boot_id || !after->active ||
+-        !after->generation) {
++        !after->generation || after->generation==before->generation ||
++        after->association_generation!=before->association_generation) {
+       count(&ProcessorControllerMetrics::status_failures);
+       return false;
+     }
+     const bool boot_changed = session.status &&
+                               session.status->boot_id != after->boot_id;
+-    if (boot_changed) {
+-      session.configured = false;
+-      session.started = false;
+-      count(&ProcessorControllerMetrics::boot_changes);
++    if (!session.controller->resume_commands_after(after->admitted_message_id)) {
++      count(&ProcessorControllerMetrics::protocol_failures);
++      sdr::telemetry::write_line(*events,nlohmann::json{{"type","controller_error"},{"radio_id",session.transport.config.id},{"reason","command_id_resumption_failed"}}.dump());
++      return false;
+     }
+-    session.status = after;
+-    session.reconciled_generation = session.transport.instance->generation();
+     auto status = session.controller->status();
+     if (!status || !wait_state(session, *status, config.io_timeout)) {
+       count(&ProcessorControllerMetrics::protocol_failures);
+@@ -703,6 +714,13 @@ struct ProcessorController::Implementation {
+                      .dump());
+       return false;
+     }
++    if (boot_changed) {
++      session.configured = false;
++      session.started = false;
++      count(&ProcessorControllerMetrics::boot_changes);
++    }
++    session.status = after;
++    session.reconciled_generation = session.transport.instance->generation();
+     session.last_liveness = Clock::now();
+     session.consecutive_failures = 0;
+     count(session.reconciled_generation > 1
+@@ -725,6 +743,17 @@ struct ProcessorController::Implementation {
+   }
+ 
+   bool configure(Session &session) {
++    // Native SDR configuration/start is illegal while already streaming.
++    // Only an unconfigured session takes this path; ordinary reconnect preserves it.
++    if (session.status && session.status->streaming) {
++      auto stopped=session.controller->stop();
++      if(!stopped || !wait(session,*stopped,vita::WaitEvidence::execution,config.io_timeout)) {
++        count(&ProcessorControllerMetrics::protocol_failures);
++        return false;
++      }
++      session.status->streaming=false;
++      sdr::telemetry::write_line(*events,nlohmann::json{{"type","controller"},{"radio_id",session.transport.config.id},{"state","radio_quiesced_for_reconfiguration"}}.dump());
++    }
+     vita::SdrRadioSettings settings;
+     settings.center_frequency =
+         *vita::Hertz::from_integer(session.transport.config.center_hz);
+diff --git a/src/telemetry.cpp b/src/telemetry.cpp
+index 0f239d5..d8a5c01 100644
+--- a/src/telemetry.cpp
++++ b/src/telemetry.cpp
+@@ -49,6 +49,27 @@ std::chrono::milliseconds interval() {
+   return std::chrono::milliseconds(n);
+ }
+ } // namespace
++HealthAssessment ActivityHealth::assess(Clock::time_point now,
++    std::optional<Clock::time_point> activity, std::uint64_t errors,
++    std::chrono::milliseconds interval, bool final) {
++  const bool reset=previous_ && errors<errors_;
++  HealthAssessment result{"unknown","recovery_unproven",std::nullopt,reset,std::nullopt};
++  if(previous_)result.sample_window_ms=std::chrono::duration_cast<std::chrono::milliseconds>(now-*previous_).count();
++  if(!reset)result.new_errors=errors-errors_;
++  if(reset || result.new_errors.value_or(0)>0)recovery_since_=now;
++  errors_=errors;
++  previous_=now;
++  if(failed_) { result.state="failed";result.reason="fatal_error"; }
++  else if(final) { result.reason="shutdown"; }
++  else if(reset) { result.reason="counter_reset"; }
++  else if(result.new_errors.value_or(0)>0) { result.state="degraded";result.reason="new_errors"; }
++  else if(activity && *activity>now) { result.reason="invalid_activity_time"; }
++  else if(!activity || now-*activity>interval*2) { result.state="idle";result.reason="no_recent_activity"; }
++  else if(!recovery_since_ || (*activity>*recovery_since_ && now-*recovery_since_>=interval)) {
++    result.state="healthy";result.reason="recent_activity";recovery_since_.reset();
++  }
++  return result;
++}
+ void write_line(std::ostream &out, const std::string &line) {
+   std::lock_guard lock(output_mutex);
+   out << line << '\n' << std::flush;
+@@ -83,6 +104,7 @@ void Reporter::emit(const char *event, const char *state, bool ready,
+                     const nlohmann::json &fields) {
+   nlohmann::json j = {
+       {"schema", "vrt.telemetry/1"},
++      {"health_policy", "local-activity/2"},
+       {"event", event},
+       {"timestamp", utc()},
+       {"role", role_},
+@@ -115,14 +137,17 @@ void Reporter::heartbeat(const nlohmann::json &counters, std::uint64_t errors,
+   auto now = std::chrono::steady_clock::now();
+   if (!final && now < next_)
+     return;
+-  const char *state = errors > 0 ? "degraded"
+-                      : activity_ == std::chrono::steady_clock::time_point{} ||
+-                              now - activity_ > interval_ * 2
+-                          ? "idle"
+-                          : "healthy";
+-  emit(final ? "shutdown" : "heartbeat",
+-       final && errors == 0 ? "unknown" : state, !final, counters);
+-  errors_ = errors;
++  const auto assessment=health_.assess(now,
++      activity_==std::chrono::steady_clock::time_point{} ? std::nullopt : std::optional{activity_},
++      errors,interval_,final);
++  auto fields=counters;
++  fields["health"]={{"scope","local_activity"},{"reason",assessment.reason},
++    {"error_total",errors},
++    {"new_errors",assessment.new_errors ? nlohmann::json(*assessment.new_errors) : nlohmann::json(nullptr)},
++    {"counter_reset",assessment.counter_reset},
++    {"sample_window_ms",assessment.sample_window_ms ? nlohmann::json(*assessment.sample_window_ms) : nlohmann::json(nullptr)},
++    {"activity_window_ms",interval_.count()*2}};
++  emit(final ? "shutdown" : "heartbeat",assessment.state,!final && !health_.failed(),fields);
+   next_ = now + interval_;
+ }
+ void Reporter::detection(const nlohmann::json &fields) {
+@@ -142,6 +167,7 @@ void Reporter::detection(const nlohmann::json &fields) {
+ }
+ void Reporter::failed() {
+   std::lock_guard lock(mutex_);
++  health_.fail();
+   if (interval_.count() != 0)
+     emit("failure", "failed", false, {{"reason", "APPLICATION_ERROR"}});
+ }
+diff --git a/tests/processor_controller_tests.cpp b/tests/processor_controller_tests.cpp
+index 8b9324e..10b73a0 100644
+--- a/tests/processor_controller_tests.cpp
++++ b/tests/processor_controller_tests.cpp
+@@ -110,6 +110,8 @@ struct RadioFixture {
+   Clock::time_point origin{Clock::now()};
+   vita::runtime::timing::ProtocolTime clock_origin{utc_now()};
+   std::atomic<bool> stop{false};
++  std::atomic<unsigned> status_fault{0};
++  unsigned status_reads{};
+   std::jthread worker;
+ 
+   RadioFixture(std::string radio_id, std::uint32_t stream_id)
+@@ -199,7 +201,7 @@ struct RadioFixture {
+           sdr::RadioConfig config;
+           config.id = id;
+           config.sid = sid;
+-          const auto snapshot = sdr::radio_status(
++          auto snapshot = sdr::radio_status(
+               config, "boot-" + id, control.snapshot(), device->settings(),
+               device->sample_ordinal(), device->clipped_samples(),
+               device->streaming(), elapsed / 1'000'000,
+@@ -208,6 +210,16 @@ struct RadioFixture {
+                       std::chrono::system_clock::now().time_since_epoch())
+                       .count()),
+               true);
++          snapshot["command_resume"]={{"version",1},{"sid",sid},{"last_admitted_id",controllee->admitted_message_id()},{"association_generation",controllee->association_generation()}};
++          switch(status_fault.load()) {
++          case 1:snapshot.erase("command_resume");break;
++          case 2:snapshot["command_resume"]["sid"]=999;break;
++          case 3:snapshot["command_resume"]["last_admitted_id"]=UINT32_MAX;break;
++          case 4:snapshot["connection"]["generation"]=1;break;
++          case 5:snapshot["boot_id"]="changing-"+std::to_string(++status_reads);break;
++          case 6:snapshot["command_resume"]["last_admitted_id"]=std::uint64_t{UINT32_MAX}+1;break;
++          default:break;
++          }
+           assert(sdr::serve_status_transaction(client.value, snapshot));
+         }
+       }
+@@ -258,7 +270,8 @@ int main() {
+   }
+ 
+   std::ostringstream events;
+-  sdr::ProcessorController controller(config, events);
++  auto owner = std::make_unique<sdr::ProcessorController>(config, events);
++  auto &controller = *owner;
+   const auto admission_deadline = Clock::now() + std::chrono::seconds(4);
+   while (!controller.coordinated() && Clock::now() < admission_deadline)
+     std::this_thread::sleep_for(std::chrono::milliseconds(1));
+@@ -320,4 +333,28 @@ int main() {
+   const auto sustained = controller.metrics();
+   assert(sustained.protocol_failures == after.protocol_failures);
+   assert(sustained.starts_submitted == 4);
++  owner.reset();
++  std::ostringstream replacement_events;
++  auto replacement = std::make_unique<sdr::ProcessorController>(config, replacement_events);
++  const auto replacement_deadline = Clock::now() + std::chrono::seconds(5);
++  while (!replacement->coordinated() && Clock::now() < replacement_deadline)
++    std::this_thread::sleep_for(std::chrono::milliseconds(1));
++  const auto result = replacement->metrics();
++  replacement.reset(); // join before reading the event stream
++  std::cerr << replacement_events.str()
++            << "replacement configurations=" << result.configurations
++            << " starts=" << result.starts_admitted
++            << " protocol_failures=" << result.protocol_failures << '\n';
++  if (result.configurations != 4 || result.starts_admitted != 4) return 1;
++  for(unsigned fault=1;fault<=6;++fault) {
++    radios[0]->status_fault.store(fault);
++    std::ostringstream rejected_events;
++    auto rejected=std::make_unique<sdr::ProcessorController>(config,rejected_events);
++    std::this_thread::sleep_for(std::chrono::milliseconds(600));
++    auto metrics=rejected->metrics();
++    assert(!rejected->coordinated() && metrics.starts_submitted==0);
++    assert(metrics.configurations<=3); // invalid radio must never be configured
++    assert(metrics.status_failures>0 || metrics.protocol_failures>0);
++    rejected.reset();
++  }
+ }
+\ No newline at end of file
+diff --git a/tests/radio_transport_tests.cpp b/tests/radio_transport_tests.cpp
+index d9f1afa..65f6cbe 100644
+--- a/tests/radio_transport_tests.cpp
++++ b/tests/radio_transport_tests.cpp
+@@ -13,6 +13,7 @@
+ 
+ #include <array>
+ #include <cassert>
++#include <cerrno>
+ #include <chrono>
+ #include <cstddef>
+ #include <cstdint>
+@@ -178,7 +179,9 @@ struct Fixture {
+   std::optional<Runtime::Controllee> controllee;
+   std::uint64_t now{};
+ 
+-  Fixture() {
++  explicit Fixture(std::chrono::milliseconds stale_timeout =
++                       std::chrono::milliseconds(120)) {
++    transport.config.stale_timeout = stale_timeout;
+     sdr::RadioSettings defaults;
+     device->apply_settings(defaults);
+     auto config = vita::profiles::iq::lab::config(
+@@ -231,7 +234,9 @@ void drain(int descriptor) {
+ }
+ 
+ void runtime_control_path() {
+-  Fixture fixture;
++  // This case tests exclusive ownership, not idle expiry. Keep its connection
++  // live across host scheduler delays; the dedicated stale test retains 120ms.
++  Fixture fixture(std::chrono::seconds(2));
+   Socket controller(connect_tcp(fixture.transport.instance->control_port()));
+   fixture.pump(2'000'000, true);
+   assert(fixture.transport.instance->connected());
+@@ -285,13 +290,29 @@ void runtime_control_path() {
+   Socket rejected(connect_tcp(fixture.transport.instance->control_port()));
+   fixture.pump(77'000'000, true);
+   std::byte probe{};
+-  assert(recv(rejected.descriptor, &probe, 1, 0) == 0);
++  // A nonblocking TCP peer can observe EAGAIN before the FIN arrives on Linux.
++  // Keep servicing transport until closure, with a bounded wall-clock deadline.
++  const auto rejection_deadline = std::chrono::steady_clock::now() +
++                                  std::chrono::milliseconds(500);
++  ssize_t rejected_read;
++  do {
++    rejected_read = recv(rejected.descriptor, &probe, 1, 0);
++    if (rejected_read >= 0 || (errno != EAGAIN && errno != EWOULDBLOCK))
++      break;
++    fixture.pump(fixture.now + 100'000, true);
++  } while (std::chrono::steady_clock::now() < rejection_deadline);
++  if (rejected_read != 0)
++    std::fprintf(stderr, "rejected connection recv=%zd errno=%d (%s)\n",
++                 rejected_read, errno, std::strerror(errno));
++  assert(rejected_read == 0);
++  assert(fixture.transport.instance->metrics().rejected_connections == 1);
++  assert(fixture.transport.instance->connected());
+ 
+   const auto state_version = fixture.device->settings();
+   controller = Socket{};
+-  fixture.pump(79'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   Socket reconnected(connect_tcp(fixture.transport.instance->control_port()));
+-  fixture.pump(81'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   assert(fixture.transport.instance->connected());
+   assert(fixture.device->settings().sample_rate_hz ==
+          state_version.sample_rate_hz);
+@@ -299,7 +320,7 @@ void runtime_control_path() {
+ 
+   const std::array<std::byte, 4> malformed{};
+   assert(send_all(reconnected.descriptor, malformed));
+-  fixture.pump(83'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   assert(!fixture.transport.instance->connected());
+   assert(recv(reconnected.descriptor, &probe, 1, 0) == 0);
+ }
+diff --git a/tests/telemetry_pipeline_tests.cpp b/tests/telemetry_pipeline_tests.cpp
+index de05c31..ec3bd61 100644
+--- a/tests/telemetry_pipeline_tests.cpp
++++ b/tests/telemetry_pipeline_tests.cpp
+@@ -131,7 +131,7 @@ int main() {
+   pc.queue_limit = 8;
+   std::ostringstream detector_output;
+   std::thread dt([&] {
+-    assert(sdr::udp::run_detector(dc, std::chrono::milliseconds(5300),
++    assert(sdr::udp::run_detector(dc, std::chrono::milliseconds(5800),
+                                   detector_output) == 0);
+   });
+   std::this_thread::sleep_for(std::chrono::milliseconds(30));
+@@ -140,21 +140,35 @@ int main() {
+   producer.consume(1, signal_wire(0, 0));
+   auto spectra = producer.consume(1, signal_wire(1, 1024));
+   assert(spectra.size() == 1);
+-  send_datagram(ports[4], spectra[0]);
++  send_datagram(ports[4],{std::byte{1}}); // independently malformed input
++  std::this_thread::sleep_for(std::chrono::milliseconds(140));
++  auto valid=sdr::decode_spectrum(spectra[0]);
++  for(unsigned i=0;i<8;++i) {
++    valid.sequence=i;
++    send_datagram(ports[4],sdr::encode_spectrum(valid));
++    std::this_thread::sleep_for(std::chrono::milliseconds(40));
++  }
+   dt.join();
+   bool normal = false, interrupted = false;
++  bool degraded=false,recovered=false,idle_after=false;
+   std::istringstream stream(detector_output.str());
+   std::string line;
+   while (std::getline(stream, line)) {
+     auto j = nlohmann::json::parse(line);
+     if (j.value("schema", nlohmann::json()) != "vrt.telemetry/1")
+       continue;
++    if(j["event"]=="heartbeat") {
++      if(j["state"]=="degraded" && j["data"]["health"]["new_errors"]==1)degraded=true;
++      if(degraded && j["state"]=="healthy" && j["data"]["malformed"]==1)recovered=true;
++      if(recovered && j["state"]=="idle" && j["data"]["malformed"]==1)idle_after=true;
++    }
+     if (j["event"] == "detection" && j["data"]["validity"] == "valid")
+       normal = true;
+     if (j["event"] == "detection" && j["data"]["validity"] == "unavailable")
+       interrupted = true;
+   }
+   assert(normal && interrupted);
++  assert(degraded && recovered && idle_after);
+   // Destination has no consumer now. UDP success is not proof of delivery.
+   std::ostringstream processor_output;
+   std::thread pt([&] {
+diff --git a/tests/telemetry_tests.cpp b/tests/telemetry_tests.cpp
+index 3f80c91..34faa05 100644
+--- a/tests/telemetry_tests.cpp
++++ b/tests/telemetry_tests.cpp
+@@ -6,6 +6,41 @@
+ #include <thread>
+ #include <vector>
+ int main() {
++  {
++    using namespace std::chrono;
++    using Policy=sdr::telemetry::ActivityHealth;
++    const auto origin=Policy::Clock::time_point{};
++    auto at=[&](int ms){return origin+milliseconds(ms);};
++    Policy policy;
++    auto result=policy.assess(at(0),std::nullopt,0,milliseconds(100));
++    assert(std::string(result.state)=="idle" && result.new_errors==0 && !result.sample_window_ms);
++    result=policy.assess(at(100),at(90),0,milliseconds(100));
++    assert(std::string(result.state)=="healthy");
++    result=policy.assess(at(200),at(190),3,milliseconds(100));
++    assert(std::string(result.state)=="degraded" && result.new_errors==3);
++    result=policy.assess(at(300),at(190),3,milliseconds(100));
++    assert(std::string(result.state)=="unknown"); // heartbeat alone cannot recover
++    result=policy.assess(at(400),at(390),3,milliseconds(100));
++    assert(std::string(result.state)=="healthy" && result.new_errors==0);
++    result=policy.assess(at(700),at(390),3,milliseconds(100));
++    assert(std::string(result.state)=="idle");
++    result=policy.assess(at(800),at(790),1,milliseconds(100));
++    assert(std::string(result.state)=="unknown" && result.counter_reset && !result.new_errors);
++    result=policy.assess(at(900),at(790),1,milliseconds(100));
++    assert(std::string(result.state)=="unknown");
++    result=policy.assess(at(1000),at(990),1,milliseconds(100));
++    assert(std::string(result.state)=="healthy");
++    result=policy.assess(at(1100),at(1090),1,milliseconds(100),true);
++    assert(std::string(result.state)=="unknown" && std::string(result.reason)=="shutdown");
++    policy.fail();
++    result=policy.assess(at(1200),at(1190),1,milliseconds(100));
++    assert(std::string(result.state)=="failed");
++    result=policy.assess(at(1300),at(1290),1,milliseconds(100),true);
++    assert(std::string(result.state)=="failed");
++    Policy fresh;
++    assert(fresh.assess(at(1400),std::nullopt,0,milliseconds(100)).new_errors==0);
++  }
++
+   setenv("VRT_TELEMETRY_INTERVAL_MS", "100", 1);
+   std::ostringstream output;
+   sdr::telemetry::Reporter r("detector", output, "quote\"\ninstance");
+@@ -29,6 +64,7 @@ int main() {
+     assert(line.size() + 1 <= 4096);
+     auto j = nlohmann::json::parse(line);
+     assert(j["schema"] == "vrt.telemetry/1");
++    assert(j["health_policy"] == "local-activity/2");
+     assert(j["sequence"].get<std::uint64_t>() > seq);
+     seq = j["sequence"];
+     assert(j["boot_id"].get<std::string>().size() == 32);
+@@ -56,5 +92,16 @@ int main() {
+   big.heartbeat({});
+   auto j = nlohmann::json::parse(bounded.str());
+   assert(j["suppressed_events"] == 1);
++  std::ostringstream terminal_output;
++  sdr::telemetry::Reporter terminal("processor",terminal_output);
++  terminal.activity();terminal.failed();terminal.heartbeat({},0,true);
++  std::istringstream terminal_lines(terminal_output.str());
++  unsigned terminal_count=0;
++  while(std::getline(terminal_lines,line)) {
++    auto event=nlohmann::json::parse(line);
++    assert(event["state"]=="failed" && event["ready"]==false);
++    ++terminal_count;
++  }
++  assert(terminal_count==2);
+   std::cout << "telemetry contract, concurrency, rate and size bounds PASS\n";
+ }
+diff --git a/tests/udp_pipeline_tests.cpp b/tests/udp_pipeline_tests.cpp
+index 09ae615..a88db0b 100644
+--- a/tests/udp_pipeline_tests.cpp
++++ b/tests/udp_pipeline_tests.cpp
+@@ -11,6 +11,7 @@
+ #include <cassert>
+ #include <cmath>
+ #include <numbers>
++#include <nlohmann/json.hpp>
+ 
+ namespace {
+ using namespace vita;
+@@ -54,7 +55,7 @@ std::vector<std::byte> context_wire() {
+ }
+ 
+ std::vector<std::byte> signal_wire(std::uint8_t count, std::size_t pairs,
+-                                   std::size_t offset = 0) {
++                                   std::size_t offset = 0, std::uint32_t seconds = 1000) {
+   std::vector<codec::Iq<std::int16_t>> samples(pairs);
+   for (std::size_t index = 0; index < pairs; ++index) {
+     const auto phase = 2 * std::numbers::pi * 102 * (offset + index) / 2048;
+@@ -67,7 +68,7 @@ std::vector<std::byte> signal_wire(std::uint8_t count, std::size_t pairs,
+   envelope.type = codec::PacketType::signal;
+   envelope.stream_id = 1;
+   envelope.class_id = codec::ClassId{profiles::iq::sdr_unknown_oui, 0, 0};
+-  envelope.timestamp = {codec::Tsi::utc, codec::Tsf::picoseconds, 1000,
++  envelope.timestamp = {codec::Tsi::utc, codec::Tsf::picoseconds, seconds,
+                         offset * 1'000'000};
+   envelope.packet_count = count;
+   envelope.trailer = true;
+@@ -82,6 +83,47 @@ std::vector<std::byte> signal_wire(std::uint8_t count, std::size_t pairs,
+ } // namespace
+ 
+ int main() {
++  {
++    sdr::udp::ProcessorCore cold(processor_config());
++    assert(cold.metrics().malformed==0);
++    assert(cold.consume(1,signal_wire(0,1024)).empty());
++    assert(cold.metrics().discards.waiting_context==1);
++    auto bad=signal_wire(0,1024);bad.back()^=std::byte{1};
++    assert(cold.consume(1,bad).empty());
++    assert(cold.metrics().discards.invalid_data==1);
++    assert(cold.consume(1,{}).empty());
++    assert(cold.metrics().discards.invalid_envelope==1);
++    assert(cold.consume(0,context_wire()).empty());
++    assert(cold.metrics().discards.limits==1);
++    assert(cold.consume(1,signal_wire(0,2049)).empty());
++    assert(cold.metrics().discards.invalid_samples==1);
++    codec::Envelope envelope;
++    envelope.type=codec::PacketType::context;envelope.stream_id=1;
++    std::vector<std::byte> bad_context(64);
++    auto length=codec::encode_envelope(envelope,{},std::nullopt,bad_context);
++    assert(length);bad_context.resize(*length);
++    assert(cold.consume(1,bad_context).empty());
++    assert(cold.metrics().discards.invalid_context==1);
++    auto report=nlohmann::json::parse(sdr::udp::metrics_json(cold.metrics()));
++    std::uint64_t sum=0;
++    for(const auto &value:report["discard_reasons"])sum+=value.get<std::uint64_t>();
++    assert(sum==6 && report["discarded"]==6 && report["malformed"]==6);
++    assert(report["discard_schema"]=="processor.discards/1");
++    assert(cold.consume(1,context_wire()).empty());
++    assert(cold.consume(1,signal_wire(0,1024)).empty());
++    auto spectra=cold.consume(1,signal_wire(1,1024,1024));assert(spectra.size()==1);
++    auto frequency=sdr::detect_frequency(sdr::decode_spectrum(spectra.front()));
++    assert(frequency && std::abs(*frequency-100'049'804.6875)<1.0);
++    assert(cold.metrics().malformed==6); // accepted processing never erases history
++    assert(cold.consume(1,signal_wire(3,1024,0,0)).empty());
++    assert(cold.metrics().discards.timestamp_range==1 && cold.metrics().malformed==7);
++    report=nlohmann::json::parse(sdr::udp::metrics_json(cold.metrics()));sum=0;
++    for(const auto &value:report["discard_reasons"])sum+=value.get<std::uint64_t>();
++    assert(sum==7 && report["discarded"]==7);
++    sdr::udp::ProcessorCore fresh(processor_config());
++    assert(fresh.metrics().malformed==0 && fresh.metrics().discards.waiting_context==0);
++  }
++
+   sdr::udp::ProcessorCore processor(processor_config());
+   const auto context = context_wire();
+   assert(processor.consume(1, context).empty());
+diff --git a/third_party/vrt_framework b/third_party/vrt_framework
+--- a/third_party/vrt_framework
++++ b/third_party/vrt_framework
+@@ -1 +1 @@
+-Subproject commit fea68ecb6622cec4c51172b04f303e56bb1451d9
++Subproject commit fea68ecb6622cec4c51172b04f303e56bb1451d9-dirty

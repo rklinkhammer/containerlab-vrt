@@ -1,0 +1,44 @@
+{
+  "outcome": "PASS",
+  "archive_sha256": "d9932e9a2626d3c059cefc30037440acb12884571054ed8515ffc17e233bba51",
+  "sessions": [
+    {
+      "session": "captures/capture-tt1q8p4u",
+      "status": "completed",
+      "files": {
+        "capture.pcap": {
+          "sha256": "b4b6478811520e94de5ea70ca548a5ae60147b7ea5da579b9bca45b5d2ba24bb",
+          "bytes": 67106704
+        },
+        "metrics.json": {
+          "sha256": "653f86a5db00c88ac63b5a94baabfa78c3bb7b32b5c464eb6414d3061b86f7f4",
+          "bytes": 501
+        }
+      }
+    },
+    {
+      "session": "captures/capture-9jqa2ddk",
+      "status": "incomplete",
+      "files": {
+        "capture.pcap": {
+          "sha256": "b2c9fcb0d6b29992884e55462ca5ca483abbb3dfeaef4f50d31e6661df4d30e7",
+          "bytes": 36909056
+        }
+      }
+    },
+    {
+      "session": "captures/capture-j0rsu9sw",
+      "status": "completed",
+      "files": {
+        "capture.pcap": {
+          "sha256": "de6d3eabc19c99340e50e9f13e8a830211311844b32657f0bba1cc6ea9ae3594",
+          "bytes": 67107198
+        },
+        "metrics.json": {
+          "sha256": "191bdc7cc2e3aa19d65785d8956fdd488c7b63afbbc39c9dfc82abef249220f6",
+          "bytes": 501
+        }
+      }
+    }
+  ]
+}

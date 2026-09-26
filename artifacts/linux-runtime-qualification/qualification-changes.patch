@@ -1,0 +1,160 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f0cf249..55eaffa 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -74,7 +74,7 @@ if(BUILD_TESTING)
+     message(FATAL_ERROR "P17 pre-rename golden-vector corpus integrity failure")
+   endif()
+   add_executable(sdr_p17_golden_vectors_tests tests/p17_golden_vectors_tests.cpp)
+-  target_include_directories(sdr_p17_golden_vectors_tests PRIVATE
++  target_include_directories(sdr_p17_golden_vectors_tests SYSTEM PRIVATE
+     third_party/vrt_framework/include)
+   target_compile_definitions(sdr_p17_golden_vectors_tests PRIVATE
+     P17_GOLDEN_FILE="${P17_GOLDEN_FILE}")
+@@ -91,7 +91,7 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_soapy_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_soapy_tests COMMAND sdr_soapy_tests)
+   add_executable(sdr_radio_services_tests tests/radio_services_tests.cpp)
+-  target_include_directories(sdr_radio_services_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_radio_services_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_radio_services_tests PRIVATE sdr_core)
+   target_compile_options(sdr_radio_services_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_radio_services_tests COMMAND sdr_radio_services_tests)
+@@ -100,7 +100,7 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_vrt_adapter_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_vrt_adapter_tests COMMAND sdr_vrt_adapter_tests)
+   add_executable(sdr_vrt_runtime_retention_tests tests/vrt_runtime_retention_tests.cpp)
+-  target_include_directories(sdr_vrt_runtime_retention_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_vrt_runtime_retention_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_compile_options(sdr_vrt_runtime_retention_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_vrt_runtime_retention_tests COMMAND sdr_vrt_runtime_retention_tests)
+   add_executable(sdr_radio_transport_tests tests/radio_transport_tests.cpp)
+@@ -117,12 +117,12 @@ if(BUILD_TESTING)
+   target_compile_options(sdr_status_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_status_tests COMMAND sdr_status_tests)
+   add_executable(sdr_udp_pipeline_tests tests/udp_pipeline_tests.cpp)
+-  target_include_directories(sdr_udp_pipeline_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_udp_pipeline_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_udp_pipeline_tests PRIVATE sdr_udp_apps)
+   target_compile_options(sdr_udp_pipeline_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_udp_pipeline_tests COMMAND sdr_udp_pipeline_tests)
+   add_executable(sdr_udp_integration_tests tests/udp_integration_tests.cpp)
+-  target_include_directories(sdr_udp_integration_tests PRIVATE third_party/vrt_framework/include)
++  target_include_directories(sdr_udp_integration_tests SYSTEM PRIVATE third_party/vrt_framework/include)
+   target_link_libraries(sdr_udp_integration_tests PRIVATE sdr_udp_apps)
+   target_compile_options(sdr_udp_integration_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+   add_test(NAME sdr_udp_integration_tests COMMAND sdr_udp_integration_tests)
+diff --git a/apps/recorder.cpp b/apps/recorder.cpp
+index 946530c..1837e4b 100644
+--- a/apps/recorder.cpp
++++ b/apps/recorder.cpp
+@@ -16,6 +16,7 @@
+ #include <arpa/inet.h>
+ #include <cerrno>
+ #include <linux/if_packet.h>
++#include <ifaddrs.h>
+ #include <net/ethernet.h>
+ #include <net/if.h>
+ #include <poll.h>
+@@ -83,9 +84,23 @@ void collect_kernel_statistics(int descriptor,
+ int run(const sdr::recorder::Options &options) {
+   const auto interface_deadline = std::chrono::steady_clock::now() +
+                                   std::chrono::seconds(30);
+-  while (if_nametoindex(options.interface.c_str()) == 0) {
++  // Containerlab creates the link before its post-create commands bring it up.
++  // AF_PACKET can report POLLERR on an administratively down interface.
++  const auto interface_ready = [&] {
++    ifaddrs *addresses = nullptr;
++    if (getifaddrs(&addresses) != 0)
++      throw std::runtime_error("cannot inspect capture interface readiness");
++    bool ready = false;
++    for (const auto *address = addresses; address; address = address->ifa_next)
++      if (address->ifa_name && options.interface == address->ifa_name &&
++          (address->ifa_flags & IFF_UP) != 0)
++        ready = true;
++    freeifaddrs(addresses);
++    return ready;
++  };
++  while (!interface_ready()) {
+     if (std::chrono::steady_clock::now() >= interface_deadline)
+-      throw std::runtime_error("capture interface did not appear before timeout");
++      throw std::runtime_error("capture interface did not become ready before timeout");
+     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+   }
+   PacketSocket socket(options.interface);
+diff --git a/tests/radio_transport_tests.cpp b/tests/radio_transport_tests.cpp
+index d9f1afa..65f6cbe 100644
+--- a/tests/radio_transport_tests.cpp
++++ b/tests/radio_transport_tests.cpp
+@@ -13,6 +13,7 @@
+ 
+ #include <array>
+ #include <cassert>
++#include <cerrno>
+ #include <chrono>
+ #include <cstddef>
+ #include <cstdint>
+@@ -178,7 +179,9 @@ struct Fixture {
+   std::optional<Runtime::Controllee> controllee;
+   std::uint64_t now{};
+ 
+-  Fixture() {
++  explicit Fixture(std::chrono::milliseconds stale_timeout =
++                       std::chrono::milliseconds(120)) {
++    transport.config.stale_timeout = stale_timeout;
+     sdr::RadioSettings defaults;
+     device->apply_settings(defaults);
+     auto config = vita::profiles::iq::lab::config(
+@@ -231,7 +234,9 @@ void drain(int descriptor) {
+ }
+ 
+ void runtime_control_path() {
+-  Fixture fixture;
++  // This case tests exclusive ownership, not idle expiry. Keep its connection
++  // live across host scheduler delays; the dedicated stale test retains 120ms.
++  Fixture fixture(std::chrono::seconds(2));
+   Socket controller(connect_tcp(fixture.transport.instance->control_port()));
+   fixture.pump(2'000'000, true);
+   assert(fixture.transport.instance->connected());
+@@ -285,13 +290,29 @@ void runtime_control_path() {
+   Socket rejected(connect_tcp(fixture.transport.instance->control_port()));
+   fixture.pump(77'000'000, true);
+   std::byte probe{};
+-  assert(recv(rejected.descriptor, &probe, 1, 0) == 0);
++  // A nonblocking TCP peer can observe EAGAIN before the FIN arrives on Linux.
++  // Keep servicing transport until closure, with a bounded wall-clock deadline.
++  const auto rejection_deadline = std::chrono::steady_clock::now() +
++                                  std::chrono::milliseconds(500);
++  ssize_t rejected_read;
++  do {
++    rejected_read = recv(rejected.descriptor, &probe, 1, 0);
++    if (rejected_read >= 0 || (errno != EAGAIN && errno != EWOULDBLOCK))
++      break;
++    fixture.pump(fixture.now + 100'000, true);
++  } while (std::chrono::steady_clock::now() < rejection_deadline);
++  if (rejected_read != 0)
++    std::fprintf(stderr, "rejected connection recv=%zd errno=%d (%s)\n",
++                 rejected_read, errno, std::strerror(errno));
++  assert(rejected_read == 0);
++  assert(fixture.transport.instance->metrics().rejected_connections == 1);
++  assert(fixture.transport.instance->connected());
+ 
+   const auto state_version = fixture.device->settings();
+   controller = Socket{};
+-  fixture.pump(79'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   Socket reconnected(connect_tcp(fixture.transport.instance->control_port()));
+-  fixture.pump(81'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   assert(fixture.transport.instance->connected());
+   assert(fixture.device->settings().sample_rate_hz ==
+          state_version.sample_rate_hz);
+@@ -299,7 +320,7 @@ void runtime_control_path() {
+ 
+   const std::array<std::byte, 4> malformed{};
+   assert(send_all(reconnected.descriptor, malformed));
+-  fixture.pump(83'000'000, true);
++  fixture.pump(fixture.now + 2'000'000, true);
+   assert(!fixture.transport.instance->connected());
+   assert(recv(reconnected.descriptor, &probe, 1, 0) == 0);
+ }

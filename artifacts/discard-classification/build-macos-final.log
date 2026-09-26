@@ -1,0 +1,8 @@
+[1/8] Building CXX object CMakeFiles/sdr_udp_pipeline_tests.dir/tests/udp_pipeline_tests.cpp.o
+[2/8] Building CXX object CMakeFiles/sdr_udp_apps.dir/apps/udp_pipeline.cpp.o
+[3/8] Linking CXX static library libsdr_udp_apps.a
+[4/8] Linking CXX executable sdr_udp_integration_tests
+[5/8] Linking CXX executable detector
+[6/8] Linking CXX executable sdr_udp_pipeline_tests
+[7/8] Linking CXX executable sdr_telemetry_pipeline_tests
+[8/8] Linking CXX executable processor

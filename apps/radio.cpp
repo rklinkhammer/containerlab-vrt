@@ -15,6 +15,8 @@
 
 #include <atomic>
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <csignal>
 #include <cstddef>
 #include <cstdint>
@@ -81,31 +83,29 @@ std::string boot_id() {
   return result;
 }
 
-void status_worker(int listener, const sdr::RadioConfig &config,
-                   const std::string &id,
-                   const std::shared_ptr<sdr::SoapyVirtualDevice> &device,
-                   const sdr::ControlSlot &control,
-                   std::chrono::steady_clock::time_point started) {
+struct StatusCache {
+  std::mutex mutex;
+  std::condition_variable updated;
+  std::atomic<bool> requested{false};
+  std::uint64_t sequence{};
+  nlohmann::json value;
+};
+
+void status_worker(int listener, StatusCache &cache) {
   while (running.load()) {
     pollfd item{listener, POLLIN, 0};
-    if (poll(&item, 1, 100) != 1)
-      continue;
+    if (poll(&item, 1, 100) != 1) continue;
     Descriptor client(accept(listener, nullptr, nullptr));
-    if (client.value < 0)
-      continue;
-    const auto status = sdr::radio_status(
-        config, id, control.snapshot(), device->settings(),
-      device->sample_ordinal(), device->clipped_samples(), device->streaming(),
-      static_cast<std::uint64_t>(
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::steady_clock::now() - started)
-          .count()),
-      static_cast<std::uint64_t>(
-        std::chrono::duration_cast<std::chrono::nanoseconds>(
-          std::chrono::system_clock::now().time_since_epoch())
-          .count()),
-      true);
-    static_cast<void>(sdr::serve_status_transaction(client.value, status));
+    if (client.value < 0) continue;
+    nlohmann::json status;
+    {
+      std::unique_lock lock(cache.mutex);
+      const auto before=cache.sequence;
+      cache.requested.store(true);
+      if(!cache.updated.wait_for(lock,std::chrono::milliseconds(500),[&]{return cache.sequence>before;}))continue;
+      status=cache.value;
+    }
+    static_cast<void>(sdr::serve_status_transaction(client.value,status));
   }
 }
 
@@ -189,11 +189,10 @@ int main(int argc, char **argv) {
     auto listener = tcp_listener(config.status_bind, config.status_port);
     const auto id = boot_id();
     const auto started = std::chrono::steady_clock::now();
+    StatusCache status_cache;
     std::vector<std::jthread> status_workers;
     for (std::size_t index = 0; index < config.status_connections; ++index)
-      status_workers.emplace_back(status_worker, listener.value,
-                                  std::cref(config), std::cref(id),
-                                  std::cref(device), std::cref(control), started);
+      status_workers.emplace_back(status_worker,listener.value,std::ref(status_cache));
     std::signal(SIGINT, stop);
     std::signal(SIGTERM, stop);
     std::signal(SIGHUP, restart);
@@ -223,6 +222,17 @@ int main(int argc, char **argv) {
       if (!progressed && !progressed.error().retryable) {
         running.store(false);
         throw std::runtime_error("radio runtime progress failed");
+      }
+      // Snapshot in the serialized runtime domain, after progress. Status threads
+      // never read native state or assemble a watermark from a different session.
+      if(status_cache.requested.exchange(false)) {
+        auto snapshot=sdr::radio_status(config,id,control.snapshot(),device->settings(),
+          device->sample_ordinal(),device->clipped_samples(),device->streaming(),
+          static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-started).count()),
+          static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count()),true);
+        snapshot["command_resume"]={{"version",1},{"sid",config.sid},{"last_admitted_id",controllee->admitted_message_id()},{"association_generation",controllee->association_generation()}};
+        {std::lock_guard lock(status_cache.mutex);status_cache.value=std::move(snapshot);++status_cache.sequence;}
+        status_cache.updated.notify_all();
       }
       report();
       std::this_thread::sleep_for(std::chrono::microseconds(100));

@@ -1,0 +1,5 @@
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio1","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio2","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio3","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+{"confirms_execution":false,"observation_kind":3,"radio_id":"radio4","reason":"vrt_status_failed","received_packets":1,"route_failures":0,"type":"controller_error","validation_accepted":false}
+replacement configurations=0 starts=0 protocol_failures=9

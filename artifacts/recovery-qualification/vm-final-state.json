@@ -1,0 +1,9 @@
+{
+  "name": "clab-vrt-recovery-20260925-222243",
+  "status": "Stopped",
+  "vmType": "vz",
+  "arch": "aarch64",
+  "cpus": 8,
+  "memory": 17179869184,
+  "limaVersion": "2.2.0"
+}

@@ -1,0 +1,40 @@
+{
+  "assessment": "QUALIFIED_WITH_LIMITATIONS",
+  "architecture": "linux/arm64",
+  "image_id": "sha256:9f5b02b86e7ee3b0bea7ba72c07b46d9a11cb19e77f2b9947f59ac957a9c49b7",
+  "linux_ctest": {
+    "passed": 15,
+    "total": 15
+  },
+  "macos_ctest": {
+    "passed": 15,
+    "total": 15
+  },
+  "sustained_seconds": 340,
+  "control_requests_per_radio": 362,
+  "controller_protocol_failures": 0,
+  "observed_processor_packet_gaps": 0,
+  "observed_detector_sequence_gaps": 0,
+  "configured_tones": "4/4 within half FFT bin",
+  "isolated_telemetry_cases": 6,
+  "recorder_readiness_cases": 2,
+  "pause_resume": "PASS",
+  "direct_docker_restart_traffic_recovery": "FAIL: new process identity, no resumed traffic in observation window",
+  "capture_completeness": "NOT_ESTABLISHED: size cap reached and 9110 kernel drops",
+  "cleanup": {
+    "removed_failed_build_container": "7330a60e865f1025e89fa3b708b34353ed265acdf863817440692250f60c9c8d",
+    "remaining_containers": [],
+    "lab_cleanup": "both trial destroy audits passed"
+  },
+  "vm": {
+    "name": "clab-vrt-linux-20260925-220209",
+    "status": "Stopped",
+    "vmType": "vz",
+    "arch": "aarch64",
+    "cpus": 8,
+    "memory": 17179869184,
+    "disk": 85899345920,
+    "limaVersion": "2.2.0"
+  },
+  "next_step": "Qualify Containerlab-authoritative node recovery restoring links and traffic."
+}

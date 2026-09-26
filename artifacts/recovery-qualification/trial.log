@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "case": "native_reconcile_after_docker_restart",
+      "exit": 0,
+      "outcome": "FAIL",
+      "reason": "reconciled: no qualified detector traffic within 90 seconds"
+    },
+    {
+      "case": "disruptive_full_redeploy",
+      "exit": 0,
+      "outcome": "PASS",
+      "changed_nodes": [
+        "radio1",
+        "radio2",
+        "radio3",
+        "radio4",
+        "processor",
+        "detector",
+        "recorder",
+        "switch1"
+      ]
+    }
+  ],
+  "baseline": "PASS",
+  "negative_control": {
+    "interface_present": false,
+    "traffic_ready": false,
+    "new_boot": true
+  },
+  "dry_run_exit": 0,
+  "cleanup_exit": 0,
+  "remaining_containers": []
+}

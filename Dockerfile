@@ -60,6 +60,7 @@ RUN printf '%s\n' \
 COPY --from=build /opt/containerlab-vrt /opt/containerlab-vrt
 COPY container/vrt-source.json /usr/share/doc/containerlab-vrt/vrt-source.json
 COPY patches/vrt-runtime-progress.patch /usr/share/doc/containerlab-vrt/vrt-runtime-progress.patch
+COPY patches/vrt-command-resumption.patch /usr/share/doc/containerlab-vrt/vrt-command-resumption.patch
 COPY THIRD_PARTY_NOTICES.md /usr/share/doc/containerlab-vrt/THIRD_PARTY_NOTICES.md
 COPY third_party/vrt_framework/LICENSE /usr/share/doc/containerlab-vrt/VRT_FRAMEWORK_LICENSE
 ENV PATH=/opt/containerlab-vrt/bin:$PATH

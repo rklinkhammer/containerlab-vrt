@@ -1,0 +1,1 @@
+Disposable copy of pinned headers only: log sid, message ID, high-water mark and association generation at TransactionManager.accept monotonic duplicate branch; capped at 32 records. Return value and native semantics unchanged. Production third-party headers are untouched.

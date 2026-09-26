@@ -1,0 +1,8 @@
+{
+  "name": "clab-vrt-health-20260926-004831",
+  "status": "Stopped",
+  "vmType": "vz",
+  "arch": "aarch64",
+  "cpus": 8,
+  "memory": 17179869184
+}

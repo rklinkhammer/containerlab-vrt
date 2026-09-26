@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <charconv>
 #include <fstream>
+#include <cstdio>
 #include <limits>
 #include <nlohmann/json.hpp>
 #include <stdexcept>
@@ -29,9 +30,10 @@ std::uint64_t parse_number(std::string_view value, std::uint64_t minimum,
 }
 
 template <typename Integer>
-void write_little_endian(std::ostream &output, Integer value) {
+void write_little_endian(std::FILE *output, Integer value) {
   for (std::size_t index = 0; index < sizeof(value); ++index) {
-    output.put(static_cast<char>(value & 0xff));
+    if (std::fputc(static_cast<unsigned char>(value & 0xff), output) == EOF)
+      throw std::runtime_error("cannot write recorder PCAP file");
     value >>= 8;
   }
 }
@@ -39,8 +41,9 @@ void write_little_endian(std::ostream &output, Integer value) {
 
 struct PcapWriter::State {
   explicit State(const std::filesystem::path &path)
-      : output(path, std::ios::binary | std::ios::trunc) {}
-  std::ofstream output;
+      : output(std::fopen(path.c_str(), "wbx")) {}
+  ~State() { if (output) std::fclose(output); }
+  std::FILE *output;
 };
 
 void Metrics::observe_frame(std::size_t wire_size,
@@ -59,17 +62,19 @@ void Metrics::observe_kernel(std::uint64_t packets,
 
 PcapWriter::PcapWriter(const std::filesystem::path &path,
                        std::uint64_t byte_limit)
-    : state_(new State(path)), byte_limit_(byte_limit) {
+    : state_(nullptr), byte_limit_(byte_limit) {
   if (byte_limit < pcap_header_bytes + pcap_record_header_bytes) {
     delete state_;
     state_ = nullptr;
     throw std::invalid_argument("PCAP byte limit is too small");
   }
+  state_ = new State(path);
   if (!state_->output) {
     delete state_;
     state_ = nullptr;
     throw std::runtime_error("cannot open recorder PCAP file");
   }
+  try {
   write_little_endian(state_->output, std::uint32_t{0xa1b2c3d4});
   write_little_endian(state_->output, std::uint16_t{2});
   write_little_endian(state_->output, std::uint16_t{4});
@@ -79,6 +84,7 @@ PcapWriter::PcapWriter(const std::filesystem::path &path,
                       static_cast<std::uint32_t>(receive_buffer_bytes));
   write_little_endian(state_->output, std::uint32_t{1});
   bytes_ = pcap_header_bytes;
+  } catch (...) { delete state_; state_ = nullptr; throw; }
 }
 
 PcapWriter::~PcapWriter() { delete state_; }
@@ -107,17 +113,14 @@ bool PcapWriter::write(std::span<const std::byte> frame, std::size_t wire_size,
       state_->output,
       static_cast<std::uint32_t>(std::min<std::size_t>(
           wire_size, std::numeric_limits<std::uint32_t>::max())));
-  state_->output.write(reinterpret_cast<const char *>(frame.data()),
-                       static_cast<std::streamsize>(frame.size()));
-  if (!state_->output)
+  if (std::fwrite(frame.data(), 1, frame.size(), state_->output) != frame.size())
     throw std::runtime_error("cannot write recorder PCAP file");
   bytes_ += record_bytes;
   return true;
 }
 
 void PcapWriter::finish() {
-  state_->output.flush();
-  if (!state_->output)
+  if (std::fflush(state_->output) != 0)
     throw std::runtime_error("cannot finalize recorder PCAP file");
 }
 

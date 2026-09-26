@@ -1,0 +1,6 @@
+{
+  "scripts/capture_session.py": "436ec81d0b07719fd2c67265bf60a2ea5603f2f13a2a23ab451cafb8f5c10944",
+  "artifacts/recorder-recovery/trial.py": "ad2ce2a3d26a5173ab0ac0127ffd8a2f728eee8af62e8c77aa4b5311896d4426",
+  "artifacts/recorder-recovery/guest-build.sh": "b161cf3e285b35f627762fcea90bd97b4a22c921d1871f7eaef7ad850241d0e8",
+  "artifacts/recorder-recovery/PLAN.md": "c7b3d4ba4e346bd8fc09277abc814dfaae2d1ca08fa84877ffc13e21b02cdfb6"
+}

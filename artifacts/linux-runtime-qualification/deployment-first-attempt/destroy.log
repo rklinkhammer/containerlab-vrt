@@ -1,0 +1,3 @@
+18:07:39 INFO Parsing & checking topology file=four-radio.clab.yml
+18:07:39 INFO no containerlab containers found
+cleanup audit: PASS for the eight exact containers and management network

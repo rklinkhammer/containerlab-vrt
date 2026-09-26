@@ -1,0 +1,13 @@
+Test project /Users/rklinkhammer/workspace/containerlab-vrt/build/dev
+    Start 8: sdr_processor_controller_tests
+1/1 Test #8: sdr_processor_controller_tests ...***Failed   15.64 sec
+replacement configurations=0 starts=0 protocol_failures=9
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  15.65 sec
+
+The following tests FAILED:
+	  8 - sdr_processor_controller_tests (Failed)
+Errors while running CTest

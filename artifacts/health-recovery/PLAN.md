@@ -1,0 +1,5 @@
+# Local health recovery policy, before implementation
+
+Counters remain cumulative and unchanged. Define versioned local-activity/2 interpretation: new cumulative-error increments produce degraded; no successful activity in two reporting intervals produces idle; unchanged errors plus fresh successful activity after the error observation and at least one interval permit healthy. Counter decrease is unknown, not a fabricated zero delta. Fatal failure is latched; shutdown is not ready and never healthy. Readiness remains local initialization, not network/application-wide readiness.
+
+Independent checks: deterministic monotonic-clock cases for first/idle/healthy/new-error/recovery-without-progress/recovery-with-progress/interruption/counter-reset/fatal/shutdown; real UDP detector malformed input followed by valid processing, then silence; retained nonzero counters at recovery; existing output bounds, disabled output and concurrency. Fresh-VM processor replacement must still pass and show recovered healthy local telemetry with unchanged historical waiting_context counts. Never infer end-to-end health from local heartbeat state.

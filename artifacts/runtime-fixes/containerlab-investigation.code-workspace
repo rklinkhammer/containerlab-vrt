@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../../containerlab-investigation"
+		},
+		{
+			"path": "../../../containerlab-workspace"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../vrt_framework"
+		}
+	],
+	"settings": {}
+}

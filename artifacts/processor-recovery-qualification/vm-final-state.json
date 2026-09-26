@@ -1,0 +1,8 @@
+{
+  "name": "clab-vrt-processor-recovery-20260926-000236",
+  "status": "Stopped",
+  "vmType": "vz",
+  "arch": "aarch64",
+  "cpus": 8,
+  "memory": 17179869184
+}

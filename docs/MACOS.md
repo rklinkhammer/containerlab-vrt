@@ -115,7 +115,7 @@ Ctrl-C stops log following, not the lab. For a snapshot, omit `--follow`. Expect
 sudo bash scripts/capture.sh
 ```
 
-This overwrites the previous capture and metrics in the guest's `artifacts/runtime/`. The diagnostic capture is limited to 60 seconds and 64 MiB. Examine metrics for kernel drops; a completed command or a file reaching its size limit is not proof of a complete 60-second capture. Historical qualification had nonzero drops.
+Each attempt creates a unique directory under the guest's `artifacts/runtime/captures/` and prints `capture_directory=...`. Previous sessions are retained. A manifest records the exact container ID, timestamps, file hashes and completed/incomplete status. The diagnostic capture is limited to 60 seconds and 64 MiB. Examine metrics for kernel drops; a completed command or a file reaching its size limit is not proof of a complete 60-second capture. Historical qualification had nonzero drops.
 
 **Mac terminal**, copy results before cleanup:
 
@@ -124,15 +124,16 @@ VM_NAME=$(cat artifacts/runtime/vm-name)
 GUEST_REPO=$(limactl shell "$VM_NAME" -- bash -lc 'printf "%s/containerlab-vrt" "$HOME"')
 DEST="artifacts/runtime/$VM_NAME/$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$DEST"
-limactl copy --backend=scp \
-  "$VM_NAME:$GUEST_REPO/artifacts/runtime/four-radio-sdr-recorder.pcap" \
-  "$VM_NAME:$GUEST_REPO/artifacts/runtime/four-radio-sdr-recorder-capture.json" \
-  "$DEST/"
-shasum -a 256 "$DEST/four-radio-sdr-recorder.pcap" > "$DEST/capture.sha256"
-cat "$DEST/four-radio-sdr-recorder-capture.json"
+# Set this to the capture directory printed by the guest command.
+CAPTURE_SESSION=capture-REPLACE_WITH_PRINTED_SUFFIX
+limactl copy --backend=scp -r \
+  "$VM_NAME:$GUEST_REPO/artifacts/runtime/captures/$CAPTURE_SESSION" "$DEST/"
+cat "$DEST/$CAPTURE_SESSION/manifest.json"
+cat "$DEST/$CAPTURE_SESSION/metrics.json"
+shasum -a 256 "$DEST/$CAPTURE_SESSION/capture.pcap"
 ```
 
-These paths now refer to files on the Mac. Raw captures stay ignored by Git. The capture script prints a hash but does not itself save a checksum file.
+Compare the PCAP hash with manifest.json. These files now reside on the Mac. Raw captures remain ignored by Git. `completed` means the bounded command finished and copied its finalized files; it does not establish lossless capture or durable storage. Failed/interrupted attempts retain an `incomplete` manifest and any copied partial files. In-container partials may be unavailable after replacement. Only files copied outside the container survive its removal. See [capture preservation](CAPTURE_PRESERVATION.md).
 
 ## 7. Clean up — Mac terminal
 
@@ -160,6 +161,10 @@ Read the destroy audit and investigate any residual resources. If destruction fa
 | Second log command never starts | The first `--follow` blocks. Use another terminal or Ctrl-C. |
 | Capture missing on Mac | It is initially in the guest checkout; use the copy step. |
 | Build passes but control tests fail | Verify the pinned framework patch with `python3 scripts/verify_vrt_source.py`; see runtime fix evidence. Preserve any new failure instead of relying on historical qualification. |
+
+## Current patched-image qualification
+
+The fresh ARM64 run is recorded in [Linux qualification results](../artifacts/linux-runtime-qualification/RESULTS.md). Both the unit/integration suite and sustained switched traffic passed. The recorder now waits for its interface to become administratively up before opening its packet socket. Do not use a bare Docker stop/start as a qualified Containerlab node recovery procedure: that trial restarted the detector process but did not restore its traffic. Subsequent [detector and single-radio replacement workflows](RECOVERY.md) are qualified through native filtered destruction and full-topology deployment; processor replacement subsequently passed with the [command-resumption fix](../artifacts/processor-recovery-fix/RESULTS.md), after the original controller-recovery failure. Upgrade radios and processor together. [Recorder replacement and completed capture preservation](../artifacts/recorder-recovery/RESULTS.md) are now qualified; switch recovery remains untested. Full native redeploy is the disruptive fallback.
 
 ## Telemetry qualification
 

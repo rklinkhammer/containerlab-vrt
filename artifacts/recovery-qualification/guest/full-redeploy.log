@@ -1,0 +1,213 @@
+{
+  "four-radio-sdr": [
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-detector",
+      "container_id": "b897bbe06bd1",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.6/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-processor",
+      "container_id": "b2a86fb35213",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.7/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio1",
+      "container_id": "e4998eabf5d7",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.8/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio2",
+      "container_id": "47d0340f6c83",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.5/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio3",
+      "container_id": "259b11b00166",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.2/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-radio4",
+      "container_id": "0424395c1861",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.4/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-recorder",
+      "container_id": "ade476538cdf",
+      "image": "containerlab-vrt-app:local",
+      "kind": "linux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.3/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    },
+    {
+      "lab_name": "four-radio-sdr",
+      "labPath": "generated/four-radio.clab.yml",
+      "absLabPath": "/home/rklinkhammer.guest/containerlab-vrt/generated/four-radio.clab.yml",
+      "name": "clab-four-radio-sdr-switch1",
+      "container_id": "5ff314e2cd6d",
+      "image": "ghcr.io/nokia/srlinux:25.10.1@sha256:bc8112667b5a87bee5039ade65b504ac2ef35511210d0675db6c7b0754e8cc4c",
+      "kind": "nokia_srlinux",
+      "state": "running",
+      "status": "Up 9 seconds",
+      "ipv4_address": "172.31.79.9/24",
+      "ipv6_address": "N/A",
+      "owner": "rklinkhammer"
+    }
+  ]
+}
+18:29:00 INFO Parsing & checking topology file=four-radio.clab.yml
+18:29:00 INFO Parsing & checking topology file=four-radio.clab.yml
+18:29:00 INFO Destroying lab name=four-radio-sdr
+18:29:00 INFO Stopping container: clab-four-radio-sdr-radio1
+18:29:00 INFO Stopping container: clab-four-radio-sdr-radio4
+18:29:00 INFO Stopping container: clab-four-radio-sdr-detector
+18:29:00 INFO Stopping container: clab-four-radio-sdr-processor
+18:29:00 INFO Stopping container: clab-four-radio-sdr-radio2
+18:29:00 INFO Stopping container: clab-four-radio-sdr-radio3
+18:29:00 ERRO container "clab-four-radio-sdr-recorder" exited; container output:
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":0,"rx_wire_bytes":0},"event":"heartbeat","instance":"recorder","last_successful_activity":null,"ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":1,"state":"idle","suppressed_events":0,"timestamp":"2026-09-25T22:26:30.050Z","uptime_ms":119}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":12,"rx_wire_bytes":1016},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:26:33.826Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":2,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:26:35.228Z","uptime_ms":5297}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":101,"rx_wire_bytes":9131},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:26:40.229Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":3,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:26:40.229Z","uptime_ms":10298}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":5603,"rx_wire_bytes":30297299},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:26:45.229Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":4,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:26:45.229Z","uptime_ms":15298}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":35099,"rx_wire_bytes":195945827},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:26:50.230Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":5,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:26:50.230Z","uptime_ms":20299}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":64586,"rx_wire_bytes":361559361},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:26:55.230Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":6,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:26:55.230Z","uptime_ms":25299}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":94086,"rx_wire_bytes":527208169},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:00.230Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":7,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:00.230Z","uptime_ms":30299}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":123582,"rx_wire_bytes":692822505},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:05.230Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":8,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:05.230Z","uptime_ms":35299}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":153032,"rx_wire_bytes":858153974},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:10.230Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":9,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:10.230Z","uptime_ms":40299}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":182525,"rx_wire_bytes":1023776648},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:15.231Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":10,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:15.231Z","uptime_ms":45299}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":212027,"rx_wire_bytes":1189394620},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:20.231Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":11,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:20.231Z","uptime_ms":50300}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":241521,"rx_wire_bytes":1355017364},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:25.231Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":12,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:25.231Z","uptime_ms":55300}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":271021,"rx_wire_bytes":1520645028},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:30.231Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":13,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:30.231Z","uptime_ms":60300}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":296464,"rx_wire_bytes":1651296646},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:35.231Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":14,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:35.231Z","uptime_ms":65300}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":316199,"rx_wire_bytes":1732765037},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:40.231Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":15,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:40.231Z","uptime_ms":70300}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":335934,"rx_wire_bytes":1814233291},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:45.232Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":16,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:45.232Z","uptime_ms":75301}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":355667,"rx_wire_bytes":1895701405},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:50.232Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":17,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:50.232Z","uptime_ms":80301}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":375399,"rx_wire_bytes":1977165349},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:27:55.232Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":18,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:27:55.232Z","uptime_ms":85301}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":395132,"rx_wire_bytes":2058629387},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:00.232Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":19,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:00.232Z","uptime_ms":90301}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":414866,"rx_wire_bytes":2140097571},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:05.233Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":20,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:05.233Z","uptime_ms":95302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":434600,"rx_wire_bytes":2221565864},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:10.233Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":21,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:10.233Z","uptime_ms":100302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":454333,"rx_wire_bytes":2303033978},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:15.233Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":22,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:15.233Z","uptime_ms":105302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":474064,"rx_wire_bytes":2384497880},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:20.233Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":23,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:20.233Z","uptime_ms":110302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":493798,"rx_wire_bytes":2465966064},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:25.233Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":24,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:25.233Z","uptime_ms":115302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":513534,"rx_wire_bytes":2547426308},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:30.233Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":25,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:30.233Z","uptime_ms":120302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":533268,"rx_wire_bytes":2628894492},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:35.234Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":26,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:35.234Z","uptime_ms":125302}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":553004,"rx_wire_bytes":2710362925},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:40.234Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":27,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:40.234Z","uptime_ms":130303}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":572739,"rx_wire_bytes":2791831179},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:45.234Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":28,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:45.234Z","uptime_ms":135303}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":592473,"rx_wire_bytes":2873299363},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:50.234Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":29,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:50.234Z","uptime_ms":140303}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":612207,"rx_wire_bytes":2954767547},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:28:55.234Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":30,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:28:55.234Z","uptime_ms":145303}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"durably_committed_bytes":null,"kernel_drops":0,"pcap_bytes_accepted":0,"pcap_enabled":false,"pcap_frames":0,"pcap_io_errors":0,"pcap_limit_reached":false,"queue_depth":null,"receive_errors":0,"receive_truncations":0,"rx_frames":631940,"rx_wire_bytes":3036235661},"event":"heartbeat","instance":"recorder","last_successful_activity":"2026-09-25T22:29:00.235Z","ready":true,"role":"recorder","schema":"vrt.telemetry/1","sequence":31,"state":"healthy","suppressed_events":0,"timestamp":"2026-09-25T22:29:00.235Z","uptime_ms":150304}
+{"boot_id":"9a2386eeaa0f87b1ae5402db206a23a9","data":{"reason":"APPLICATION_ERROR"},"event":"failure","instance":"recorder","last_successful_activity":null,"ready":false,"role":"recorder","schema":"vrt.telemetry/1","sequence":32,"state":"failed","suppressed_events":0,"timestamp":"2026-09-25T22:29:00.246Z","uptime_ms":150314}
+recorder: application error (see documented configuration requirements)
+18:29:00 INFO Stopping container: clab-four-radio-sdr-recorder
+18:29:00 INFO Stopping container: clab-four-radio-sdr-switch1
+18:29:00 INFO Removed container name=clab-four-radio-sdr-recorder
+18:29:00 INFO Removed container name=clab-four-radio-sdr-detector
+18:29:00 INFO Removed container name=clab-four-radio-sdr-processor
+18:29:00 INFO Removed container name=clab-four-radio-sdr-radio1
+18:29:00 INFO Removed container name=clab-four-radio-sdr-radio3
+18:29:00 INFO Removed container name=clab-four-radio-sdr-switch1
+18:29:00 INFO Removed container name=clab-four-radio-sdr-radio2
+18:29:00 INFO Removed container name=clab-four-radio-sdr-radio4
+18:29:00 INFO Removing host entries path=/etc/hosts
+18:29:00 INFO Removing SSH config path=/etc/ssh/ssh_config.d/clab-four-radio-sdr.conf
+18:29:00 INFO Containerlab started version=0.79.0
+18:29:00 INFO Parsing & checking topology file=four-radio.clab.yml
+18:29:00 INFO Creating docker network name=four-radio-sdr-mgmt IPv4 subnet=172.31.79.0/24 IPv6 subnet="" MTU=0
+18:29:00 INFO Creating lab directory path=/home/rklinkhammer.guest/containerlab-vrt/generated/clab-four-radio-sdr
+18:29:00 INFO Creating container name=recorder
+18:29:00 INFO Creating container name=radio1
+18:29:00 INFO Creating container name=processor
+18:29:00 INFO Creating container name=radio3
+18:29:00 INFO Creating container name=switch1
+18:29:00 INFO Creating container name=radio4
+18:29:00 INFO Creating container name=radio2
+18:29:00 INFO Creating container name=detector
+18:29:00 INFO Created link: switch1:e1-1 (ethernet-1/1) ▪┄┄▪ radio1:eth1
+18:29:00 INFO Created link: switch1:e1-2 (ethernet-1/2) ▪┄┄▪ radio2:eth1
+18:29:00 INFO Created link: switch1:e1-3 (ethernet-1/3) ▪┄┄▪ radio3:eth1
+18:29:00 INFO Created link: switch1:e1-4 (ethernet-1/4) ▪┄┄▪ radio4:eth1
+18:29:00 INFO Created link: switch1:e1-5 (ethernet-1/5) ▪┄┄▪ processor:eth1
+18:29:00 INFO Created link: switch1:e1-6 (ethernet-1/6) ▪┄┄▪ detector:eth1
+18:29:00 INFO Created link: switch1:e1-7 (ethernet-1/7) ▪┄┄▪ recorder:eth1
+18:29:00 INFO Running postdeploy actions kind=nokia_srlinux node=switch1
+18:29:10 INFO Executed command node=recorder command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=radio4 command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=radio2 command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=radio4 command="ip address replace 10.79.0.13/24 dev eth1" stdout=""
+18:29:10 INFO Executed command node=recorder command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Executed command node=radio3 command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=radio2 command="ip address replace 10.79.0.11/24 dev eth1" stdout=""
+18:29:10 INFO Executed command node=radio4 command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Executed command node=radio3 command="ip address replace 10.79.0.12/24 dev eth1" stdout=""
+18:29:10 INFO Executed command node=radio2 command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Executed command node=radio3 command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Executed command node=detector command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=radio1 command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=processor command="ip link set dev eth1 mtu 9000" stdout=""
+18:29:10 INFO Executed command node=radio1 command="ip address replace 10.79.0.10/24 dev eth1" stdout=""
+18:29:10 INFO Executed command node=detector command="ip address replace 10.79.0.15/24 dev eth1" stdout=""
+18:29:10 INFO Executed command node=processor command="ip address replace 10.79.0.14/24 dev eth1" stdout=""
+18:29:10 INFO Executed command node=radio1 command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Executed command node=processor command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Executed command node=detector command="ip link set dev eth1 up" stdout=""
+18:29:10 INFO Adding host entries path=/etc/hosts
+18:29:10 INFO Adding SSH config for nodes path=/etc/ssh/ssh_config.d/clab-four-radio-sdr.conf

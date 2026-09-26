@@ -1,0 +1,8 @@
+time="2026-09-25T20:13:44-04:00" level=info msg="Sending SIGINT to hostagent process 11313"
+time="2026-09-25T20:13:44-04:00" level=info msg="Waiting for the host agent and the driver processes to shut down"
+time="2026-09-25T20:13:44-04:00" level=info msg="[hostagent] Received SIGINT, shutting down the host agent"
+time="2026-09-25T20:13:44-04:00" level=info msg="[hostagent] Shutting down the host agent"
+time="2026-09-25T20:13:44-04:00" level=info msg="[hostagent] Shutting down VZ"
+time="2026-09-25T20:13:45-04:00" level=info msg="[hostagent] [VZ] - vm state change: stopped"
+time="2026-09-25T20:13:45-04:00" level=info msg="Waiting for the instance to shut down"
+time="2026-09-25T20:13:45-04:00" level=info msg="The instance clab-vrt-processor-recovery-20260926-000236 has shut down"

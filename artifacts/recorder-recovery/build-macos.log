@@ -1,0 +1,5 @@
+[1/5] Building CXX object CMakeFiles/sdr_recorder_tests.dir/tests/recorder_tests.cpp.o
+[2/5] Building CXX object CMakeFiles/sdr_recorder.dir/src/recorder.cpp.o
+[3/5] Linking CXX static library libsdr_recorder.a
+[4/5] Linking CXX executable sdr_recorder_tests
+[5/5] Linking CXX executable recorder

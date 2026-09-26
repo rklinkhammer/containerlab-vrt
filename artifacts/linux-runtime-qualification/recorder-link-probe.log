@@ -1,0 +1,6 @@
+{"boot_id":"279e324bd8d97e689e7f383630c92bf6","data":{"reason":"APPLICATION_ERROR"},"event":"failure","instance":"64ed1a9c1c0a","last_successful_activity":null,"ready":false,"role":"recorder","schema":"vrt.telemetry/1","sequence":1,"state":"failed","suppressed_events":0,"timestamp":"2026-09-25T22:09:03.958Z","uptime_ms":0}
+recorder: application error (see documented configuration requirements)
+down exit=2
+{"boot_id":"7bfe662c43c654a03bc1466d9147f936","data":{"reason":"APPLICATION_ERROR"},"event":"failure","instance":"26049c3dba70","last_successful_activity":null,"ready":false,"role":"recorder","schema":"vrt.telemetry/1","sequence":1,"state":"failed","suppressed_events":0,"timestamp":"2026-09-25T22:09:04.092Z","uptime_ms":0}
+recorder: application error (see documented configuration requirements)
+up exit=2

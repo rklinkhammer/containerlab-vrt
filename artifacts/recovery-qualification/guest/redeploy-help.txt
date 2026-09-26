@@ -1,0 +1,32 @@
+
+  destroy a lab and deploy it again based on the topology definition file                                               
+  reference: https://containerlab.dev/cmd/redeploy/                                                                     
+         
+  USAGE  
+         
+    containerlab redeploy [--flags]  
+         
+  FLAGS  
+         
+    -a --all            Destroy all containerlab labs
+    -c --cleanup        Delete lab directory
+    -d --debug          Enable debug mode
+    --export-template   Template file for topology data export
+    -f --format         Output format. One of [table, json] (table)
+    --graceful          Attempt to stop containers before removing
+    -g --graph          Generate topology graph
+    -h --help           Help for redeploy
+    -4 --ipv4-subnet    Management network IPv4 subnet range (<nil>)
+    -6 --ipv6-subnet    Management network IPv6 subnet range (<nil>)
+    --keep-mgmt-net     Do not remove the management network
+    --log-level         Logging level; one of [trace, debug, info, warning, error, fatal] (info)
+    --max-workers       Limit the maximum number of workers creating/deleting nodes
+    --name              Lab/Topology name
+    --network           Management network name
+    -r --runtime        Container runtime (docker)
+    --skip-labdir-acl   Skip the lab directory extended ACLs provisioning
+    --skip-post-deploy  Skip post deploy action
+    --timeout           Timeout for external API requests (e.g. container runtimes), e.g: 30s, 1m, 2m30s (2m0s)
+    -t --topo           Path to the topology definition file, a directory containing one, 'stdin', or a URL
+    --vars              Path to a topology template variables file (can be specified multiple times)
+

@@ -1,0 +1,26 @@
+
+  destroy a lab based defined by means of the topology definition file                                                  
+  reference: https://containerlab.dev/cmd/destroy/                                                                      
+         
+  USAGE  
+         
+    containerlab destroy [--flags]  
+         
+  FLAGS  
+         
+    -a --all         Destroy all containerlab labs
+    -c --cleanup     Delete lab directory. Cannot be used with node-filter
+    -d --debug       Enable debug mode
+    --graceful       Attempt to stop containers before removing
+    -h --help        Help for destroy
+    --keep-mgmt-net  Do not remove the management network
+    --log-level      Logging level; one of [trace, debug, info, warning, error, fatal] (info)
+    --max-workers    Limit the maximum number of workers deleting nodes
+    --name           Lab/Topology name
+    --node-filter    Comma separated list of nodes to include
+    -r --runtime     Container runtime (docker)
+    --timeout        Timeout for external API requests (e.g. container runtimes), e.g: 30s, 1m, 2m30s (2m0s)
+    -t --topo        Path to the topology definition file, a directory containing one, 'stdin', or a URL
+    --vars           Path to a topology template variables file (can be specified multiple times)
+    -y --yes         Auto-Approve deletion when used with --all (skips confirmation prompt)
+

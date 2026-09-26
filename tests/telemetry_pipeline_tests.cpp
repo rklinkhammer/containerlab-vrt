@@ -131,7 +131,7 @@ int main() {
   pc.queue_limit = 8;
   std::ostringstream detector_output;
   std::thread dt([&] {
-    assert(sdr::udp::run_detector(dc, std::chrono::milliseconds(5300),
+    assert(sdr::udp::run_detector(dc, std::chrono::milliseconds(5800),
                                   detector_output) == 0);
   });
   std::this_thread::sleep_for(std::chrono::milliseconds(30));
@@ -140,21 +140,35 @@ int main() {
   producer.consume(1, signal_wire(0, 0));
   auto spectra = producer.consume(1, signal_wire(1, 1024));
   assert(spectra.size() == 1);
-  send_datagram(ports[4], spectra[0]);
+  send_datagram(ports[4],{std::byte{1}}); // independently malformed input
+  std::this_thread::sleep_for(std::chrono::milliseconds(140));
+  auto valid=sdr::decode_spectrum(spectra[0]);
+  for(unsigned i=0;i<8;++i) {
+    valid.sequence=i;
+    send_datagram(ports[4],sdr::encode_spectrum(valid));
+    std::this_thread::sleep_for(std::chrono::milliseconds(40));
+  }
   dt.join();
   bool normal = false, interrupted = false;
+  bool degraded=false,recovered=false,idle_after=false;
   std::istringstream stream(detector_output.str());
   std::string line;
   while (std::getline(stream, line)) {
     auto j = nlohmann::json::parse(line);
     if (j.value("schema", nlohmann::json()) != "vrt.telemetry/1")
       continue;
+    if(j["event"]=="heartbeat") {
+      if(j["state"]=="degraded" && j["data"]["health"]["new_errors"]==1)degraded=true;
+      if(degraded && j["state"]=="healthy" && j["data"]["malformed"]==1)recovered=true;
+      if(recovered && j["state"]=="idle" && j["data"]["malformed"]==1)idle_after=true;
+    }
     if (j["event"] == "detection" && j["data"]["validity"] == "valid")
       normal = true;
     if (j["event"] == "detection" && j["data"]["validity"] == "unavailable")
       interrupted = true;
   }
   assert(normal && interrupted);
+  assert(degraded && recovered && idle_after);
   // Destination has no consumer now. UDP success is not proof of delivery.
   std::ostringstream processor_output;
   std::thread pt([&] {
